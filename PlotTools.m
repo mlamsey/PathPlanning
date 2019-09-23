@@ -2,8 +2,9 @@ classdef PlotTools
 	methods(Static)
         function figure_ref = PlotPartOnNewFigure(part_data)
             f = figure;
-            a = axes('parent',f);
+            a = axes('parent',f,'gridcolor',[0,0,0],'gridalpha',0.5);
             view(45,25);
+            grid on;
             PlotTools.PlotPart(part_data,a);
         end%func PlotPartOnNewFigure
 
@@ -27,6 +28,8 @@ classdef PlotTools
                 end%if
 			end%for i
             hold off;
+
+            PlotTools.BufferPlotAxes(parent_axes,0.15);
 
             fprintf(' Done!\n');
 
@@ -62,9 +65,9 @@ classdef PlotTools
             ref = cell(length(moves),1);
             for i = 1:length(moves)
                 if(nargin == 1)
-                    ref{i} = PlotTools.PlotMove(moves{i});
+                    ref{i} = PlotTools.PlotMoveLine(moves{i});
                 elseif(nargin == 2)
-                    ref{i} = PlotTools.PlotMove(moves{i},parent_axes);
+                    ref{i} = PlotTools.PlotMoveLine(moves{i},parent_axes);
                 else
                     fprintf('PlotTools::PlotSlice: incorrect number of arguments.\n');
                     ref{i} = null;
@@ -82,9 +85,9 @@ classdef PlotTools
 
         end%func PlotSlice
 
-        function ref = PlotMove(move,parent_axes)
+        function ref = PlotMoveLine(move,parent_axes)
             if(~isa(move,'Move'))
-                fprintf('PlotTools::PlotMove: Input not a Move!\n');
+                fprintf('PlotTools::PlotMoveLine: Input not a Move!\n');
                 return;
             end%if
 
@@ -95,8 +98,35 @@ classdef PlotTools
             y = [p1.y,p2.y];
             z = [p1.z,p2.z];
 
-            ref = line(x,y,z,'color','k','marker','o','parent',parent_axes,'tag','move_line');
+            dx = p2.x - p1.x;
+            dy = p2.y - p1.y;
+            dz = p2.z - p1.z;
 
-        end%func PlotMove
+            ref = line(x,y,z,'color','k','marker','o','parent',parent_axes,'tag','move_line');
+            % ref = quiver3(p1.x,p1.y,p1.z,dx,dy,dz,0,...
+            %     'parent',parent_axes,...
+            %     'color','k',...
+            %     'autoscale','off',...
+            %     'tag','move_line');
+        end%func PlotMoveLine
+
+        function ref = BufferPlotAxes(ax,percent_buffer)
+            x_lim = xlim(ax);
+            y_lim = ylim(ax);
+            z_lim = zlim(ax);
+
+            x_range = x_lim(2) - x_lim(1);
+            y_range = y_lim(2) - y_lim(1);
+            z_range = z_lim(2) - z_lim(1);
+
+            x_inc = percent_buffer * x_range;
+            y_inc = percent_buffer * y_range;
+            z_inc = percent_buffer * z_range;
+
+            xlim([x_lim(1) - x_inc, x_lim(2) + x_inc]);
+            ylim([y_lim(1) - y_inc, y_lim(2) + y_inc]);
+            zlim([z_lim(1) - z_inc, z_lim(2) + z_inc]);
+
+        end%func BufferPlotAxes
 	end%methods
 end%class PlotTooles

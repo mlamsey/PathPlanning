@@ -3,14 +3,37 @@ classdef MoveAlgorithms
         coincidence_threshold = 0.0001; % mm
         parallel_threshold = 0.0001; % dmm
     end%properties
-    
+
 	methods(Static)
 
+		function new_move = ReverseMove(old_move)
+			if(~isa(old_move,'Move'))
+				fprintf('MoveAlgorithms::ReverseMove: Input not a move\n');
+				new_move = old_move;
+				return;
+			end%if
+			new_move = Move(old_move.point2,old_move.point1);
+		end%func ReverseMove
+
 		function [move1,move2] = BisectMove(old_move)
+			if(~isa(old_move,'Move'))
+				fprintf('MoveAlgorithms::BisectMove: Input not a move\n');
+				return;
+			end%if
 			[move1,move2] = MoveAlgorithms.BisectMoveAtPercent(old_move,0.5);
 		end%func BisectMove
 
 		function [move1,move2] = BisectMoveAtPercent(old_move,percent_along_move)
+			if(~isa(old_move,'Move'))
+				fprintf('MoveAlgorithms::BisectMoveAtPercent: Input 1 not a move\n');
+				return;
+			end%if
+
+			if(~(0.0 < percent_along_move && percent_along_move < 1.0))
+				fprintf('MoveAlgorithms::BisectMoveAtPercent: Input 2 out of range 0-1\n');
+				return;
+			end%if
+
 			point_start = old_move.point1;
 			point_end = old_move.point2;
 			point_middle = WaypointAlgorithms.GetPointBetween(point_start,point_end,percent_along_move);

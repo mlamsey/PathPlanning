@@ -91,6 +91,7 @@ classdef SliceManipulator < handle
 		function UpdatePlot(obj)
 			if(isa(obj.current_part,'Part'))
 				if(obj.bool_part_updated)
+					reset(obj.plot_axes);
 					delete(findobj('tag','move_line'));
 					PlotTools.PlotPart(obj.current_part,obj.plot_axes);
 					obj.bool_part_updated = false;

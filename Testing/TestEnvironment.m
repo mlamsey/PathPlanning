@@ -12,9 +12,16 @@ function TestPlot
     close all;
     segments = Segment(slices);
     part = Part({segments});
-    for i = 1:5
-    	part.segments{1}.slices{i} = SliceAlgorithms.BisectMove(part.segments{1}.slices{i},rem(i,4)+1);
-    	part.segments{1}.slices{i} = SliceAlgorithms.StaggerStartByMoves(part.segments{1}.slices{i},rem(i-1,4)+1);
+    for i = 1:length(slices)
+    	slice_i = part.segments{1}.slices{i};
+
+    	slice_i = SliceAlgorithms.BisectMove(slice_i,rem(i,length(slice_i.moves))+1);
+    	slice_i = SliceAlgorithms.StaggerStartByMoves(slice_i,rem(i-1,length(slice_i.moves) - 1)+1);
+    	if(rem(i,2) == 0)
+    		slice_i = SliceAlgorithms.ReverseSlicePointOrder(slice_i);
+    	end%if
+
+    	part.segments{1}.slices{i} = slice_i;
     end%for i
     PlotTools.PlotPartOnNewFigure(part);
     

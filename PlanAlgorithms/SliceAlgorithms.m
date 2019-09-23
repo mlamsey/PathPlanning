@@ -10,7 +10,7 @@ classdef SliceAlgorithms
 
             n_moves = length(original_slice.moves);
 
-            if(~(0 < moves_to_stagger < n_moves))
+            if(~(0 < moves_to_stagger && moves_to_stagger < n_moves))
                 fprintf('SliceAlgorithms::StaggerStartByMoves: number of slices to stagger by is outside of range\n');
                 updated_slice = original_slice;
                 return;
@@ -47,7 +47,10 @@ classdef SliceAlgorithms
                 fprintf('SliceAlgorithms::ReverseSlicePointOrder: Input not a slice!\n');
                 return;
             end%if
-            reversed_slice = Slice(flip(original_slice.path_positions),flip(original_slice.path_orientations));
+            reversed_slice = Slice(flip(original_slice.moves));
+            for i = 1:length(reversed_slice.moves)
+                reversed_slice.moves{i} = MoveAlgorithms.ReverseMove(reversed_slice.moves{i});
+            end%for i
         end%func ReverseSlicePointOrder
 
         function new_slice = CombineCollinearMoves(original_slice)
