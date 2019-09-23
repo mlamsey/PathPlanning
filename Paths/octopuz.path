@@ -1,0 +1,1380 @@
+!StartHeader!
+op_id:6
+ToolNumber:239
+op_num:1
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,50.813,25.400,0.000,0.000,0.000,6.418
+R:-44.901,50.813,0.000,0.000,0.000,0.000,6.418
+L:44.901,50.813,0.000,0.000,0.000,0.000,6.418
+R:44.901,50.813,25.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:7
+ToolNumber:239
+op_num:2
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,-50.787,25.400,0.000,0.000,0.000,6.418
+R:-44.901,-50.787,0.000,0.000,0.000,0.000,6.418
+L:44.901,-50.787,0.000,0.000,0.000,0.000,6.418
+R:44.901,-50.787,25.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:8
+ToolNumber:239
+op_num:3
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,27.899,0.000,0.000,0.000,6.418
+R:44.901,50.787,2.499,0.000,0.000,0.000,6.418
+L:-44.901,50.787,2.499,0.000,0.000,0.000,6.418
+R:-44.901,50.787,27.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:9
+ToolNumber:239
+op_num:4
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,27.899,0.000,0.000,0.000,6.418
+R:44.901,-50.813,2.499,0.000,0.000,0.000,6.418
+L:-44.901,-50.813,2.499,0.000,0.000,0.000,6.418
+R:-44.901,-50.813,27.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:10
+ToolNumber:239
+op_num:5
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,50.813,30.400,0.000,0.000,0.000,6.418
+R:-44.901,50.813,5.000,0.000,0.000,0.000,6.418
+L:44.901,50.813,5.000,0.000,0.000,0.000,6.418
+R:44.901,50.813,30.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:11
+ToolNumber:239
+op_num:6
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,-50.787,30.400,0.000,0.000,0.000,6.418
+R:-44.901,-50.787,5.000,0.000,0.000,0.000,6.418
+L:44.901,-50.787,5.000,0.000,0.000,0.000,6.418
+R:44.901,-50.787,30.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:12
+ToolNumber:239
+op_num:7
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,32.899,0.000,0.000,0.000,6.418
+R:44.901,50.787,7.499,0.000,0.000,0.000,6.418
+L:-44.901,50.787,7.499,0.000,0.000,0.000,6.418
+R:-44.901,50.787,32.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:13
+ToolNumber:239
+op_num:8
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,32.899,0.000,0.000,0.000,6.418
+R:44.901,-50.813,7.499,0.000,0.000,0.000,6.418
+L:-44.901,-50.813,7.499,0.000,0.000,0.000,6.418
+R:-44.901,-50.813,32.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:14
+ToolNumber:239
+op_num:9
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,50.813,35.400,0.000,0.000,0.000,6.418
+R:-44.901,50.813,10.000,0.000,0.000,0.000,6.418
+L:44.901,50.813,10.000,0.000,0.000,0.000,6.418
+R:44.901,50.813,35.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:15
+ToolNumber:239
+op_num:10
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,-50.787,35.400,0.000,0.000,0.000,6.418
+R:-44.901,-50.787,10.000,0.000,0.000,0.000,6.418
+L:44.901,-50.787,10.000,0.000,0.000,0.000,6.418
+R:44.901,-50.787,35.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:16
+ToolNumber:239
+op_num:11
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,37.899,0.000,0.000,0.000,6.418
+R:44.901,50.787,12.499,0.000,0.000,0.000,6.418
+L:-44.901,50.787,12.499,0.000,0.000,0.000,6.418
+R:-44.901,50.787,37.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:17
+ToolNumber:239
+op_num:12
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,37.899,0.000,0.000,0.000,6.418
+R:44.901,-50.813,12.499,0.000,0.000,0.000,6.418
+L:-44.901,-50.813,12.499,0.000,0.000,0.000,6.418
+R:-44.901,-50.813,37.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:18
+ToolNumber:239
+op_num:13
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,50.813,40.400,0.000,0.000,0.000,6.418
+R:-44.901,50.813,15.000,0.000,0.000,0.000,6.418
+L:44.901,50.813,15.000,0.000,0.000,0.000,6.418
+R:44.901,50.813,40.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:19
+ToolNumber:239
+op_num:14
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,-50.787,40.400,0.000,0.000,0.000,6.418
+R:-44.901,-50.787,15.000,0.000,0.000,0.000,6.418
+L:44.901,-50.787,15.000,0.000,0.000,0.000,6.418
+R:44.901,-50.787,40.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:20
+ToolNumber:239
+op_num:15
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,42.899,0.000,0.000,0.000,6.418
+R:44.901,50.787,17.499,0.000,0.000,0.000,6.418
+L:-44.901,50.787,17.499,0.000,0.000,0.000,6.418
+R:-44.901,50.787,42.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:21
+ToolNumber:239
+op_num:16
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,42.899,0.000,0.000,0.000,6.418
+R:44.901,-50.813,17.499,0.000,0.000,0.000,6.418
+L:-44.901,-50.813,17.499,0.000,0.000,0.000,6.418
+R:-44.901,-50.813,42.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:22
+ToolNumber:239
+op_num:17
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,50.813,45.400,0.000,0.000,0.000,6.418
+R:-44.901,50.813,20.000,0.000,0.000,0.000,6.418
+L:44.901,50.813,20.000,0.000,0.000,0.000,6.418
+R:44.901,50.813,45.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:23
+ToolNumber:239
+op_num:18
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-44.901,-50.787,45.400,0.000,0.000,0.000,6.418
+R:-44.901,-50.787,20.000,0.000,0.000,0.000,6.418
+L:44.901,-50.787,20.000,0.000,0.000,0.000,6.418
+R:44.901,-50.787,45.400,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:24
+ToolNumber:239
+op_num:19
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,47.899,0.000,0.000,0.000,6.418
+R:44.901,50.787,22.499,0.000,0.000,0.000,6.418
+L:-44.901,50.787,22.499,0.000,0.000,0.000,6.418
+R:-44.901,50.787,47.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:25
+ToolNumber:239
+op_num:20
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,47.899,0.000,0.000,0.000,6.418
+R:44.901,-50.813,22.499,0.000,0.000,0.000,6.418
+L:-44.901,-50.813,22.499,0.000,0.000,0.000,6.418
+R:-44.901,-50.813,47.899,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:26
+ToolNumber:239
+op_num:21
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-42.400,50.813,50.394,0.000,0.000,0.000,6.418
+R:-42.400,50.813,24.994,0.000,0.000,0.000,6.418
+L:44.901,50.813,24.994,0.000,0.000,0.000,6.418
+R:44.901,50.813,50.394,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:27
+ToolNumber:239
+op_num:22
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-42.400,-50.787,50.394,0.000,0.000,0.000,6.418
+R:-42.400,-50.787,24.994,0.000,0.000,0.000,6.418
+L:44.901,-50.787,24.994,0.000,0.000,0.000,6.418
+R:44.901,-50.787,50.394,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:28
+ToolNumber:239
+op_num:23
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,52.893,0.000,0.000,0.000,6.418
+R:44.901,50.787,27.493,0.000,0.000,0.000,6.418
+L:-39.900,50.787,27.493,0.000,0.000,0.000,6.418
+R:-39.900,50.787,52.893,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:29
+ToolNumber:239
+op_num:24
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,52.893,0.000,0.000,0.000,6.418
+R:44.901,-50.813,27.493,0.000,0.000,0.000,6.418
+L:-39.900,-50.813,27.493,0.000,0.000,0.000,6.418
+R:-39.900,-50.813,52.893,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:30
+ToolNumber:239
+op_num:25
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-37.400,50.813,55.392,0.000,0.000,0.000,6.418
+R:-37.400,50.813,29.992,0.000,0.000,0.000,6.418
+L:44.901,50.813,29.992,0.000,0.000,0.000,6.418
+R:44.901,50.813,55.392,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:31
+ToolNumber:239
+op_num:26
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-37.400,-50.787,55.392,0.000,0.000,0.000,6.418
+R:-37.400,-50.787,29.992,0.000,0.000,0.000,6.418
+L:44.901,-50.787,29.992,0.000,0.000,0.000,6.418
+R:44.901,-50.787,55.392,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:32
+ToolNumber:239
+op_num:27
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,57.892,0.000,0.000,0.000,6.418
+R:44.901,50.787,32.492,0.000,0.000,0.000,6.418
+L:-34.900,50.787,32.492,0.000,0.000,0.000,6.418
+R:-34.900,50.787,57.892,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:33
+ToolNumber:239
+op_num:28
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,57.892,0.000,0.000,0.000,6.418
+R:44.901,-50.813,32.492,0.000,0.000,0.000,6.418
+L:-34.900,-50.813,32.492,0.000,0.000,0.000,6.418
+R:-34.900,-50.813,57.892,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:34
+ToolNumber:239
+op_num:29
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-32.400,50.813,60.391,0.000,0.000,0.000,6.418
+R:-32.400,50.813,34.991,0.000,0.000,0.000,6.418
+L:44.901,50.813,34.991,0.000,0.000,0.000,6.418
+R:44.901,50.813,60.391,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:35
+ToolNumber:239
+op_num:30
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-32.400,-50.787,60.391,0.000,0.000,0.000,6.418
+R:-32.400,-50.787,34.991,0.000,0.000,0.000,6.418
+L:44.901,-50.787,34.991,0.000,0.000,0.000,6.418
+R:44.901,-50.787,60.391,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:36
+ToolNumber:239
+op_num:31
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,62.890,0.000,0.000,0.000,6.418
+R:44.901,50.787,37.490,0.000,0.000,0.000,6.418
+L:-29.900,50.787,37.490,0.000,0.000,0.000,6.418
+R:-29.900,50.787,62.890,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:37
+ToolNumber:239
+op_num:32
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,62.890,0.000,0.000,0.000,6.418
+R:44.901,-50.813,37.490,0.000,0.000,0.000,6.418
+L:-29.900,-50.813,37.490,0.000,0.000,0.000,6.418
+R:-29.900,-50.813,62.890,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:38
+ToolNumber:239
+op_num:33
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-27.400,50.813,65.390,0.000,0.000,0.000,6.418
+R:-27.400,50.813,39.990,0.000,0.000,0.000,6.418
+L:44.901,50.813,39.990,0.000,0.000,0.000,6.418
+R:44.901,50.813,65.390,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:39
+ToolNumber:239
+op_num:34
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-27.400,-50.787,65.390,0.000,0.000,0.000,6.418
+R:-27.400,-50.787,39.990,0.000,0.000,0.000,6.418
+L:44.901,-50.787,39.990,0.000,0.000,0.000,6.418
+R:44.901,-50.787,65.390,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:40
+ToolNumber:239
+op_num:35
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,67.889,0.000,0.000,0.000,6.418
+R:44.901,50.787,42.489,0.000,0.000,0.000,6.418
+L:-24.900,50.787,42.489,0.000,0.000,0.000,6.418
+R:-24.900,50.787,67.889,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:41
+ToolNumber:239
+op_num:36
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,67.889,0.000,0.000,0.000,6.418
+R:44.901,-50.813,42.489,0.000,0.000,0.000,6.418
+L:-24.900,-50.813,42.489,0.000,0.000,0.000,6.418
+R:-24.900,-50.813,67.889,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:42
+ToolNumber:239
+op_num:37
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-22.400,50.813,70.388,0.000,0.000,0.000,6.418
+R:-22.400,50.813,44.988,0.000,0.000,0.000,6.418
+L:44.901,50.813,44.988,0.000,0.000,0.000,6.418
+R:44.901,50.813,70.388,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:43
+ToolNumber:239
+op_num:38
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-22.400,-50.787,70.388,0.000,0.000,0.000,6.418
+R:-22.400,-50.787,44.988,0.000,0.000,0.000,6.418
+L:44.901,-50.787,44.988,0.000,0.000,0.000,6.418
+R:44.901,-50.787,70.388,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:44
+ToolNumber:239
+op_num:39
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,72.888,0.000,0.000,0.000,6.418
+R:44.901,50.787,47.488,0.000,0.000,0.000,6.418
+L:-19.900,50.787,47.488,0.000,0.000,0.000,6.418
+R:-19.900,50.787,72.888,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:45
+ToolNumber:239
+op_num:40
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,72.888,0.000,0.000,0.000,6.418
+R:44.901,-50.813,47.488,0.000,0.000,0.000,6.418
+L:-19.900,-50.813,47.488,0.000,0.000,0.000,6.418
+R:-19.900,-50.813,72.888,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:46
+ToolNumber:239
+op_num:41
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-17.400,50.813,75.387,0.000,0.000,0.000,6.418
+R:-17.400,50.813,49.987,0.000,0.000,0.000,6.418
+L:44.901,50.813,49.987,0.000,0.000,0.000,6.418
+R:44.901,50.813,75.387,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:47
+ToolNumber:239
+op_num:42
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-17.400,-50.787,75.387,0.000,0.000,0.000,6.418
+R:-17.400,-50.787,49.987,0.000,0.000,0.000,6.418
+L:44.901,-50.787,49.987,0.000,0.000,0.000,6.418
+R:44.901,-50.787,75.387,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:48
+ToolNumber:239
+op_num:43
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,77.887,0.000,0.000,0.000,6.418
+R:44.901,50.787,52.487,0.000,0.000,0.000,6.418
+L:-14.900,50.787,52.487,0.000,0.000,0.000,6.418
+R:-14.900,50.787,77.887,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:49
+ToolNumber:239
+op_num:44
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,77.887,0.000,0.000,0.000,6.418
+R:44.901,-50.813,52.487,0.000,0.000,0.000,6.418
+L:-14.900,-50.813,52.487,0.000,0.000,0.000,6.418
+R:-14.900,-50.813,77.887,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:50
+ToolNumber:239
+op_num:45
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-12.400,50.813,80.386,0.000,0.000,0.000,6.418
+R:-12.400,50.813,54.986,0.000,0.000,0.000,6.418
+L:44.901,50.813,54.986,0.000,0.000,0.000,6.418
+R:44.901,50.813,80.386,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:51
+ToolNumber:239
+op_num:46
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-12.400,-50.787,80.386,0.000,0.000,0.000,6.418
+R:-12.400,-50.787,54.986,0.000,0.000,0.000,6.418
+L:44.901,-50.787,54.986,0.000,0.000,0.000,6.418
+R:44.901,-50.787,80.386,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:52
+ToolNumber:239
+op_num:47
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,82.885,0.000,0.000,0.000,6.418
+R:44.901,50.787,57.485,0.000,0.000,0.000,6.418
+L:-9.900,50.787,57.485,0.000,0.000,0.000,6.418
+R:-9.900,50.787,82.885,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:53
+ToolNumber:239
+op_num:48
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,82.885,0.000,0.000,0.000,6.418
+R:44.901,-50.813,57.485,0.000,0.000,0.000,6.418
+L:-9.900,-50.813,57.485,0.000,0.000,0.000,6.418
+R:-9.900,-50.813,82.885,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:54
+ToolNumber:239
+op_num:49
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-7.400,50.813,85.385,0.000,0.000,0.000,6.418
+R:-7.400,50.813,59.985,0.000,0.000,0.000,6.418
+L:44.901,50.813,59.985,0.000,0.000,0.000,6.418
+R:44.901,50.813,85.385,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:55
+ToolNumber:239
+op_num:50
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-7.400,-50.787,85.385,0.000,0.000,0.000,6.418
+R:-7.400,-50.787,59.985,0.000,0.000,0.000,6.418
+L:44.901,-50.787,59.985,0.000,0.000,0.000,6.418
+R:44.901,-50.787,85.385,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:56
+ToolNumber:239
+op_num:51
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,87.884,0.000,0.000,0.000,6.418
+R:44.901,50.787,62.484,0.000,0.000,0.000,6.418
+L:-4.900,50.787,62.484,0.000,0.000,0.000,6.418
+R:-4.900,50.787,87.884,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:57
+ToolNumber:239
+op_num:52
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,87.884,0.000,0.000,0.000,6.418
+R:44.901,-50.813,62.484,0.000,0.000,0.000,6.418
+L:-4.900,-50.813,62.484,0.000,0.000,0.000,6.418
+R:-4.900,-50.813,87.884,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:58
+ToolNumber:239
+op_num:53
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-2.400,50.813,90.383,0.000,0.000,0.000,6.418
+R:-2.400,50.813,64.983,0.000,0.000,0.000,6.418
+L:44.901,50.813,64.983,0.000,0.000,0.000,6.418
+R:44.901,50.813,90.383,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:59
+ToolNumber:239
+op_num:54
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:-2.400,-50.787,90.383,0.000,0.000,0.000,6.418
+R:-2.400,-50.787,64.983,0.000,0.000,0.000,6.418
+L:44.901,-50.787,64.983,0.000,0.000,0.000,6.418
+R:44.901,-50.787,90.383,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:60
+ToolNumber:239
+op_num:55
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,92.883,0.000,0.000,0.000,6.418
+R:44.901,50.787,67.483,0.000,0.000,0.000,6.418
+L:0.100,50.787,67.483,0.000,0.000,0.000,6.418
+R:0.100,50.787,92.883,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:61
+ToolNumber:239
+op_num:56
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,92.883,0.000,0.000,0.000,6.418
+R:44.901,-50.813,67.483,0.000,0.000,0.000,6.418
+L:0.100,-50.813,67.483,0.000,0.000,0.000,6.418
+R:0.100,-50.813,92.883,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:62
+ToolNumber:239
+op_num:57
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:2.600,50.813,95.382,0.000,0.000,0.000,6.418
+R:2.600,50.813,69.982,0.000,0.000,0.000,6.418
+L:44.901,50.813,69.982,0.000,0.000,0.000,6.418
+R:44.901,50.813,95.382,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:63
+ToolNumber:239
+op_num:58
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:2.600,-50.787,95.382,0.000,0.000,0.000,6.418
+R:2.600,-50.787,69.982,0.000,0.000,0.000,6.418
+L:44.901,-50.787,69.982,0.000,0.000,0.000,6.418
+R:44.901,-50.787,95.382,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:64
+ToolNumber:239
+op_num:59
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,97.881,0.000,0.000,0.000,6.418
+R:44.901,50.787,72.481,0.000,0.000,0.000,6.418
+L:5.100,50.787,72.481,0.000,0.000,0.000,6.418
+R:5.100,50.787,97.881,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:65
+ToolNumber:239
+op_num:60
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,97.881,0.000,0.000,0.000,6.418
+R:44.901,-50.813,72.481,0.000,0.000,0.000,6.418
+L:5.100,-50.813,72.481,0.000,0.000,0.000,6.418
+R:5.100,-50.813,97.881,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:66
+ToolNumber:239
+op_num:61
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:7.600,50.813,100.381,0.000,0.000,0.000,6.418
+R:7.600,50.813,74.981,0.000,0.000,0.000,6.418
+L:44.901,50.813,74.981,0.000,0.000,0.000,6.418
+R:44.901,50.813,100.381,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:67
+ToolNumber:239
+op_num:62
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:7.600,-50.787,100.381,0.000,0.000,0.000,6.418
+R:7.600,-50.787,74.981,0.000,0.000,0.000,6.418
+L:44.901,-50.787,74.981,0.000,0.000,0.000,6.418
+R:44.901,-50.787,100.381,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:68
+ToolNumber:239
+op_num:63
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,102.880,0.000,0.000,0.000,6.418
+R:44.901,50.787,77.480,0.000,0.000,0.000,6.418
+L:10.100,50.787,77.480,0.000,0.000,0.000,6.418
+R:10.100,50.787,102.880,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:69
+ToolNumber:239
+op_num:64
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,102.880,0.000,0.000,0.000,6.418
+R:44.901,-50.813,77.480,0.000,0.000,0.000,6.418
+L:10.100,-50.813,77.480,0.000,0.000,0.000,6.418
+R:10.100,-50.813,102.880,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:70
+ToolNumber:239
+op_num:65
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:12.600,50.813,105.380,0.000,0.000,0.000,6.418
+R:12.600,50.813,79.980,0.000,0.000,0.000,6.418
+L:44.901,50.813,79.980,0.000,0.000,0.000,6.418
+R:44.901,50.813,105.380,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:71
+ToolNumber:239
+op_num:66
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:12.600,-50.787,105.380,0.000,0.000,0.000,6.418
+R:12.600,-50.787,79.980,0.000,0.000,0.000,6.418
+L:44.901,-50.787,79.980,0.000,0.000,0.000,6.418
+R:44.901,-50.787,105.380,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:72
+ToolNumber:239
+op_num:67
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,107.879,0.000,0.000,0.000,6.418
+R:44.901,50.787,82.479,0.000,0.000,0.000,6.418
+L:15.100,50.787,82.479,0.000,0.000,0.000,6.418
+R:15.100,50.787,107.879,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:73
+ToolNumber:239
+op_num:68
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,107.879,0.000,0.000,0.000,6.418
+R:44.901,-50.813,82.479,0.000,0.000,0.000,6.418
+L:15.100,-50.813,82.479,0.000,0.000,0.000,6.418
+R:15.100,-50.813,107.879,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:74
+ToolNumber:239
+op_num:69
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:17.600,50.813,110.378,0.000,0.000,0.000,6.418
+R:17.600,50.813,84.978,0.000,0.000,0.000,6.418
+L:44.901,50.813,84.978,0.000,0.000,0.000,6.418
+R:44.901,50.813,110.378,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:75
+ToolNumber:239
+op_num:70
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:17.600,-50.787,110.378,0.000,0.000,0.000,6.418
+R:17.600,-50.787,84.978,0.000,0.000,0.000,6.418
+L:44.901,-50.787,84.978,0.000,0.000,0.000,6.418
+R:44.901,-50.787,110.378,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:76
+ToolNumber:239
+op_num:71
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,112.878,0.000,0.000,0.000,6.418
+R:44.901,50.787,87.478,0.000,0.000,0.000,6.418
+L:20.100,50.787,87.478,0.000,0.000,0.000,6.418
+R:20.100,50.787,112.878,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:77
+ToolNumber:239
+op_num:72
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,112.878,0.000,0.000,0.000,6.418
+R:44.901,-50.813,87.478,0.000,0.000,0.000,6.418
+L:20.100,-50.813,87.478,0.000,0.000,0.000,6.418
+R:20.100,-50.813,112.878,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:78
+ToolNumber:239
+op_num:73
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:22.600,50.813,115.377,0.000,0.000,0.000,6.418
+R:22.600,50.813,89.977,0.000,0.000,0.000,6.418
+L:44.901,50.813,89.977,0.000,0.000,0.000,6.418
+R:44.901,50.813,115.377,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:79
+ToolNumber:239
+op_num:74
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:22.600,-50.787,115.377,0.000,0.000,0.000,6.418
+R:22.600,-50.787,89.977,0.000,0.000,0.000,6.418
+L:44.901,-50.787,89.977,0.000,0.000,0.000,6.418
+R:44.901,-50.787,115.377,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:80
+ToolNumber:239
+op_num:75
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,117.876,0.000,0.000,0.000,6.418
+R:44.901,50.787,92.476,0.000,0.000,0.000,6.418
+L:25.100,50.787,92.476,0.000,0.000,0.000,6.418
+R:25.100,50.787,117.876,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:81
+ToolNumber:239
+op_num:76
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,117.876,0.000,0.000,0.000,6.418
+R:44.901,-50.813,92.476,0.000,0.000,0.000,6.418
+L:25.100,-50.813,92.476,0.000,0.000,0.000,6.418
+R:25.100,-50.813,117.876,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:82
+ToolNumber:239
+op_num:77
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:27.600,50.813,120.376,0.000,0.000,0.000,6.418
+R:27.600,50.813,94.976,0.000,0.000,0.000,6.418
+L:44.901,50.813,94.976,0.000,0.000,0.000,6.418
+R:44.901,50.813,120.376,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:83
+ToolNumber:239
+op_num:78
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:27.600,-50.787,120.376,0.000,0.000,0.000,6.418
+R:27.600,-50.787,94.976,0.000,0.000,0.000,6.418
+L:44.901,-50.787,94.976,0.000,0.000,0.000,6.418
+R:44.901,-50.787,120.376,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:84
+ToolNumber:239
+op_num:79
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,122.875,0.000,0.000,0.000,6.418
+R:44.901,50.787,97.475,0.000,0.000,0.000,6.418
+L:30.100,50.787,97.475,0.000,0.000,0.000,6.418
+R:30.100,50.787,122.875,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:85
+ToolNumber:239
+op_num:80
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,122.875,0.000,0.000,0.000,6.418
+R:44.901,-50.813,97.475,0.000,0.000,0.000,6.418
+L:30.100,-50.813,97.475,0.000,0.000,0.000,6.418
+R:30.100,-50.813,122.875,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:86
+ToolNumber:239
+op_num:81
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:32.600,50.813,125.374,0.000,0.000,0.000,6.418
+R:32.600,50.813,99.974,0.000,0.000,0.000,6.418
+L:44.901,50.813,99.974,0.000,0.000,0.000,6.418
+R:44.901,50.813,125.374,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:87
+ToolNumber:239
+op_num:82
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:32.600,-50.787,125.374,0.000,0.000,0.000,6.418
+R:32.600,-50.787,99.974,0.000,0.000,0.000,6.418
+L:44.901,-50.787,99.974,0.000,0.000,0.000,6.418
+R:44.901,-50.787,125.374,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:88
+ToolNumber:239
+op_num:83
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,127.874,0.000,0.000,0.000,6.418
+R:44.901,50.787,102.474,0.000,0.000,0.000,6.418
+L:35.100,50.787,102.474,0.000,0.000,0.000,6.418
+R:35.100,50.787,127.874,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:89
+ToolNumber:239
+op_num:84
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,127.874,0.000,0.000,0.000,6.418
+R:44.901,-50.813,102.474,0.000,0.000,0.000,6.418
+L:35.100,-50.813,102.474,0.000,0.000,0.000,6.418
+R:35.100,-50.813,127.874,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:90
+ToolNumber:239
+op_num:85
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:37.600,50.813,130.373,0.000,0.000,0.000,6.418
+R:37.600,50.813,104.973,0.000,0.000,0.000,6.418
+L:44.901,50.813,104.973,0.000,0.000,0.000,6.418
+R:44.901,50.813,130.373,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:91
+ToolNumber:239
+op_num:86
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:37.600,-50.787,130.373,0.000,0.000,0.000,6.418
+R:37.600,-50.787,104.973,0.000,0.000,0.000,6.418
+L:44.901,-50.787,104.973,0.000,0.000,0.000,6.418
+R:44.901,-50.787,130.373,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:92
+ToolNumber:239
+op_num:87
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,50.787,132.872,0.000,0.000,0.000,6.418
+R:44.901,50.787,107.472,0.000,0.000,0.000,6.418
+L:40.100,50.787,107.472,0.000,0.000,0.000,6.418
+R:40.100,50.787,132.872,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:93
+ToolNumber:239
+op_num:88
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:44.901,-50.813,132.872,0.000,0.000,0.000,6.418
+R:44.901,-50.813,107.472,0.000,0.000,0.000,6.418
+L:40.100,-50.813,107.472,0.000,0.000,0.000,6.418
+R:40.100,-50.813,132.872,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:94
+ToolNumber:239
+op_num:89
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:42.600,50.813,135.372,0.000,0.000,0.000,6.418
+R:42.600,50.813,109.972,0.000,0.000,0.000,6.418
+L:44.901,50.813,109.972,0.000,0.000,0.000,6.418
+R:44.901,50.813,135.372,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:95
+ToolNumber:239
+op_num:90
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:42.600,-50.787,135.372,0.000,0.000,0.000,6.418
+R:42.600,-50.787,109.972,0.000,0.000,0.000,6.418
+L:44.901,-50.787,109.972,0.000,0.000,0.000,6.418
+R:44.901,-50.787,135.372,0.000,0.000,0.000,6.418
+!StartHeader!
+op_id:96
+ToolNumber:239
+op_num:91
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:25.173,50.787,132.024,180.000,45.000,-180.000,6.418
+R:43.134,50.787,114.063,180.000,45.000,-180.000,6.418
+L:-46.668,50.787,24.262,180.000,45.000,-180.000,6.418
+R:-64.629,50.787,42.222,180.000,45.000,-180.000,6.418
+!StartHeader!
+op_id:97
+ToolNumber:239
+op_num:92
+opType:1
+ToolName: 1/2 FLAT ENDMILL
+WCSName:Back
+SpindleSpeed:1069
+HeadNumber:-1
+ToolpathGroupName:TOOLPATH GROUP-1
+!EndHeader!
+R:25.173,-50.813,132.024,180.000,45.000,-180.000,6.418
+R:43.134,-50.813,114.063,180.000,45.000,-180.000,6.418
+L:-46.668,-50.813,24.262,180.000,45.000,-180.000,6.418
+R:-64.629,-50.813,42.222,180.000,45.000,-180.000,6.418
