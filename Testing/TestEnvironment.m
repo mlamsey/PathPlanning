@@ -14,6 +14,7 @@ function TestPlot
     part = Part({segments});
     for i = 1:5
     	part.segments{1}.slices{i} = SliceAlgorithms.BisectMove(part.segments{1}.slices{i},rem(i,4)+1);
+    	part.segments{1}.slices{i} = SliceAlgorithms.StaggerStartByMoves(part.segments{1}.slices{i},rem(i-1,4)+1);
     end%for i
     PlotTools.PlotPartOnNewFigure(part);
     

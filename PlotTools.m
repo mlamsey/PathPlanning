@@ -59,18 +59,27 @@ classdef PlotTools
             end%if
 
             moves = slice_data.moves;
+            ref = cell(length(moves),1);
             for i = 1:length(moves)
                 if(nargin == 1)
-                    PlotTools.PlotMove(moves{i});
+                    ref{i} = PlotTools.PlotMove(moves{i});
                 elseif(nargin == 2)
-                    PlotTools.PlotMove(moves{i},parent_axes);
+                    ref{i} = PlotTools.PlotMove(moves{i},parent_axes);
                 else
                     fprintf('PlotTools::PlotSlice: incorrect number of arguments.\n');
+                    ref{i} = null;
                     break;
                 end%if
+
+                % Color: Green [0,1,0] = Start, Red [1,0,0] = End
+                if(i == 1)
+                    ref{i}.Color = [0,1,0];
+                elseif(i == length(moves))
+                    ref{i}.Color = [1,0,0];
+                end%if
+
             end%for i
 
-            ref = 0;
         end%func PlotSlice
 
         function ref = PlotMove(move,parent_axes)
@@ -86,7 +95,7 @@ classdef PlotTools
             y = [p1.y,p2.y];
             z = [p1.z,p2.z];
 
-            ref = line(x,y,z,'color','k','marker','x','parent',parent_axes,'tag','move_line');
+            ref = line(x,y,z,'color','k','marker','o','parent',parent_axes,'tag','move_line');
 
         end%func PlotMove
 	end%methods

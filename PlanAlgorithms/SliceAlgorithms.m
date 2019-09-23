@@ -1,6 +1,29 @@
 classdef SliceAlgorithms
 	methods(Static)
 
+        function updated_slice = StaggerStartByMoves(original_slice,moves_to_stagger)
+            if(~isa(original_slice,'Slice'))
+                fprinf('SliceAlgorithms::StaggerStartByMoves: Input not a slice\n');
+                updated_slice = original_slice;
+                return;
+            end%if
+
+            n_moves = length(original_slice.moves);
+
+            if(~(0 < moves_to_stagger < n_moves))
+                fprintf('SliceAlgorithms::StaggerStartByMoves: number of slices to stagger by is outside of range\n');
+                updated_slice = original_slice;
+                return;
+            end%if
+
+            tail_moves = {original_slice.moves{end-(moves_to_stagger-1):end,:}};
+            [original_slice.moves{moves_to_stagger + 1:end,:}] = original_slice.moves{1:end-moves_to_stagger,:};
+            [original_slice.moves{1:moves_to_stagger,:}] = tail_moves{:};
+
+            updated_slice = original_slice;
+
+        end%func StaggerStartByMoves
+
         function updated_slice = BisectMove(original_slice,move_number)
             if(~isa(original_slice,'Slice'))
                 fprintf('SliceAlgorithms::BisectMove: Input 1 not a slice\n');
