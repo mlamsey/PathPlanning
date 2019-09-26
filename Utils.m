@@ -1,6 +1,6 @@
 classdef Utils
 	methods(Static)
-		
+		%hi
 		function are_all_of_type = AreAll(cell_array,type)
 			are_all_of_type = true;
 
