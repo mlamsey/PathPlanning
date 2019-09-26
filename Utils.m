@@ -1,6 +1,6 @@
 classdef Utils
 	methods(Static)
-		%hi
+		%hi // this is logan's machine
 		function are_all_of_type = AreAll(cell_array,type)
 			are_all_of_type = true;
 
