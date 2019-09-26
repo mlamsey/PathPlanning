@@ -1,5 +1,22 @@
 classdef WaypointAlgorithms
 	methods(Static)
+
+		function distance_between_points = GetDistanceBetweenPoints(point1,point2)
+			if(~isa(point1,'Waypoint') || ~isa(point2,'Waypoint'))
+				fprintf('WaypointAlgorithms::GetDistanceBetweenPoints: Inputs not all Waypoints\n');
+				distance_between_points = 0;
+				return;
+			end%if
+			x1 = point1.x;
+			y1 = point1.y;
+			z1 = point1.z;
+			x2 = point2.x;
+			y2 = point2.y;
+			z2 = point2.z;
+
+			distance_between_points = sqrt((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2);
+		end%func GetDistanceBetweenPoints
+
 		function midpoint = GetMidpoint(point1,point2)
 			if(~isa(point1,'Waypoint') || ~isa(point2,'Waypoint'))
 				fprintf('WaypointAlgorithms::GetMidpoint: Inputs not all Waypoints\n');

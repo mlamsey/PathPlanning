@@ -6,6 +6,24 @@ classdef MoveAlgorithms
 
 	methods(Static)
 
+		function move_distance = GetMoveDistance(move)
+			if(~isa(move,'Move'))
+				fprintf('MoveAlgorithms::GetMoveDistance: Input not a move\n');
+				move_distance = 0;
+				return;
+			end%if
+			move_distance = WaypointAlgorithms.GetDistanceBetweenPoints(move.point1,move.point2);
+		end%func GetMoveDistance
+
+		function move_midpoint = GetMoveMidpoint(move)
+			if(~isa(move,'Move'))
+				fprintf('MoveAlgorithms::GetMoveMidpoint: Input not a move\n');
+				move_midpoint = null;
+				return;
+			end%if
+			move_midpoint = WaypointAlgorithms.GetMidpoint(move.point1,move.point2);
+		end%func GetMoveMidpoint
+
 		function new_move = ReverseMove(old_move)
 			if(~isa(old_move,'Move'))
 				fprintf('MoveAlgorithms::ReverseMove: Input not a move\n');

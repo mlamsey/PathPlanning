@@ -1,6 +1,10 @@
 classdef SliceAlgorithms
 	methods(Static)
 
+        function FindClosestSlice2PointToSlice1Point(slice1,slice1_point,slice2)
+
+        end%func FindClosestNextSlicePointToCurrentSliceMoveMidpoint
+
         function updated_slice = StaggerStartByMoves(original_slice,moves_to_stagger)
             if(~isa(original_slice,'Slice'))
                 fprinf('SliceAlgorithms::StaggerStartByMoves: Input not a slice\n');
