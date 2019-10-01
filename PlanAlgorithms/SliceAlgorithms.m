@@ -1,6 +1,33 @@
 classdef SliceAlgorithms
 	methods(Static)
 
+        function normalized_normal_vector = GetNormalVectorFromClosestMoveOnPreviousSlice(move_on_current_slice,previous_slice)
+            if(~isa(move_on_current_slice,'Move'))
+                fprintf('SliceAlgorithms::GetNormalVectorFromClosestMoveOnPreviousSlice: Input 1 not a Move\n')
+                normalized_normal_vector = null;
+                return;
+            end%if
+            if(~isa(previous_slice,'Slice'))
+                fprintf('SliceAlgorithms::GetNormalVectorFromClosestMoveOnPreviousSlice: Input 2 not a Slice')
+                normalized_normal_vector = null;
+                return;
+            end%if
+
+            previous_slice_closest_move_index = SliceAlgorithms.FindClosestSlice2MoveToSlice1Move(move_on_current_slice,previous_slice);
+            previous_slice_closest_move = previous_slice.moves{previous_slice_closest_move_index};
+
+            current_move_midpoint = MoveAlgorithms.GetMoveMidpoint(move_on_current_slice);
+            previous_move_midpoint = MoveAlgorithms.GetMoveMidpoint(previous_slice_closest_move);
+
+            vector_between_moves = WaypointAlgorithms.GetVectorBetweenPoints(previous_move_midpoint,current_move_midpoint);
+            previous_move_direction_vector = MoveAlgorithms.GetMoveDirectionVector(previous_slice_closest_move);
+
+            [proj,normal] = Utils.VectorProjection(vector_between_moves,previous_move_direction_vector);
+
+            normalized_normal_vector = normal ./ norm(normal);
+            
+        end%func GetNormalVectorFromClosestMoveOnPreviousSlice
+
         function closest_move_index = FindClosestSlice2MoveToSlice1Move(slice1_move,slice2)
             if(~isa(slice1_move,'Move'))
                 fprintf('SliceAlgorithms::FindClosestSlice2PointToSlice1Point: slice1_move is not a Move\n');

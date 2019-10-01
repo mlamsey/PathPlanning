@@ -1,6 +1,19 @@
 classdef WaypointAlgorithms
 	methods(Static)
 
+		function vector_between_points = GetVectorBetweenPoints(point1,point2)
+			if(~isa(point1,'Waypoint') || ~isa(point2,'Waypoint'))
+				fprintf('WaypointAlgorithms::GetVectorBetweenPoints: Inputs not all Waypoints\n');
+				vector_between_points = [0,0,0];
+				return;
+			end%if
+
+			vector_between_points(1) = point2.x - point1.x;
+			vector_between_points(2) = point2.y - point1.y;
+			vector_between_points(3) = point2.z - point1.z;
+
+		end%func GetVectorBetweenPoints
+
 		function distance_between_points = GetDistanceBetweenPoints(point1,point2)
 			if(~isa(point1,'Waypoint') || ~isa(point2,'Waypoint'))
 				fprintf('WaypointAlgorithms::GetDistanceBetweenPoints: Inputs not all Waypoints\n');

@@ -6,6 +6,19 @@ classdef MoveAlgorithms
 
 	methods(Static)
 
+		function move_direction_vector = GetMoveDirectionVector(move)
+			if(~isa(move,'Move'))
+				fprintf('MoveAlgorithms::GetMoveDirectionVector: Input not a move\n');
+				move_direction_vector = [0,0,0];
+				return;
+			end%if
+
+			move_direction_vector(1) = move.point2.x = move.point1.x;
+			move_direction_vector(2) = move.point2.y = move.point1.y;
+			move_direction_vector(3) = move.point2.z = move.point1.z;
+			
+		end%func GetMoveDirectionVector
+
 		function move_distance = GetMoveDistance(move)
 			if(~isa(move,'Move'))
 				fprintf('MoveAlgorithms::GetMoveDistance: Input not a move\n');
