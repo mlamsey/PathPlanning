@@ -162,6 +162,17 @@ classdef PlotTools
             end%if
         end%func PlotMoveVector
 
+        function PlotVectorProjection(a,b)
+            [a1,a2] = Utils.VectorProjection(a,b);
+
+            quiver3(0,0,0,a(1),a(2),a(3),'color','k','autoscalefactor',1);
+            hold on;
+            quiver3(0,0,0,b(1),b(2),b(3),'color',[.2,.2,.2],'autoscalefactor',1);
+            quiver3(0,0,0,a1(1),a1(2),a1(3),'color','r','autoscalefactor',1);
+            quiver3(a1(1),a1(2),a1(3),a2(1),a2(2),a2(3),'color','g','autoscalefactor',1);
+            hold off;
+        end%func PlotVectorProjection
+
         function ref = BufferPlotAxes(ax,percent_buffer)
             x_lim = xlim(ax);
             y_lim = ylim(ax);

@@ -1,7 +1,25 @@
 classdef SliceAlgorithms
 	methods(Static)
 
-        function FindClosestSlice2PointToSlice1Point(slice1,slice1_point,slice2)
+        function closest_move_index = FindClosestSlice2MoveToSlice1Move(slice1_move,slice2)
+            if(~isa(slice1_move,'Move'))
+                fprintf('SliceAlgorithms::FindClosestSlice2PointToSlice1Point: slice1_move is not a Move\n');
+                return;
+            end%if
+            if(~isa(slice2,'Slice'))
+                fprintf('SliceAlgorithms::FindClosestSlice2PointToSlice1Point: slice2 is not a Slice\n');
+                return;
+            end%if
+
+            move1_midpoint = MoveAlgorithms.GetMoveMidpoint(slice1_move);
+            distances_between_moves = zeros(length(slice2.moves),1);
+
+            for i = 1:length(slice2.moves)
+                move2_i_midpoint = MoveAlgorithms.GetMoveMidpoint(slice2.moves{i});
+                distances_between_moves(i) = WaypointAlgorithms.GetDistanceBetweenPoints(move1_midpoint,move2_i_midpoint);
+            end%for i
+
+            [min_distance_value,closest_move_index] = min(distances_between_moves);
 
         end%func FindClosestNextSlicePointToCurrentSliceMoveMidpoint
 

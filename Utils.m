@@ -17,6 +17,14 @@ classdef Utils
 
 		end%func AreAll
 
+		function [a1,a2] = VectorProjection(a,b)
+			% Projects vector A onto vector B
+			% a1 is projection, a2 is normal remainder
+			b_normalized = b ./ norm(b);
+			a1 = dot(a,b_normalized) .* b_normalized;
+			a2 = a - a1;
+		end%func VectorProjection
+
 		function distance_between_points = PointDistance3D(point1,point2)
 			if(~isa(point1,'Waypoint') || ~isa(point2,'Waypoint'))
 				fprintf('Utils::PointDistance3D: Inputs are not waypoints\n');
