@@ -1,6 +1,14 @@
 classdef SliceAlgorithms
 	methods(Static)
 
+        function new_slice = UpdateMoveABCUsingInterLayerVectors(this_slice,previous_slice)
+            n_moves = length(this_slice.moves);
+            for i = 1:n_moves
+                current_move = this_slice.moves{i};
+                norm_vector = SliceAlgorithms.GetNormalVectorFromClosestMoveOnPreviousSlice(current_move,previous_slice)
+            end%for i
+        end%func UpdateMoveABCUsingInterLayerVectors
+
         function normalized_normal_vector = GetNormalVectorFromClosestMoveOnPreviousSlice(move_on_current_slice,previous_slice)
             if(~isa(move_on_current_slice,'Move'))
                 fprintf('SliceAlgorithms::GetNormalVectorFromClosestMoveOnPreviousSlice: Input 1 not a Move\n')

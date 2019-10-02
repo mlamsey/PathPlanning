@@ -13,10 +13,10 @@ classdef MoveAlgorithms
 				return;
 			end%if
 
-			move_direction_vector(1) = move.point2.x = move.point1.x;
-			move_direction_vector(2) = move.point2.y = move.point1.y;
-			move_direction_vector(3) = move.point2.z = move.point1.z;
-			
+			move_direction_vector(1) = move.point2.x - move.point1.x;
+			move_direction_vector(2) = move.point2.y - move.point1.y;
+			move_direction_vector(3) = move.point2.z - move.point1.z;
+
 		end%func GetMoveDirectionVector
 
 		function move_distance = GetMoveDistance(move)

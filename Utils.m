@@ -17,6 +17,10 @@ classdef Utils
 
 		end%func AreAll
 
+		function [a,b,c] = GetXYZEulerAnglesFromDirectionVector(direction_vector)
+
+		end%func GetEulerAnglesFromDirectionVector
+
 		function [a1,a2] = VectorProjection(a,b)
 			% Projects vector A onto vector B
 			% a1 is projection, a2 is normal remainder
