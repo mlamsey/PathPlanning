@@ -17,7 +17,18 @@ classdef Utils
 
 		end%func AreAll
 
-		function [a,b,c] = GetXYZEulerAnglesFromDirectionVector(direction_vector)
+		function [a,b,c] = GetXYZEulerAnglesFromNormalVectorAndTravelVector(norm_vector,travel_vector)
+			% Normalize inputs
+			norm_vector = norm_vector ./ norm(norm_vector); % Z
+			travel_vector = travel_vector ./ norm(travel_vector); % X
+			y_vector = cross(norm_vector,travel_vector);
+
+			R = [travel_vector',y_vector',norm_vector'];
+
+			% Defined by equations on Siciliano p.33 - Roll-Pitch-Yaw
+			c = radtodeg( atan2(-1*R(2,1),-1*R(1,1)) );
+			b = radtodeg( atan2(-1*R(3,1),-1*sqrt(R(3,2)^2 + R(3,3)^2)) );
+			a = radtodeg( atan2(-1*R(3,2),-1*R(3,3)) );
 
 		end%func GetEulerAnglesFromDirectionVector
 

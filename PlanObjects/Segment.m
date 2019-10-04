@@ -1,6 +1,7 @@
 classdef Segment
 	properties
 		slices;
+		segment_type;
 	end%properties
 	methods
 
@@ -15,6 +16,7 @@ classdef Segment
 			end%if
 
 			obj.slices = slices;
+			obj.segment_type = 'GA';
 		end%Constructor
 
 	end%methods
