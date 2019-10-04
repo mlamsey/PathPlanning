@@ -5,8 +5,14 @@ classdef SliceAlgorithms
             n_moves = length(this_slice.moves);
             for i = 1:n_moves
                 current_move = this_slice.moves{i};
-                norm_vector = SliceAlgorithms.GetNormalVectorFromClosestMoveOnPreviousSlice(current_move,previous_slice)
+                norm_vector = SliceAlgorithms.GetNormalVectorFromClosestMoveOnPreviousSlice(current_move,previous_slice);
+                travel_vector = MoveAlgorithms.GetMoveDirectionVector(current_move);
+                [a,b,c] = Utils.GetXYZEulerAnglesFromNormalVectorAndTravelVector(norm_vector,travel_vector);
+
+                current_move = MoveAlgorithms.UpdateABC(current_move,a,b,c);
+                this_slice.moves{i} = current_move;
             end%for i
+            new_slice = this_slice;
         end%func UpdateMoveABCUsingInterLayerVectors
 
         function normalized_normal_vector = GetNormalVectorFromClosestMoveOnPreviousSlice(move_on_current_slice,previous_slice)

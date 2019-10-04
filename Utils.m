@@ -26,9 +26,9 @@ classdef Utils
 			R = [travel_vector',y_vector',norm_vector'];
 
 			% Defined by equations on Siciliano p.33 - Roll-Pitch-Yaw
-			c = radtodeg( atan2(-1*R(2,1),-1*R(1,1)) );
-			b = radtodeg( atan2(-1*R(3,1),-1*sqrt(R(3,2)^2 + R(3,3)^2)) );
-			a = radtodeg( atan2(-1*R(3,2),-1*R(3,3)) );
+			c = radtodeg( atan2(R(2,1),R(1,1)) );
+			b = radtodeg( atan2(-1*R(3,1),sqrt(R(3,2)^2 + R(3,3)^2)) );
+			a = radtodeg( atan2(R(3,2),R(3,3)) );
 
 		end%func GetEulerAnglesFromDirectionVector
 

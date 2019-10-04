@@ -6,6 +6,17 @@ classdef MoveAlgorithms
 
 	methods(Static)
 
+		function updated_move = UpdateABC(move,a,b,c)
+                move.point1.a = a;
+                move.point1.b = b;
+                move.point1.c = c;
+                move.point2.a = a;
+                move.point2.b = b;
+                move.point2.c = c;
+
+                updated_move = move;
+		end%func UpdateABC
+
 		function move_direction_vector = GetMoveDirectionVector(move)
 			if(~isa(move,'Move'))
 				fprintf('MoveAlgorithms::GetMoveDirectionVector: Input not a move\n');
