@@ -6,15 +6,13 @@ classdef MoveAlgorithms
 
 	methods(Static)
 
-		function updated_move = UpdateABC(move,a,b,c)
+		function UpdateABC(move,a,b,c)
                 move.point1.a = a;
                 move.point1.b = b;
                 move.point1.c = c;
                 move.point2.a = a;
                 move.point2.b = b;
                 move.point2.c = c;
-
-                updated_move = move;
 		end%func UpdateABC
 
 		function move_direction_vector = GetMoveDirectionVector(move)
@@ -48,13 +46,12 @@ classdef MoveAlgorithms
 			move_midpoint = WaypointAlgorithms.GetMidpoint(move.point1,move.point2);
 		end%func GetMoveMidpoint
 
-		function new_move = ReverseMove(old_move)
-			if(~isa(old_move,'Move'))
+		function ReverseMove(move)
+			if(~isa(move,'Move'))
 				fprintf('MoveAlgorithms::ReverseMove: Input not a move\n');
-				new_move = old_move;
 				return;
 			end%if
-			new_move = Move(old_move.point2,old_move.point1);
+			move = Move(move.point2,move.point1);
 		end%func ReverseMove
 
 		function [move1,move2] = BisectMove(old_move)

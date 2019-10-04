@@ -1,4 +1,4 @@
-classdef Waypoint
+classdef Waypoint < handle
 	properties
 		x;
 		y;

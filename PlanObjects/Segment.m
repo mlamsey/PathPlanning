@@ -1,4 +1,4 @@
-classdef Segment
+classdef Segment < handle
 	properties
 		slices;
 		segment_type;

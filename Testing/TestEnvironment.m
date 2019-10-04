@@ -15,13 +15,11 @@ function TestPlot
     for i = 1:length(slices)
     	slice_i = part.segments{1}.slices{i};
 
-    	slice_i = SliceAlgorithms.BisectMove(slice_i,rem(i,length(slice_i.moves))+1);
-    	slice_i = SliceAlgorithms.StaggerStartByMoves(slice_i,rem(i-1,length(slice_i.moves) - 1)+1);
+    	SliceAlgorithms.BisectMove(slice_i,rem(i,length(slice_i.moves))+1);
+    	SliceAlgorithms.StaggerStartByMoves(slice_i,rem(i-1,length(slice_i.moves) - 1)+1);
     	if(rem(i,2) == 0)
-    		slice_i = SliceAlgorithms.ReverseSlicePointOrder(slice_i);
+    		SliceAlgorithms.ReverseSlicePointOrder(slice_i);
     	end%if
-
-    	part.segments{1}.slices{i} = slice_i;
     end%for i
     PlotTools.PlotPartOnNewFigure(part);
     

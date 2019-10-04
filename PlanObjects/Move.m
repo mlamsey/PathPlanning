@@ -1,4 +1,4 @@
-classdef Move
+classdef Move < handle
 	properties
 		point1;
 		point2;

@@ -82,7 +82,7 @@ classdef SliceManipulator < handle
 
 		function CallbackRemoveCollinearPoints(hObject, source, event, obj)
 			if(isa(obj.current_part,'Part'))
-				obj.current_part = PartAlgorithms.CombineCollinearMoves(obj.current_part);
+				PartAlgorithms.CombineCollinearMoves(obj.current_part);
 				obj.bool_part_updated = true;
 			end%if
 			obj.UpdatePlot;

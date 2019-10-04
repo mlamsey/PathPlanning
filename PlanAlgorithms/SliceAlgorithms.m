@@ -1,7 +1,7 @@
 classdef SliceAlgorithms
 	methods(Static)
 
-        function new_slice = UpdateMoveABCUsingInterLayerVectors(this_slice,previous_slice)
+        function UpdateMoveABCUsingInterLayerVectors(this_slice,previous_slice)
             n_moves = length(this_slice.moves);
             for i = 1:n_moves
                 current_move = this_slice.moves{i};
@@ -12,7 +12,6 @@ classdef SliceAlgorithms
                 current_move = MoveAlgorithms.UpdateABC(current_move,a,b,c);
                 this_slice.moves{i} = current_move;
             end%for i
-            new_slice = this_slice;
         end%func UpdateMoveABCUsingInterLayerVectors
 
         function normalized_normal_vector = GetNormalVectorFromClosestMoveOnPreviousSlice(move_on_current_slice,previous_slice)
@@ -64,7 +63,7 @@ classdef SliceAlgorithms
 
         end%func FindClosestNextSlicePointToCurrentSliceMoveMidpoint
 
-        function updated_slice = StaggerStartByMoves(original_slice,moves_to_stagger)
+        function StaggerStartByMoves(original_slice,moves_to_stagger)
             if(~isa(original_slice,'Slice'))
                 fprinf('SliceAlgorithms::StaggerStartByMoves: Input not a slice\n');
                 updated_slice = original_slice;
@@ -83,14 +82,11 @@ classdef SliceAlgorithms
             [original_slice.moves{moves_to_stagger + 1:end,:}] = original_slice.moves{1:end-moves_to_stagger,:};
             [original_slice.moves{1:moves_to_stagger,:}] = tail_moves{:};
 
-            updated_slice = original_slice;
-
         end%func StaggerStartByMoves
 
-        function updated_slice = BisectMove(original_slice,move_number)
+        function BisectMove(original_slice,move_number)
             if(~isa(original_slice,'Slice'))
                 fprintf('SliceAlgorithms::BisectMove: Input 1 not a slice\n');
-                updated_slice = original_slice;
                 return;
             end%if
             move_to_bisect = original_slice.moves{move_number};
@@ -101,25 +97,22 @@ classdef SliceAlgorithms
             original_slice.moves{move_number} = move1;
             original_slice.moves{move_number + 1} = move2;
 
-            updated_slice = original_slice;
-
         end%func BisectMove
 
-        function reversed_slice = ReverseSlicePointOrder(original_slice)
+        function ReverseSlicePointOrder(original_slice)
             if(~isa(original_slice,'Slice'))
                 fprintf('SliceAlgorithms::ReverseSlicePointOrder: Input not a slice!\n');
                 return;
             end%if
-            reversed_slice = Slice(flip(original_slice.moves));
-            for i = 1:length(reversed_slice.moves)
-                reversed_slice.moves{i} = MoveAlgorithms.ReverseMove(reversed_slice.moves{i});
+            original_slice = Slice(flip(original_slice.moves));
+            for i = 1:length(original_slice.moves)
+                MoveAlgorithms.ReverseMove(original_slice.moves{i});
             end%for i
         end%func ReverseSlicePointOrder
 
-        function new_slice = CombineCollinearMoves(original_slice)
+        function CombineCollinearMoves(original_slice)
             if(~isa(original_slice,'Slice'))
                 fprintf('SliceAlgorithms::CombineCollinearMoves: Input is not a slice\n');
-                new_slice = original_slice;
                 return;
             end%if
 
@@ -142,8 +135,7 @@ classdef SliceAlgorithms
             after_n_moves = length(moves);
             fprintf('Slice reduced from %i points to %i points\n',before_n_moves,after_n_moves);
 
-            new_slice = original_slice;
-            new_slice.moves = moves;
+            original_slice.moves = moves;
 
         end%func CombineCollinearMoves
 

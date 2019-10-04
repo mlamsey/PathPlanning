@@ -1,4 +1,4 @@
-classdef Slice
+classdef Slice < handle
     properties
         moves;
     end%properties
