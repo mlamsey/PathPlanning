@@ -1,5 +1,4 @@
 classdef Contour < handle
-    % REFACTOR THIS TO BE NAMED "Contour"
     properties
         moves;
     end%properties

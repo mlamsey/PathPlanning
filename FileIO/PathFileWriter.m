@@ -9,26 +9,47 @@ classdef PathFileWriter
 	end%properties
 
 	methods(Static)
-		function Write(file_path,slice_set)
+		function WritePart(file_path,part)
+			if(~isa(part,'Part'))
+				fprintf('PathFileWrite::Write: Input 2 not a part\n');
+				return;
+			end%if
+
 			file_id = fopen(file_path,'w');
 			if(file_id == -1)
 				fprintf('PathFileWriter::Write: File failed to open.\n');
 				return;
 			end%if
 
-			for i = 1:length(slice_set)
-				PathFileWriter.WriteSliceToFile(file_id,slice_set{i},i);
-			end
+			last_operation_index = 1;
+
+			for i = 1:length(part.segments)
+				last_operation_index = PathFileWriter.WriteSegment(file_id,part.segments{i},last_operation_index);
+			end%for i
 
 			fclose(file_id);
 		end%func Write
 
-		function WriteSliceToFile(file_id,slice_data,slice_number)
-			PathFileWriter.WriteHeader(file_id,slice_number);
-			PathFileWriter.WriteSlice(file_id,slice_data)
-		end%func WriteSliceToFile
+		function last_operation_index = WriteSegment(file_id,current_segment,start_operation_index)
+			if(~isa(current_segment,'Segment'))
+				fprintf('PathFileWrite::WriteSegment: Input 2 not a Segment\n');
+				return;
+			end%if
 
-		function WriteHeader(file_id,slice_number)
+			last_operation_index = start_operation_index;
+
+			for i = 1:length(current_segment.contours)
+				last_operation_index = PathFileWriter.WriteContourToFile(file_id,current_segment.contours{i},last_operation_index);
+			end%for i
+		end%func WriteSegment
+
+		function last_operation_index = WriteContourToFile(file_id,current_contour,current_operation_index)
+			PathFileWriter.WriteHeader(file_id,current_operation_index);
+			PathFileWriter.WriteContour(file_id,current_contour);
+			last_operation_index = 1;
+		end%func WriteContourToFile
+
+		function WriteHeader(file_id,current_operation_index)
 			header =   ['!StartHeader!\n' ...
 						'op_id:%i\n' ...
 						'ToolNumber:239\n' ...
@@ -40,29 +61,33 @@ classdef PathFileWriter
 						'HeadNumber:-1\n' ...
 						'ToolpathGroupName:TOOLPATH GROUP-1\n' ...
 						'!EndHeader!\n'];
-			fprintf(file_id,header,slice_number,slice_number);
+			fprintf(file_id,header,current_operation_index,current_operation_index);
 		end%func WriteHeader
 
-		function WriteSlice(file_id,slice_data)
-			if(~isa(slice_data,'Slice'))
-				fprintf('PathFileWriter::WriteSlice: Slice data is not a Slice Object!\n');
+		function WriteContour(file_id,current_contour)
+			if(~isa(current_contour,'Contour'))
+				fprintf('PathFileWriter::WriteContour: Contour data is not a Contour Object!\n');
 				return;
 			end%if
 
-			positions = slice_data.path_positions;
-			orientations = slice_data.path_orientations;
-
-			n_points = length(positions);
-
 			write_string = '';
 
-			StartMove();
-			if(length(positions) > 1)
-				for i = 2:length(positions)
-					LinearMove(positions{i},orientations{i},PathFileWriter.mms_welding_speed);
-				end%for i
-			end%if
-			EndMove();
+			for i = 1:length(current_contour.moves)
+				current_move = current_contour.moves{i};
+
+				% Write first move
+				if(i == 1)
+					PathFileWriter.WriteRetractMotion(current_move.point1,write_string);
+				end%if
+			end%for i
+
+			% StartMove();
+			% if(length(positions) > 1)
+			% 	for i = 2:length(positions)
+			% 		LinearMove(positions{i},orientations{i},PathFileWriter.mms_welding_speed);
+			% 	end%for i
+			% end%if
+			% EndMove();
 
 			% Write to file
 			fprintf(file_id,write_string);
@@ -112,6 +137,61 @@ classdef PathFileWriter
 				end%for i
 			end%func GetCommaSeparatedString
 
-		end%func WriteSlice
+		end%func WriteContour
+
+		function appended_string = WriteStartContour(waypoint,working_string)
+			% Write retract + move to start point
+			motion_start_point = waypoint;
+
+		end%func WriteStartContour
+
+		function appended_string = WriteEndContour(waypoint,working_string)
+			% Write move to end point + retract
+
+		end%func WriteEndContour
+
+		function appended_string = WriteRetractMotion(destination_waypoint,working_string)
+			% Write generic retract motion
+			appended_string = [working_string ...
+			PathFileWriter.cmd_retract_move ...
+			':' PathFileWriter.GetWaypointString(destination_waypoint)];
+
+		end%func WriteRetractMove
+
+		function appended_string = WriteLinearMotion(destination_waypoint,working_string)
+			% Write generic linear motion
+			appended_string = [working_string ...
+			PathFileWriter.cmd_linear_move ...
+			':' PathFileWriter.GetWaypointString(destination_waypoint)];
+
+		end%func WriteLinearMotion
+
+		function appended_string = WriteContourMotion(destination_waypoint,working_string)
+			% Write generic contour motion
+			appended_string = [working_string ...
+			PathFileWriter.cmd_contour_move ...
+			':' PathFileWriter.GetWaypointString(destination_waypoint)];
+
+		end%func WriteLinearMotion
+
+		function waypoint_string = GetWaypointString(waypoint)
+			if(~isa(waypoint,'Waypoint'))
+				fprintf('PathFileWriter::GetWaypointString: Input not a Waypoint\n');
+				waypoint_string = '';
+				return;
+			end%if
+
+			% Extract info w/ 3 decimal points precision
+			x = num2str(waypoint.x,'%1.3f');
+			y = num2str(waypoint.y,'%1.3f');
+			z = num2str(waypoint.z,'%1.3f');
+			a = num2str(waypoint.a,'%1.3f');
+			b = num2str(waypoint.b,'%1.3f');
+			c = num2str(waypoint.c,'%1.3f');
+			speed = num2str(waypoint.speed,'%1.3f');
+
+			% Create comma separated string
+			waypoint_string = [x,',',y,',',z,',',a,',',b,',',c,',',speed];
+		end%func GetWaypointString
 	end%methods
-end%class pathFileWriter
+end%class PathFileWriter

@@ -18,10 +18,19 @@ classdef Utils
 		end%func AreAll
 
 		function [a,b,c] = GetXYZEulerAnglesFromNormalVectorAndTravelVector(norm_vector,travel_vector)
+			% Check orthogonality
+			if(dot(norm_vector,travel_vector))
+				fprintf('Utils::GetXYZEulerAnglesFromNormalVectorAndTravelVector: Inputs not orthogonal\n');
+				a = 0;
+				b = 0;
+				c = 0;
+				return;
+			end%if
+
 			% Normalize inputs
 			norm_vector = norm_vector ./ norm(norm_vector); % Z
 			travel_vector = travel_vector ./ norm(travel_vector); % X
-			y_vector = cross(norm_vector,travel_vector);
+			y_vector = cross(norm_vector,travel_vector) ./ norm(cross(norm_vector,travel_vector));
 
 			R = [travel_vector',y_vector',norm_vector'];
 
@@ -31,6 +40,25 @@ classdef Utils
 			a = radtodeg( atan2(R(3,2),R(3,3)) );
 
 		end%func GetEulerAnglesFromDirectionVector
+
+		function normal_vector = GetNormalVectorFromXYZEulerAnglesDegrees(a,b,c)
+			r11 = cosd(c) * cosd(b);
+			r12 = cosd(c) * sind(b) * sind(a) - sind(c) * cosd(a);
+			r13 = cosd(c) * sind(b) * cosd(a) + sind(c) * sind(a);
+			r21 = sind(c) * cosd(b);
+			r22 = sind(c) * sind(b) * sind(a) + cosd(c) * cosd(a);
+			r23 = sind(c) * sind(b) * cosd(a) - cosd(c) * sind(a);
+			r31 = -1*sind(c);
+			r32 = cosd(b) * sind(a);
+			r33 = cosd(c) * cosd(a);
+
+			R = [r11,r12,r13
+			r21,r22,r23
+			r31,r32,r33];
+
+			% Define original normal vector as Z axis
+			normal_vector = R * [0;0;1];
+		end%func GetNormalVectorFromXYZEulerAngles
 
 		function [a1,a2] = VectorProjection(a,b)
 			% Projects vector A onto vector B
@@ -69,6 +97,13 @@ classdef Utils
 			dz = (move.point2.z - move.point1.z) / move_distance;
 
 		end%func GetNormalizedSlopes
+
+		function str = GetCommaSeparatedString(vector)
+			str = '';
+			for i = 1:length(vector)
+				str = [str num2str(vector(i),'%1.3f') ','];
+			end%for i
+		end%func GetCommaSeparatedString
 
 	end%methods
 end%class Utils
