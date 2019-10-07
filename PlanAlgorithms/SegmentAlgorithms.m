@@ -6,12 +6,12 @@ classdef SegmentAlgorithms
 				return;
 			end%if
 
-			for i = 1:length(original_segment.slices)
-				SliceAlgorithms.CombineCollinearMoves(original_segment.slices{i});
+			for i = 1:length(original_segment.contours)
+				ContourAlgorithms.CombineCollinearMoves(original_segment.contours{i});
 			end%for i
 		end%func CombineLinearMoves
 
-		function StaggerSliceStartPoints(original_segment)
+		function StaggerContourStartPoints(original_segment)
 
 		end%func
 	end%methods

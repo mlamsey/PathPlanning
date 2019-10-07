@@ -5,22 +5,22 @@ classdef FileTools
 
     methods(Static)
         function part = PromptForPartImportFromGOM
-            msg = questdlg('Please select a folder containing slices from GOM','SliceManipulator INFO','OK','OK');
+            msg = questdlg('Please select a folder containing contours from GOM','ContourManipulator INFO','OK','OK');
             directory = uigetdir;
             if(~directory)
                 fprintf('FileTools::PromptForPartImportFromGOM: No directory selected!\n');
                 part = 0;
             else
-                part = FileTools.ImportSliceSetFromGOM(directory);
+                part = FileTools.ImportContourSetFromGOM(directory);
             end%if
 
         end%func PromptForPartImportFromGOM
 
-        function part = ImportSliceSetFromGOM(file_path)
+        function part = ImportContourSetFromGOM(file_path)
             part = Part({Segment(FileTools.importGOMPath(file_path))});
-        end%func ImportSliceSetFromGOM
+        end%func ImportContourSetFromGOM
 
-        function slices = importGOMPath(directory_path)
+        function contours = importGOMPath(directory_path)
             % Input: absolute path to the directory to import
             % Output: 1D array of [x,y,z] lists (n x 3 double)
 
@@ -31,7 +31,7 @@ classdef FileTools
 
             % Instantiate bonus iterators
             n_files_read = 0;
-            slice_i = 1;
+            contour_i = 1;
 
             % Notice!
             fprintf('GOM Import with default speed: %1.3f mm/s\n',FileTools.default_speed);
@@ -42,9 +42,9 @@ classdef FileTools
 
                 % check if filenames are NOT navigation targets
                 if(~strcmp(file_name,'.') && ~strcmp(file_name,'..'))
-                    % Generate path, import slice data, assign slice in set
+                    % Generate path, import contour data, assign contour in set
                     full_path = strcat(dir_info(i).folder,'\',file_name);
-                    [positions,orientations] = FileTools.importSlice(full_path);
+                    [positions,orientations] = FileTools.importContour(full_path);
 
                     % Spoof speed
                     speeds = cell(length(positions),1);
@@ -52,11 +52,11 @@ classdef FileTools
                         speeds{j} = FileTools.default_speed;
                     end%for i
 
-                    % Assign slice
-                    slices{slice_i} = Slice(positions,orientations,speeds);
+                    % Assign contour
+                    contours{contour_i} = Contour(positions,orientations,speeds);
 
                     % iterate
-                    slice_i = slice_i + 1;
+                    contour_i = contour_i + 1;
                     n_files_read = n_files_read + 1;
                 end
 
@@ -66,9 +66,9 @@ classdef FileTools
 
         end%func importGOMPath
 
-        function [positions,orientations] = importSlice(file_path)
-            % Input: absolute path to slice file
-            % Output: XYZ slice points
+        function [positions,orientations] = importContour(file_path)
+            % Input: absolute path to contour file
+            % Output: XYZ contour points
 
             raw_data = dlmread(file_path,' ',1,1);
             x = raw_data(:,1);
@@ -89,4 +89,4 @@ classdef FileTools
         end%func
 
     end%Static Methods
-end%class SliceTools
+end%class ContourTools
