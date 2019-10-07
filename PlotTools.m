@@ -42,31 +42,31 @@ classdef PlotTools
 
 		function ref = PlotSegment(segment_data,parent_axes)
             if(~isa(segment_data,'Segment'))
-                fprintf('PlotTools::PlotSliceSet: Input not a segment\n');
+                fprintf('PlotTools::PlotContourSet: Input not a segment\n');
             end%if
 
-            slices = segment_data.slices;
+            contours = segment_data.contours;
             
-            for i = 1:length(slices)
+            for i = 1:length(contours)
                 if(nargin == 1)
-                    PlotTools.PlotSlice(slices{i});
+                    PlotTools.PlotContour(contours{i});
                 elseif(nargin == 2)
-                    PlotTools.PlotSlice(slices{i},parent_axes);
+                    PlotTools.PlotContour(contours{i},parent_axes);
                 else
                     fprintf('PlotTools::PlotSegment: incorrect number of arguments.\n');
                     break;
                 end%if
             end%for i
 
-        end%func PlotSliceSet
+        end%func PlotContourSet
 
-        function ref = PlotSlice(slice_data,parent_axes)
-            if(~isa(slice_data,'Slice'))
-                fprintf('PlotTools::PlotSlice: Input not a slice!\n');
+        function ref = PlotContour(contour_data,parent_axes)
+            if(~isa(contour_data,'Contour'))
+                fprintf('PlotTools::PlotContour: Input not a contour!\n');
                 return;
             end%if
 
-            moves = slice_data.moves;
+            moves = contour_data.moves;
             ref = cell(length(moves),1);
             for i = 1:length(moves)
 
@@ -92,14 +92,14 @@ classdef PlotTools
                         ref{i} = PlotTools.PlotMoveLine(moves{i},parent_axes,color_vector);
                     end%if
                 else
-                    fprintf('PlotTools::PlotSlice: incorrect number of arguments.\n');
+                    fprintf('PlotTools::PlotContour: incorrect number of arguments.\n');
                     ref{i} = null;
                     break;
                 end%if
 
             end%for i
 
-        end%func PlotSlice
+        end%func PlotContour
 
         function ref = PlotMoveLine(move,parent_axes,color_vector)
             if(~isa(move,'Move'))

@@ -1,11 +1,11 @@
-classdef TestSliceData
+classdef TestContourData
     properties
-        test_slice_set
+        test_contour_set
     end%properties
     
     methods
-        function obj = TestSliceData
-            obj.test_slice_set = GenerateLayerSet(10);
+        function obj = TestContourData
+            obj.test_contour_set = GenerateLayerSet(10);
             
             % Subfunctions
             function layer_set = GenerateLayerSet(number_of_layers)
@@ -32,10 +32,10 @@ classdef TestSliceData
                     for j = 1:length(points_square)
                         layer_box{j}(3) = i - 1;
                     end%for j
-                    layer_set{i} = Slice(layer_box,default_orientation,speeds);
+                    layer_set{i} = Contour(layer_box,default_orientation,speeds);
                 end%for i
                 
             end%func GenerateLayerSet
         end%func Constructor
     end%methods
-end%func TestSliceData
+end%func TestContourData

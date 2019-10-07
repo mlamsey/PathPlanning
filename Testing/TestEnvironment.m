@@ -6,19 +6,19 @@ end%func TestEnvironment
 
 function TestPlot
 
-	test_data = TestSliceData;
-    slices = test_data.test_slice_set;
+	test_data = TestContourData;
+    contours = test_data.test_contour_set;
 
     close all;
-    segments = Segment(slices);
+    segments = Segment(contours);
     part = Part({segments});
-    for i = 1:length(slices)
-    	slice_i = part.segments{1}.slices{i};
+    for i = 1:length(contours)
+    	contour_i = part.segments{1}.contours{i};
 
-    	SliceAlgorithms.BisectMove(slice_i,rem(i,length(slice_i.moves))+1);
-    	SliceAlgorithms.StaggerStartByMoves(slice_i,rem(i-1,length(slice_i.moves) - 1)+1);
+    	ContourAlgorithms.BisectMove(contour_i,rem(i,length(contour_i.moves))+1);
+    	ContourAlgorithms.StaggerStartByMoves(contour_i,rem(i-1,length(contour_i.moves) - 1)+1);
     	if(rem(i,2) == 0)
-    		SliceAlgorithms.ReverseSlicePointOrder(slice_i);
+    		ContourAlgorithms.ReverseContourPointOrder(contour_i);
     	end%if
     end%for i
     PlotTools.PlotPartOnNewFigure(part);
@@ -28,8 +28,8 @@ end%func PlotTest
 function TestAlgorithms
 
 	close all;
-	slice_directory = 'C:\Users\pty883\Documents\Slices\Test Box';
-	part = FileTools.ImportSliceSetFromGOM(slice_directory);
+	contour_directory = 'C:\Users\pty883\Documents\Contours\Test Box';
+	part = FileTools.ImportContourSetFromGOM(contour_directory);
 	PlotTools.PlotPart(part);
 	title('Before');
 	part = PartAlgorithms.CombineCollinearMoves(part);
@@ -40,15 +40,15 @@ end%func TestAlgorithms
 
 function TestImportASCIIFromGOM
 
-	slice_directory = 'C:\Users\pty883\Documents\Slices\Test Box';
-	part = FileTools.ImportSliceSetFromGOM(slice_directory);
+	contour_directory = 'C:\Users\pty883\Documents\Contours\Test Box';
+	part = FileTools.ImportContourSetFromGOM(contour_directory);
 	PlotTools.PlotPart(part);
 
 end%func TestImportASCIIFromGOM
 
 function TestGeneratePathFile
 
-	slice_directory = 'C:\Users\pty883\Documents\Slices\Test Box';
-	slices = SliceTools.ImportSliceSetFromGOM(slice_directory);
+	contour_directory = 'C:\Users\pty883\Documents\Contours\Test Box';
+	contours = ContourTools.ImportContourSetFromGOM(contour_directory);
 
 end%func TestGeneratePathFile

@@ -1,26 +1,27 @@
-classdef Slice < handle
+classdef Contour < handle
+    % REFACTOR THIS TO BE NAMED "Contour"
     properties
         moves;
     end%properties
     
     methods
-        function obj = Slice(positions, orientations, speeds)
+        function obj = Contour(positions, orientations, speeds)
 
             if(nargin == 3) % Position, Orientation, Speed
 
                 if(~isa(positions,'cell') || ~isa(orientations,'cell') || ~isa(speeds,'cell'))
-                    fprintf('Slice::Slice: At least one input is not a cell array\n');
+                    fprintf('Contour::Contour: At least one input is not a cell array\n');
                     return;
                 end%if
                 
                 if(length(positions) ~= length(orientations) || length(positions) ~= length(speeds) ...
                     || length(orientations) ~= length(speeds))
-                    fprintf('Slice::Slice: Input vector size mismatch\n');
+                    fprintf('Contour::Contour: Input vector size mismatch\n');
                     return;
                 end%if
                 
                 if(~IsOneByThreeVector(positions{1}) || ~IsOneByThreeVector(orientations{1}))
-                    fprintf('Slice::Slice: At least one of the inputs is not the correct size\n');
+                    fprintf('Contour::Contour: At least one of the inputs is not the correct size\n');
                     return;
                 end%if
 
@@ -52,7 +53,7 @@ classdef Slice < handle
                 obj.moves = positions;
 
             else
-                fprintf('Slice::Slice: Incorrect number of arguments.\n')
+                fprintf('Contour::Contour: Incorrect number of arguments.\n')
                 obj = null;
             end%if
 
@@ -72,4 +73,4 @@ classdef Slice < handle
             
         end%func Constructor
     end%methods
-end%class Slice
+end%class Contour

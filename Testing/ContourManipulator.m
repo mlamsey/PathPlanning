@@ -1,4 +1,4 @@
-classdef SliceManipulator < handle
+classdef ContourManipulator < handle
 
 	properties(Constant)
 		window_width = 1400;
@@ -18,7 +18,7 @@ classdef SliceManipulator < handle
 
 	methods
 
-		function obj = SliceManipulator(obj)
+		function obj = ContourManipulator(obj)
 			close all;
 			
 			obj.ui_window = obj.CreateWindow;
@@ -34,7 +34,7 @@ classdef SliceManipulator < handle
 			window_x = (screen_width - obj.window_width) / 2;
 			window_y = (screen_height - obj.window_height) / 2;
 
-			figure_ref = figure('Name','Slice Manipulator',...
+			figure_ref = figure('Name','Contour Manipulator',...
 				'NumberTitle','off',...
 				'position',[window_x,window_y,obj.window_width,obj.window_height],...
 				'Resize','off',...
@@ -50,7 +50,7 @@ classdef SliceManipulator < handle
 			xlabel('X (mm)');
 			ylabel('Y (mm)');
 			zlabel('Z (mm)');
-			title('Slice Preview','fontsize',20);
+			title('Contour Preview','fontsize',20);
 		end%func CreateAxes
 
 		function ui_elements = CreateUIElements(obj,figure_parent)
@@ -75,7 +75,7 @@ classdef SliceManipulator < handle
 				obj.current_part = part;
 				obj.bool_part_updated = true;
 			else
-				fprintf('SliceManipulator::CallbackLoadPart: Invalid file selection.\n');
+				fprintf('ContourManipulator::CallbackLoadPart: Invalid file selection.\n');
 			end%if
 			obj.UpdatePlot;
 		end%func CallbackLoadPart
@@ -97,7 +97,7 @@ classdef SliceManipulator < handle
 					obj.bool_part_updated = false;
 				end%if
 			else
-				fprintf('SliceManipulator::UpdatePlot: Current Part not populated.\n');
+				fprintf('ContourManipulator::UpdatePlot: Current Part not populated.\n');
 			end%if
 		end%func UpdatePlot
 	end%methods
