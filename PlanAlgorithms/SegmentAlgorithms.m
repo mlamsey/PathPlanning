@@ -11,9 +11,9 @@ classdef SegmentAlgorithms
 			end%for i
 		end%func CombineLinearMoves
 
-		function UpdateTorchOrientationsUsingInterContourVectors(original_segment)
+		function UpdateTorchQuaternionsUsingInterContourVectors(original_segment)
 			if(~isa(original_segment,'Segment'))
-				fprintf('SegmentAlgorithms::UpdateTorchOrientationsUsingInterContourVectors: Input not a segment\n');
+				fprintf('SegmentAlgorithms::UpdateTorchQuaternionsUsingInterContourVectors: Input not a segment\n');
 				return;
 			end%if
 
@@ -22,10 +22,10 @@ classdef SegmentAlgorithms
 				for i = 2:length(original_segment.contours)
 					previous_contour = original_segment.contours{i-1};
 					this_contour = original_segment.contours{i};
-					ContourAlgorithms.UpdateTorchOrientationsUsingInterContourVectors(this_contour,previous_contour);
+					ContourAlgorithms.UpdateTorchQuaternionsUsingInterContourVectors(this_contour,previous_contour);
 				end%for i
 			end%if
-		end%func UpdateTorchOrientationsUsingInterContourVectors
+		end%func UpdateTorchQuaternionsUsingInterContourVectors
 
 		function StaggerContourStartPoints(original_segment)
 

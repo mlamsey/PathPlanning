@@ -2,18 +2,23 @@ classdef ContourAlgorithms
 	methods(Static)
 
         function UpdateTorchQuaternionsUsingInterContourVectors(this_contour,previous_contour)
+            if(~isa(this_contour,'Contour') || ~isa(previous_contour,'Contour'))
+                fprintf('ContourAlgorithms::UpdateTorchQuaternionsUsingInterContourVectors: Inputs not all Contours\n');
+                return;
+            end%if
+
             n_moves = length(this_contour.moves);
             for i = 1:n_moves
                 current_move = this_contour.moves{i};
-                norm_vector = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour);
+                normal_vector = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour);
                 travel_vector = MoveAlgorithms.GetMoveDirectionVector(current_move);
 
                 torch_quaternion = Utils.GetQuaternionFromNormalVectorAndTravelVector(normal_vector,travel_vector);
 
-                current_move = MoveAlgorithms.UpdateTorchOrientation(current_move,torch_quaternion);
-                this_contour.moves{i} = current_move;
+                MoveAlgorithms.UpdateTorchOrientation(current_move,torch_quaternion);
             end%for i
-        end%func UpdateMoveABCUsingInterLayerVectors
+
+        end%func UpdateTorchQuaternionsUsingInterContourVectors
 
         function normalized_normal_vector = GetNormalVectorFromClosestMoveOnPreviousContour(move_on_current_contour,previous_contour)
             if(~isa(move_on_current_contour,'Move'))
