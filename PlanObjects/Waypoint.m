@@ -3,20 +3,16 @@ classdef Waypoint < handle
 		x;
 		y;
 		z;
-		a;
-		b;
-		c;
+		torch_quaternion;
 		speed;
 	end%properties
 
 	methods
-		function obj = Waypoint(x,y,z,a,b,c,speed)
+		function obj = Waypoint(x,y,z,torch_quaternion,speed)
 			obj.x = x;
 			obj.y = y;
 			obj.z = z;
-			obj.a = a;
-			obj.b = b;
-			obj.c = c;
+			obj.torch_quaternion = torch_quaternion;
 			obj.speed = speed;
 		end%func Constructor
 	end%methods

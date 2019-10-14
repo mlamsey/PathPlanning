@@ -182,16 +182,22 @@ classdef PathFileWriter
 			end%if
 
 			% Extract info w/ 3 decimal points precision
-			x = num2str(waypoint.x,'%1.3f');
-			y = num2str(waypoint.y,'%1.3f');
-			z = num2str(waypoint.z,'%1.3f');
-			a = num2str(waypoint.a,'%1.3f');
-			b = num2str(waypoint.b,'%1.3f');
-			c = num2str(waypoint.c,'%1.3f');
-			speed = num2str(waypoint.speed,'%1.3f');
+			str_x = num2str(waypoint.x,'%1.3f');
+			str_y = num2str(waypoint.y,'%1.3f');
+			str_z = num2str(waypoint.z,'%1.3f');
+
+			[a,b,c] = Utils.GetABCFromQuaternion(waypoint.torch_quaternion);
+
+			str_a = num2str(a,'%1.3f');
+			str_b = num2str(b,'%1.3f');
+			str_c = num2str(c,'%1.3f');
+			str_speed = num2str(waypoint.speed,'%1.3f');
 
 			% Create comma separated string
-			waypoint_string = [x,',',y,',',z,',',a,',',b,',',c,',',speed];
+			waypoint_string = [str_x,',',str_y,',',str_z,',',...
+			str_a,',',str_b,',',str_c,',',...
+			str_speed];
+			
 		end%func GetWaypointString
 	end%methods
 end%class PathFileWriter

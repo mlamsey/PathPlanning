@@ -58,11 +58,14 @@ classdef WaypointAlgorithms
 			x = point2.x - n * (point2.x - point1.x);
 			y = point2.y - n * (point2.y - point1.y);
 			z = point2.z - n * (point2.z - point1.z);
-			a = point2.a - n * (point2.a - point1.a);
-			b = point2.b - n * (point2.b - point1.b);
-			c = point2.c - n * (point2.c - point1.c);
+
+			quaternion_1 = quatnormalize(point1.torch_quaternion.compact);
+			quaternion_2 = quatnormalize(point2.torch_quaternion.compact);
+
+			torch_quaternion = quatinterp(quaternion_1,quaternion_2,percent_along_line,'slerp');
+
 			speed = n * (point2.speed - point1.speed);
-			between_point = Waypoint(x,y,z,a,b,c,speed);
+			between_point = Waypoint(x,y,z,torch_quaternion,speed);
 
 		end%func GetPointBetween
 	end%methods

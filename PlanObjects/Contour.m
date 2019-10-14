@@ -19,9 +19,13 @@ classdef Contour < handle
                     return;
                 end%if
                 
-                if(~IsOneByThreeVector(positions{1}) || ~IsOneByThreeVector(orientations{1}))
-                    fprintf('Contour::Contour: At least one of the inputs is not the correct size\n');
+                if(~IsOneByThreeVector(positions{1}))
+                    fprintf('Contour::Contour: Input 1 is not the correct size\n');
                     return;
+                end%if
+
+                if(~isa(orientations{1},'quaternion'))
+                    fprintf('Contour::Contour: Input 2 does not contain quaternions\n');
                 end%if
 
                 % Create moves
@@ -35,11 +39,9 @@ classdef Contour < handle
                         x = positions{k}(1);
                         y = positions{k}(2);
                         z = positions{k}(3);
-                        a = orientations{k}(1);
-                        b = orientations{k}(2);
-                        c = orientations{k}(3);
+                        torch_quaternion = orientations{k}(1);
                         speed = speeds{k};
-                        points{j} = Waypoint(x,y,z,a,b,c,speed);
+                        points{j} = Waypoint(x,y,z,torch_quaternion,speed);
                     end%for j
 
                     moves{i} = Move(points{1},points{2});

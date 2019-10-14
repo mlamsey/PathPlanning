@@ -17,6 +17,13 @@ classdef Utils
 
 		end%func AreAll
 
+		function [a,b,c] = GetABCFromQuaternion(torch_quaternion)
+			%placeholder
+			a = 0;
+			b = 0;
+			c = 0;
+		end%func GetABCFromQuaternion
+
 		function [a,b,c] = GetXYZEulerAnglesFromNormalVectorAndTravelVector(norm_vector,travel_vector)
 			% Check orthogonality
 			if(dot(norm_vector,travel_vector))
