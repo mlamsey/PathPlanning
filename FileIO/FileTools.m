@@ -17,10 +17,10 @@ classdef FileTools
         end%func PromptForPartImportFromGOM
 
         function part = ImportContourSetFromGOM(file_path)
-            part = Part({Segment(FileTools.importGOMPath(file_path))});
+            part = Part({Segment(FileTools.ImportGOMPath(file_path))});
         end%func ImportContourSetFromGOM
 
-        function contours = importGOMPath(directory_path)
+        function contours = ImportGOMPath(directory_path)
             % Input: absolute path to the directory to import
             % Output: 1D array of [x,y,z] lists (n x 3 double)
 
@@ -44,7 +44,7 @@ classdef FileTools
                 if(~strcmp(file_name,'.') && ~strcmp(file_name,'..'))
                     % Generate path, import contour data, assign contour in set
                     full_path = strcat(dir_info(i).folder,'\',file_name);
-                    [positions,orientations] = FileTools.importContour(full_path);
+                    [positions,orientations] = FileTools.ImportContour(full_path);
 
                     % Spoof speed
                     speeds = cell(length(positions),1);
@@ -64,9 +64,9 @@ classdef FileTools
 
             %fprintf('%i files read\n',n_files_read);
 
-        end%func importGOMPath
+        end%func ImportGOMPath
 
-        function [positions,orientations] = importContour(file_path)
+        function [positions,orientations] = ImportContour(file_path)
             % Input: absolute path to contour file
             % Output: XYZ contour points
 
@@ -74,16 +74,13 @@ classdef FileTools
             x = raw_data(:,1);
             y = raw_data(:,2);
             z = raw_data(:,3);
-            a = raw_data(:,4);
-            b = raw_data(:,5);
-            c = raw_data(:,6);
 
             positions = cell(length(x),1);
-            orientations = positions;
+            orientations = cell(length(x),1);
 
             for i = 1:length(positions)
                 positions{i} = [x(i),y(i),z(i)];
-                orientations{i} = [a(i),b(i),c(i)];
+                orientations{i} = quaternion.ones;
             end%for i
 
         end%func

@@ -9,6 +9,11 @@ classdef PlotTools
         end%func PlotPartOnNewFigure
 
 		function figure_ref = PlotPart(part_data,parent_axes)
+            if(nargin ~= 2)
+                fprintf('PlotTools.PlotPart: Not enough input arguments\n');
+                return;
+            end%if
+
             fprintf('Plotting Part...');
 			if(~isa(part_data,'Part'))
 				fprintf('PlotTools::PlotPart: Input not a part\n');

@@ -6,13 +6,9 @@ classdef MoveAlgorithms
 
 	methods(Static)
 
-		function UpdateABC(move,a,b,c)
-                move.point1.a = a;
-                move.point1.b = b;
-                move.point1.c = c;
-                move.point2.a = a;
-                move.point2.b = b;
-                move.point2.c = c;
+		function UpdateTorchOrientation(move,torch_quaternion)
+                move.point1.torch_quaternion = torch_quaternion;
+                move.point2.torch_quaternion = torch_quaternion;
 		end%func UpdateABC
 
 		function move_direction_vector = GetMoveDirectionVector(move)

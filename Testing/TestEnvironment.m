@@ -5,14 +5,12 @@ function TestEnvironment
 end%func TestEnvironment
 
 function TestPlot
-
-	test_data = TestContourData;
-    contours = test_data.test_contour_set;
-
     close all;
-    segments = Segment(contours);
-    part = Part({segments});
-    for i = 1:length(contours)
+	T = TestPart;
+
+    part = T.test_part;
+
+    for i = 1:length(part.segments{1}.contours)
     	contour_i = part.segments{1}.contours{i};
 
     	ContourAlgorithms.BisectMove(contour_i,rem(i,length(contour_i.moves))+1);

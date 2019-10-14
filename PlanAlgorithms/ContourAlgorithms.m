@@ -1,15 +1,16 @@
 classdef ContourAlgorithms
 	methods(Static)
 
-        function UpdateMoveABCUsingInterLayerVectors(this_contour,previous_contour)
+        function UpdateTorchQuaternionsUsingInterContourVectors(this_contour,previous_contour)
             n_moves = length(this_contour.moves);
             for i = 1:n_moves
                 current_move = this_contour.moves{i};
                 norm_vector = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour);
                 travel_vector = MoveAlgorithms.GetMoveDirectionVector(current_move);
-                [a,b,c] = Utils.GetXYZEulerAnglesFromNormalVectorAndTravelVector(norm_vector,travel_vector);
 
-                current_move = MoveAlgorithms.UpdateABC(current_move,a,b,c);
+                torch_quaternion = Utils.GetQuaternionFromNormalVectorAndTravelVector(normal_vector,travel_vector);
+
+                current_move = MoveAlgorithms.UpdateTorchOrientation(current_move,torch_quaternion);
                 this_contour.moves{i} = current_move;
             end%for i
         end%func UpdateMoveABCUsingInterLayerVectors
