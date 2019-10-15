@@ -32,6 +32,7 @@ classdef SegmentAlgorithms
 			if(length(original_segment.contours) > 1)
 				% for i = 2:end b/c first contour has GA torch orientation
 				for i = 2:length(original_segment.contours)
+					fprintf('Calculating Quaternions for Layer %i\n',i);
 					previous_contour = original_segment.contours{i-1};
 					this_contour = original_segment.contours{i};
 					ContourAlgorithms.UpdateTorchQuaternionsUsingInterContourVectors(this_contour,previous_contour);

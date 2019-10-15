@@ -25,6 +25,21 @@ classdef PartAlgorithms
 
 		end%func PlotNumberOfMovesInEachContour
 
+		function UpdateTorchQuaternionsUsingInterContourVectors(original_part)
+			if(~isa(original_part,'Part'))
+				fprintf('PartAlgorithms::UpdateTorchQuaternionsUsingInterContourVectors: Input not a part\n');
+				return;
+			end%if
+
+			fprintf('Updating torch quaternions...\n');
+			tic;
+			for i = 1:length(original_part.segments)
+				SegmentAlgorithms.UpdateTorchQuaternionsUsingInterContourVectors(original_part.segments{i});
+			end%for i
+			
+			fprintf('Quaternions calculated in %1.2f seconds\n',toc);
+		end%func UpdateTorchQuaternionsUsingInterContourVectors
+
 		function DecimateContoursByMoveLength(original_part)
 			if(~isa(original_part,'Part'))
 				fprintf('PartAlgorithms::DecimateContoursByMoveLength: Input not a part\n');

@@ -1,6 +1,6 @@
 classdef Utils
 	properties(Constant)
-		e = 10^-5; % epsilon
+		e = 10^-4; % epsilon
 	end%properties
 
 	methods(Static)
@@ -16,7 +16,7 @@ classdef Utils
                 is_formatted = true;
             end%if
         end%func IsOneByThreeVector
-            
+
 		function are_all_of_type = AreAll(cell_array,type)
 			% Checks if all elements of the input array are of the specified type
 			are_all_of_type = true;
