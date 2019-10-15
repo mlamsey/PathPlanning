@@ -19,7 +19,7 @@ classdef Contour < handle
                     return;
                 end%if
                 
-                if(~IsOneByThreeVector(positions{1}))
+                if(~Utils.IsOneByThreeVector(positions{1}))
                     fprintf('Contour::Contour: Input 1 is not the correct size\n');
                     return;
                 end%if
@@ -56,22 +56,7 @@ classdef Contour < handle
             else
                 fprintf('Contour::Contour: Incorrect number of arguments.\n')
                 obj = null;
-            end%if
-
-            % Subfunctions (nested b/c constructor needs it in this scope)
-            function is_formatted = IsOneByThreeVector(test_data)
-                data_size = size(test_data);
-                if(length(data_size) > 2)
-                    is_formatted = false;
-                elseif(data_size(1) ~= 3 && data_size(2) ~= 3)
-                    is_formatted = false;
-                elseif(data_size(1) ~= 1 && data_size(2) ~= 1)
-                    is_formatted = false;
-                else
-                    is_formatted = true;
-                end%if
-            end%func IsOneByThreeVector
-            
+            end%if    
         end%func Constructor
     end%methods
 end%class Contour

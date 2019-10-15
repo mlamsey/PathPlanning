@@ -4,6 +4,19 @@ classdef Utils
 	end%properties
 
 	methods(Static)
+        function is_formatted = IsOneByThreeVector(test_data)
+            data_size = size(test_data);
+            if(length(data_size) > 2)
+                is_formatted = false;
+            elseif(data_size(1) ~= 3 && data_size(2) ~= 3)
+                is_formatted = false;
+            elseif(data_size(1) ~= 1 && data_size(2) ~= 1)
+                is_formatted = false;
+            else
+                is_formatted = true;
+            end%if
+        end%func IsOneByThreeVector
+            
 		function are_all_of_type = AreAll(cell_array,type)
 			% Checks if all elements of the input array are of the specified type
 			are_all_of_type = true;
