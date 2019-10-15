@@ -2,6 +2,11 @@ classdef SegmentAlgorithms
 	methods(Static)
 
 		function DecimateContoursByMoveLength(original_segment)
+			if(~isa(original_segment,'Segment'))
+				fprintf('SegmentAlgorithms::DecimateContoursByMoveLength: Input not a segment\n');
+				return;
+			end%if
+
 			for i = 1:length(original_segment.contours)
 				ContourAlgorithms.DecimateContourByMoveLength(original_segment.contours{i});
 			end%for i
