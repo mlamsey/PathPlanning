@@ -22,6 +22,8 @@ classdef MoveAlgorithms
 			move_direction_vector(2) = move.point2.y - move.point1.y;
 			move_direction_vector(3) = move.point2.z - move.point1.z;
 
+			move_direction_vector = move_direction_vector ./ norm(move_direction_vector);
+
 		end%func GetMoveDirectionVector
 
 		function move_distance = GetMoveDistance(move)

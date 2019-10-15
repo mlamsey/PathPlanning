@@ -8,9 +8,10 @@ classdef ContourAlgorithms
             end%if
 
             n_moves = length(this_contour.moves);
+            previous_closest_move_index = 1;
             for i = 1:n_moves
                 current_move = this_contour.moves{i};
-                normal_vector = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour);
+                [normal_vector,previous_closest_move_index] = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour,i,previous_closest_move_index);
                 travel_vector = MoveAlgorithms.GetMoveDirectionVector(current_move);
 
                 torch_quaternion = Utils.GetQuaternionFromNormalVectorAndTravelVector(normal_vector,travel_vector);
@@ -20,7 +21,7 @@ classdef ContourAlgorithms
 
         end%func UpdateTorchQuaternionsUsingInterContourVectors
 
-        function normalized_normal_vector = GetNormalVectorFromClosestMoveOnPreviousContour(move_on_current_contour,previous_contour)
+        function [normalized_normal_vector,previous_contour_closest_move_index] = GetNormalVectorFromClosestMoveOnPreviousContour(move_on_current_contour,previous_contour,move_index,initial_guess)
             if(~isa(move_on_current_contour,'Move'))
                 fprintf('ContourAlgorithms::GetNormalVectorFromClosestMoveOnPreviousContour: Input 1 not a Move\n')
                 normalized_normal_vector = null;
@@ -32,7 +33,7 @@ classdef ContourAlgorithms
                 return;
             end%if
 
-            previous_contour_closest_move_index = ContourAlgorithms.FindClosestContour2MoveToContour1Move(move_on_current_contour,previous_contour);
+            previous_contour_closest_move_index = ContourAlgorithms.FindClosestContour2MoveToContour1MoveWithInitialGuess(move_on_current_contour,previous_contour,initial_guess);
             previous_contour_closest_move = previous_contour.moves{previous_contour_closest_move_index};
 
             current_move_midpoint = MoveAlgorithms.GetMoveMidpoint(move_on_current_contour);
@@ -68,6 +69,65 @@ classdef ContourAlgorithms
             [min_distance_value,closest_move_index] = min(distances_between_moves);
 
         end%func FindClosestNextContourPointToCurrentContourMoveMidpoint
+
+        function closest_move_index = FindClosestContour2MoveToContour1MoveWithInitialGuess(contour1_move,contour2,initial_guess)
+            if(~isa(contour1_move,'Move'))
+                fprintf('ContourAlgorithms::FindClosestContour2MoveToContour1MoveWithInitialGuess: Input 1 is not a Move\n');
+                return;
+            end%if
+            if(~isa(contour2,'Contour'))
+                fprintf('ContourAlgorithms::FindClosestContour2MoveToContour1MoveWithInitialGuess: Input 2 is not a Contour\n');
+                return;
+            end%if
+
+            move1_midpoint = MoveAlgorithms.GetMoveMidpoint(contour1_move);
+
+            if(initial_guess > length(contour2.moves))
+                initial_guess = length(contour2.moves);
+            end%if
+
+            i = initial_guess; % init b/c of iterator++ at start of loop
+            closest_move_index = i; % init
+            last_distance_between_moves = 100000; % init
+            this_distance_between_moves = WaypointAlgorithms.GetDistanceBetweenPoints(move1_midpoint,MoveAlgorithms.GetMoveMidpoint(contour2.moves{i})); % init
+
+            while(this_distance_between_moves < last_distance_between_moves)
+                closest_move_index = i;
+                last_distance_between_moves = this_distance_between_moves;
+
+                if(i < length(contour2.moves))
+                    i = i + 1;
+                else
+                    i = 1;
+                end%if
+
+                move2_i_midpoint = MoveAlgorithms.GetMoveMidpoint(contour2.moves{i});
+                this_distance_between_moves = WaypointAlgorithms.GetDistanceBetweenPoints(move1_midpoint,move2_i_midpoint);
+            end%while
+
+            if(initial_guess > 1)
+                i = initial_guess - 1;
+            else
+                i = length(contour2.moves);
+            end%if
+
+            this_distance_between_moves = WaypointAlgorithms.GetDistanceBetweenPoints(move1_midpoint,MoveAlgorithms.GetMoveMidpoint(contour2.moves{i})); % init
+
+            while(this_distance_between_moves < last_distance_between_moves)
+                closest_move_index = i;
+                last_distance_between_moves = this_distance_between_moves;
+
+                if(i > 1)
+                    i = i - 1;
+                else
+                    i = length(contour2.moves);
+                end%if
+
+                move2_i_midpoint = MoveAlgorithms.GetMoveMidpoint(contour2.moves{i});
+                this_distance_between_moves = WaypointAlgorithms.GetDistanceBetweenPoints(move1_midpoint,move2_i_midpoint);
+            end%while
+
+        end%func FindClosestContour2MoveToContour1MoveWithInitialGuess
 
         function StaggerStartByMoves(original_contour,moves_to_stagger)
             if(~isa(original_contour,'Contour'))
