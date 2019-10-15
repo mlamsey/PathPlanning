@@ -1,5 +1,30 @@
 classdef ContourAlgorithms
+    properties(Constant)
+        minimum_move_length = 1; % mm
+    end%properties
+
 	methods(Static)
+
+        function DecimateContourByMoveLength(original_contour)
+            moves = original_contour.moves;
+            threshold = ContourAlgorithms.minimum_move_length;
+
+            i = 1;
+            while(i < length(moves))
+                current_move_length = MoveAlgorithms.GetMoveDistance(moves{i});
+                if(current_move_length < threshold)
+                    moves{i} = MoveAlgorithms.CombineMoves(moves{i},moves{i+1});
+                    % Remove the move you just combined into
+                    moves{i + 1} = {}; 
+                    moves = moves(~cellfun('isempty',moves));
+                else
+                    i = i + 1;
+                end%if
+            end%while
+
+            original_contour.moves = moves;
+
+        end%func
 
         function UpdateTorchQuaternionsUsingInterContourVectors(this_contour,previous_contour)
             if(~isa(this_contour,'Contour') || ~isa(previous_contour,'Contour'))
@@ -50,11 +75,11 @@ classdef ContourAlgorithms
 
         function closest_move_index = FindClosestContour2MoveToContour1Move(contour1_move,contour2)
             if(~isa(contour1_move,'Move'))
-                fprintf('ContourAlgorithms::FindClosestContour2PointToContour1Point: contour1_move is not a Move\n');
+                fprintf('ContourAlgorithms::FindClosestContour2MoveToContour1Move: contour1_move is not a Move\n');
                 return;
             end%if
             if(~isa(contour2,'Contour'))
-                fprintf('ContourAlgorithms::FindClosestContour2PointToContour1Point: contour2 is not a Contour\n');
+                fprintf('ContourAlgorithms::FindClosestContour2MoveToContour1Move: contour2 is not a Contour\n');
                 return;
             end%if
 
