@@ -6,7 +6,7 @@ classdef ContourAlgorithms
 	methods(Static)
 
         function DecimateContourByMoveLength(original_contour)
-            if(~isa(this_contour,'Contour') || ~isa(previous_contour,'Contour'))
+            if(~isa(original_contour,'Contour'))
                 fprintf('ContourAlgorithms::DecimateContourByMoveLength: Input not a Contour\n');
                 return;
             end%if

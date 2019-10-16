@@ -36,7 +36,7 @@ classdef Utils
 		end%func AreAll
 
 		function [a,b,c] = GetABCFromQuaternion(torch_quaternion)
-			[a,b,c] = eulerd(torch_quaternion,'XYZ',frame);
+			[a,b,c] = eulerd(torch_quaternion,'XYZ','point');
 		end%func GetABCFromQuaternion
 
 		function q = GetQuaternionFromNormalVectorAndTravelVector(normal_vector,travel_vector)
@@ -59,7 +59,7 @@ classdef Utils
 			x_axis(2),y_axis(2),z_axis(2)
 			x_axis(3),y_axis(3),z_axis(3)];
 
-			q = quaternion(R,'rotmat','frame');
+			q = quaternion(R,'rotmat','point');
 			% Normalize quaternion
 			q = quaternion(quatnormalize(q.compact));
 
