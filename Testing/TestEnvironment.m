@@ -1,6 +1,9 @@
 function TestEnvironment
 
-	TestPlot;
+	n_points = 100;
+	v = linspace(-1,1,n_points);
+	
+	%TestPlot;
 
 end%func TestEnvironment
 

@@ -41,7 +41,8 @@ classdef ContourAlgorithms
             previous_closest_move_index = 1;
             for i = 1:n_moves
                 current_move = this_contour.moves{i};
-                [normal_vector,previous_closest_move_index] = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour,i,previous_closest_move_index);
+
+                [normal_vector,previous_closest_move_index] = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour,previous_closest_move_index);
                 travel_vector = MoveAlgorithms.GetMoveDirectionVector(current_move);
 
                 torch_quaternion = Utils.GetQuaternionFromNormalVectorAndTravelVector(normal_vector,travel_vector);
@@ -51,7 +52,7 @@ classdef ContourAlgorithms
 
         end%func UpdateTorchQuaternionsUsingInterContourVectors
 
-        function [normalized_normal_vector,previous_contour_closest_move_index] = GetNormalVectorFromClosestMoveOnPreviousContour(move_on_current_contour,previous_contour,move_index,initial_guess)
+        function [normalized_normal_vector,previous_contour_closest_move_index] = GetNormalVectorFromClosestMoveOnPreviousContour(move_on_current_contour,previous_contour,initial_guess)
             if(~isa(move_on_current_contour,'Move'))
                 fprintf('ContourAlgorithms::GetNormalVectorFromClosestMoveOnPreviousContour: Input 1 not a Move\n')
                 normalized_normal_vector = null;
@@ -70,9 +71,9 @@ classdef ContourAlgorithms
             previous_move_midpoint = MoveAlgorithms.GetMoveMidpoint(previous_contour_closest_move);
 
             vector_between_moves = WaypointAlgorithms.GetVectorBetweenPoints(previous_move_midpoint,current_move_midpoint);
-            previous_move_direction_vector = MoveAlgorithms.GetMoveDirectionVector(previous_contour_closest_move);
 
-            [proj,normal] = Utils.VectorProjection(vector_between_moves,previous_move_direction_vector);
+            this_move_direction_vector = MoveAlgorithms.GetMoveDirectionVector(move_on_current_contour);
+            [proj,normal] = Utils.VectorProjection(vector_between_moves,this_move_direction_vector);
 
             normalized_normal_vector = normal ./ norm(normal);
             
@@ -121,6 +122,7 @@ classdef ContourAlgorithms
             last_distance_between_moves = 100000; % init
             this_distance_between_moves = WaypointAlgorithms.GetDistanceBetweenPoints(move1_midpoint,MoveAlgorithms.GetMoveMidpoint(contour2.moves{i})); % init
 
+            % Check for min distance with increasing index
             while(this_distance_between_moves < last_distance_between_moves)
                 closest_move_index = i;
                 last_distance_between_moves = this_distance_between_moves;
@@ -135,6 +137,7 @@ classdef ContourAlgorithms
                 this_distance_between_moves = WaypointAlgorithms.GetDistanceBetweenPoints(move1_midpoint,move2_i_midpoint);
             end%while
 
+            % Coerce initial guess
             if(initial_guess > 1)
                 i = initial_guess - 1;
             else
@@ -143,6 +146,7 @@ classdef ContourAlgorithms
 
             this_distance_between_moves = WaypointAlgorithms.GetDistanceBetweenPoints(move1_midpoint,MoveAlgorithms.GetMoveMidpoint(contour2.moves{i})); % init
 
+            % Check for min distance with decreasing index
             while(this_distance_between_moves < last_distance_between_moves)
                 closest_move_index = i;
                 last_distance_between_moves = this_distance_between_moves;

@@ -1,6 +1,6 @@
 classdef Utils
 	properties(Constant)
-		e = 10^-4; % epsilon
+		e = 10^-9; % epsilon
 	end%properties
 
 	methods(Static)
@@ -36,7 +36,7 @@ classdef Utils
 		end%func AreAll
 
 		function [a,b,c] = GetABCFromQuaternion(torch_quaternion)
-			[a,b,c] = eulerd(torch_quaternion,'XYZ','point');
+			[a,b,c] = eulerd(torch_quaternion,'XYZ','frame');
 		end%func GetABCFromQuaternion
 
 		function q = GetQuaternionFromNormalVectorAndTravelVector(normal_vector,travel_vector)
@@ -59,18 +59,17 @@ classdef Utils
 			x_axis(2),y_axis(2),z_axis(2)
 			x_axis(3),y_axis(3),z_axis(3)];
 
-			q = quaternion(R,'rotmat','point');
+			q = quaternion(R,'rotmat','frame');
 			% Normalize quaternion
 			q = quaternion(quatnormalize(q.compact));
 
 		end%func GetQuaternionFromNormalVectorAndTravelVector
 
-		function [a1,a2] = VectorProjection(a,b)
+		function [proj,normal] = VectorProjection(a,b)
 			% Projects vector A onto vector B
-			% a1 is projection, a2 is normal remainder
 			b_normalized = b ./ norm(b);
-			a1 = dot(a,b_normalized) .* b_normalized;
-			a2 = a - a1;
+			proj = dot(a,b_normalized) .* b_normalized;
+			normal = a - proj;
 		end%func VectorProjection
 
 		function distance_between_points = PointDistance3D(point1,point2)
