@@ -39,20 +39,27 @@ classdef ContourAlgorithms
 
             n_moves = length(this_contour.moves);
             previous_closest_move_index = 1;
+
+            number_of_search_iterations_average = 0;
+
             for i = 1:n_moves
                 current_move = this_contour.moves{i};
 
-                [normal_vector,previous_closest_move_index] = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour,previous_closest_move_index);
+                [normal_vector,previous_closest_move_index,number_of_search_iterations] = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour,previous_closest_move_index);
                 travel_vector = MoveAlgorithms.GetMoveDirectionVector(current_move);
 
                 torch_quaternion = Utils.GetQuaternionFromNormalVectorAndTravelVector(normal_vector,travel_vector);
 
                 MoveAlgorithms.UpdateTorchOrientation(current_move,torch_quaternion);
+
+                number_of_search_iterations_average = number_of_search_iterations_average + ((number_of_search_iterations - number_of_search_iterations_average) / i);
             end%for i
+
+            fprintf('Average Number of Search Iterations for Nearest Move: %1.3f\n',number_of_search_iterations_average);
 
         end%func UpdateTorchQuaternionsUsingInterContourVectors
 
-        function [normalized_normal_vector,previous_contour_closest_move_index] = GetNormalVectorFromClosestMoveOnPreviousContour(move_on_current_contour,previous_contour,initial_guess)
+        function [normalized_normal_vector,previous_contour_closest_move_index,number_of_search_iterations] = GetNormalVectorFromClosestMoveOnPreviousContour(move_on_current_contour,previous_contour,initial_guess)
             if(~isa(move_on_current_contour,'Move'))
                 fprintf('ContourAlgorithms::GetNormalVectorFromClosestMoveOnPreviousContour: Input 1 not a Move\n')
                 normalized_normal_vector = null;
@@ -64,7 +71,8 @@ classdef ContourAlgorithms
                 return;
             end%if
 
-            previous_contour_closest_move_index = ContourAlgorithms.FindClosestContour2MoveToContour1MoveWithInitialGuess(move_on_current_contour,previous_contour,initial_guess);
+            [previous_contour_closest_move_index,number_of_search_iterations] = ContourAlgorithms.FindClosestContour2MoveToContour1MoveWithInitialGuess(move_on_current_contour,previous_contour,initial_guess);
+
             previous_contour_closest_move = previous_contour.moves{previous_contour_closest_move_index};
 
             current_move_midpoint = MoveAlgorithms.GetMoveMidpoint(move_on_current_contour);
@@ -101,7 +109,7 @@ classdef ContourAlgorithms
 
         end%func FindClosestNextContourPointToCurrentContourMoveMidpoint
 
-        function closest_move_index = FindClosestContour2MoveToContour1MoveWithInitialGuess(contour1_move,contour2,initial_guess)
+        function [closest_move_index,number_of_search_iterations] = FindClosestContour2MoveToContour1MoveWithInitialGuess(contour1_move,contour2,initial_guess)
             if(~isa(contour1_move,'Move'))
                 fprintf('ContourAlgorithms::FindClosestContour2MoveToContour1MoveWithInitialGuess: Input 1 is not a Move\n');
                 return;
@@ -118,12 +126,15 @@ classdef ContourAlgorithms
             end%if
 
             i = initial_guess; % init b/c of iterator++ at start of loop
+            number_of_search_iterations = 0; % tracking var for number of search iterations
+
             closest_move_index = i; % init
             last_distance_between_moves = 100000; % init
             this_distance_between_moves = WaypointAlgorithms.GetDistanceBetweenPoints(move1_midpoint,MoveAlgorithms.GetMoveMidpoint(contour2.moves{i})); % init
 
             % Check for min distance with increasing index
             while(this_distance_between_moves < last_distance_between_moves)
+                number_of_search_iterations = number_of_search_iterations + 1;
                 closest_move_index = i;
                 last_distance_between_moves = this_distance_between_moves;
 
@@ -148,6 +159,7 @@ classdef ContourAlgorithms
 
             % Check for min distance with decreasing index
             while(this_distance_between_moves < last_distance_between_moves)
+                number_of_search_iterations = number_of_search_iterations + 1;
                 closest_move_index = i;
                 last_distance_between_moves = this_distance_between_moves;
 
