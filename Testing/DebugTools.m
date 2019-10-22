@@ -1,5 +1,29 @@
 classdef DebugTools
 	methods(Static)
+		function PlotContourEulerAngles(contour_data)
+			a = zeros(length(contour_data.moves),1);
+			b = a;
+			c = a;
+
+			for i = 1:length(contour_data.moves)
+				current_point = contour_data.moves{i}.point1;
+				[ai,bi,ci] = Utils.GetABCFromQuaternion(current_point.torch_quaternion);
+				a(i) = ai;
+				b(i) = bi;
+				c(i) = ci;
+			end%for i
+			plot(a);
+			hold on;
+			plot(b);
+			plot(c);
+			hold off;
+			legend('A/X','B/Y','C/Z');
+			xlabel('Move Index (i)');
+			ylabel('Euler Angle (Degrees)');
+			grid on;
+
+		end%func PlotContourEulerAngles
+
 		function IterativeSegmentQuatPlot(seg)
             for i = 1:length(seg.contours)
                 p = PlotTools.PlotContourWithTorchQuaternions(seg.contours{i});
@@ -23,7 +47,7 @@ classdef DebugTools
             for i = 1:length(this_contour.moves)
                 move = this_contour.moves{i};
                 q = move.point1.torch_quaternion;
-                R = rotmat(q,'point');
+                R = rotmat(q,'frame');
                 v = 25.*(R*[0;0;-1]);
 
                 x = move.point1.x;
