@@ -85,5 +85,61 @@ classdef FileTools
 
         end%func
 
+        function PadFileNameZerosForPlaneOffset(filename_prefix,directory)
+            % Pads filenames for the output from GOM's planar slice export
+            % filename_prefix specifies to only pad files containing that substring
+            working_dir = dir(directory);
+            if(length(working_dir) == 0)
+                fprintf('FileTools::PadFileNameZeros: Directory not found\n');
+                return;
+            end%if
+
+            mm_delimiter = '+';
+            end_delimiter = ' ';
+
+            % Find maximum order of magnitude
+            mm_values = [];
+
+            for i = 1:length(working_dir)
+                filename = working_dir(i).name;
+                if(contains(filename,filename_prefix))
+                    mm_index = strfind(filename,mm_delimiter) + 1;
+                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - 1;
+                    mm_values = [mm_values,str2num(filename(mm_index:end_number_index))];
+                end%if
+            end%for i
+
+            max_mm_order = floor(log10(max(mm_values)));
+
+            % Pad files
+            for i = 1:length(working_dir)
+                filename = working_dir(i).name;
+                old_file_string = strcat(working_dir(i).folder,'\',filename);
+
+                if(contains(filename,filename_prefix))
+                    mm_index = strfind(filename,mm_delimiter) + 1;
+                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - 1;
+                    mm_value = str2num(filename(mm_index:end_number_index));
+
+                    mm_order = floor(log10(mm_value));
+                    if(mm_order < 0)
+                        mm_order = 0;
+                    end%if
+
+                    while(mm_order < max_mm_order)
+                        filename = strcat(filename(1:mm_index-1),'0',filename(mm_index:end));
+                        mm_order = mm_order + 1;
+                    end%while
+
+                    new_file_string = strcat(working_dir(i).folder,'\',filename);
+
+                    if(~strcmp(old_file_string,new_file_string))
+                        movefile(old_file_string,new_file_string);
+                    end%if
+                end%if
+            end%for i
+
+        end%func PadFileNameZeros
+
     end%Static Methods
 end%class ContourTools
