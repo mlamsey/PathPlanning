@@ -1,5 +1,24 @@
 classdef DebugTools
 	methods(Static)
+		function CheckRotationMatrixFromQuaternion
+			normal_vector = [0,sqrt(2)/2,sqrt(2)/2];
+			travel_vector = [1,0,0];
+			if(dot(normal_vector,travel_vector))
+				fprintf('DebugTools::CheckRotationMatrixFromQuaternion: Normal and Travel vectors not perpendicular\n');
+				return;
+			end%if
+
+			y_vector = cross(normal_vector,travel_vector);
+			
+			R = [travel_vector',y_vector',normal_vector']
+			q1 = quaternion(R,'rotmat','frame')
+			q2 = Utils.GetQuaternionFromNormalVectorAndTravelVector(normal_vector,travel_vector)
+			R1 = rotmat(q1,'frame')
+			R2 = rotmat(q2,'frame')
+			eulerd(q1,'ZYX','frame')
+
+		end%func CheckRotationMatrixFromQuaternion
+
 		function PlotContourEulerAngles(contour_data)
 			a = zeros(length(contour_data.moves),1);
 			b = a;
