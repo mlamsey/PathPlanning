@@ -46,6 +46,7 @@ classdef PartAlgorithms
 				return;
 			end%if
 
+			fprintf('Decimating Part Contours by Minimum Move Length: %1.3fmm\n',ContourAlgorithms.minimum_move_length);
 			for i = 1:length(original_part.segments)
 				SegmentAlgorithms.DecimateContoursByMoveLength(original_part.segments{i});
 			end%for i
