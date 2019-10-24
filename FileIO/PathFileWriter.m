@@ -27,7 +27,7 @@ classdef PathFileWriter
 				last_operation_index = PathFileWriter.WriteSegment(file_id,part.segments{i},last_operation_index);
 			end%for i
 
-			fclose(file_id);
+			fclose('all');
 		end%func Write
 
 		function last_operation_index = WriteSegment(file_id,current_segment,start_operation_index)
@@ -46,7 +46,7 @@ classdef PathFileWriter
 		function last_operation_index = WriteContourToFile(file_id,current_contour,current_operation_index)
 			PathFileWriter.WriteHeader(file_id,current_operation_index);
 			PathFileWriter.WriteContour(file_id,current_contour);
-			last_operation_index = 1;
+			last_operation_index = current_operation_index + 1;
 		end%func WriteContourToFile
 
 		function WriteHeader(file_id,current_operation_index)
