@@ -35,6 +35,21 @@ classdef Utils
 
 		end%func AreAll
 
+		function direction_vector = GetDirectionVectorFromQuaternion(torch_quaternion)
+			if(~isa(torch_quaternion,'quaternion'))
+				fprintF('Utils::GetDirectionVectorFromQuaternion: Input not a quaternion\n');
+				direction_vector = [0,0,1];
+				return;
+			end%if
+
+			R = rotmat(torch_quaternion,'frame');
+			direction_vector = [0,0,1];
+
+			if(norm(direction_vector) ~= 1)
+				fprintf('Utils::GetDirectionVectorFromQuaternion: WARNING: Calculated direction vector is not length 1\n');
+			end%if
+		end%func GetDirectionVectorFromQuaternion
+
 		function [a,b,c] = GetABCFromQuaternion(torch_quaternion)
 			angles = eulerd(torch_quaternion,'XYZ','frame');
 			a = angles(1);
