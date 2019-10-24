@@ -43,11 +43,9 @@ classdef Utils
 			end%if
 
 			R = rotmat(torch_quaternion,'frame');
-			direction_vector = [0,0,1];
+			direction_vector = R*[0;0;-1];
 
-			if(norm(direction_vector) ~= 1)
-				fprintf('Utils::GetDirectionVectorFromQuaternion: WARNING: Calculated direction vector is not length 1\n');
-			end%if
+			direction_vector = direction_vector ./ norm(direction_vector);
 		end%func GetDirectionVectorFromQuaternion
 
 		function [a,b,c] = GetABCFromQuaternion(torch_quaternion)

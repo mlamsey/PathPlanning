@@ -4,8 +4,8 @@ classdef PathFileWriter
 		cmd_linear_move = 'L';
 		cmd_contour_move = 'C';
 		mm_retract_z_offset = 25.4; % mm
-		mms_welding_speed = 6.418; % mm/s
-		mms_travel_speed = 100; % mm/s
+		mms_welding_speed = 6.418; % mm/s // 2.75 mm/s
+		mms_travel_speed = 100; % mm/s // 75 -- put this in the retract moves
 	end%properties
 
 	methods(Static)
