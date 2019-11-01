@@ -58,7 +58,9 @@ classdef MoveAlgorithms
 				fprintf('MoveAlgorithms::ReverseMove: Input not a move\n');
 				return;
 			end%if
-			move = Move(move.point2,move.point1);
+			temp = move.point1;
+			move.point1 = move.point2;
+			move.point2 = temp;
 		end%func ReverseMove
 
 		function [move1,move2] = BisectMove(old_move)

@@ -216,10 +216,13 @@ classdef ContourAlgorithms
                 fprintf('ContourAlgorithms::ReverseContourPointOrder: Input not a contour!\n');
                 return;
             end%if
-            original_contour = Contour(flip(original_contour.moves));
+
+            original_contour.moves = flip(original_contour.moves);
+
             for i = 1:length(original_contour.moves)
                 MoveAlgorithms.ReverseMove(original_contour.moves{i});
             end%for i
+
         end%func ReverseContourPointOrder
 
         function CombineCollinearMoves(original_contour)

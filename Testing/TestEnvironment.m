@@ -1,13 +1,10 @@
-function TestEnvironment
+function p = TestEnvironment
 
-	n_points = 100;
-	v = linspace(-1,1,n_points);
-	
-	%TestPlot;
+	p = TestPlot;
 
 end%func TestEnvironment
 
-function TestPlot
+function part = TestPlot
     close all;
 	T = TestPart;
 
@@ -16,11 +13,12 @@ function TestPlot
     for i = 1:length(part.segments{1}.contours)
     	contour_i = part.segments{1}.contours{i};
 
-    	ContourAlgorithms.BisectMove(contour_i,rem(i,length(contour_i.moves))+1);
-    	ContourAlgorithms.StaggerStartByMoves(contour_i,rem(i-1,length(contour_i.moves) - 1)+1);
+    	% ContourAlgorithms.BisectMove(contour_i,rem(i,length(contour_i.moves))+1);
+    	% ContourAlgorithms.StaggerStartByMoves(contour_i,rem(i-1,length(contour_i.moves) - 1)+1);
     	if(rem(i,2) == 0)
     		ContourAlgorithms.ReverseContourPointOrder(contour_i);
     	end%if
+        
     end%for i
     PlotTools.PlotPartOnNewFigure(part);
     

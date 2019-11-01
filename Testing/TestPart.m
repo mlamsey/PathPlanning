@@ -1,4 +1,4 @@
-classdef TestPart
+classdef TestPart < handle
     properties
         test_part;
     end%properties
