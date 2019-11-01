@@ -1,4 +1,4 @@
-classdef Segment < handle
+classdef Segment < handle & matlab.mixin.Copyable
 	properties
 		contours;
 		segment_type;

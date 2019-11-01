@@ -1,4 +1,4 @@
-classdef Move < handle
+classdef Move < handle & matlab.mixin.Copyable
 	properties
 		point1;
 		point2;

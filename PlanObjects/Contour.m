@@ -1,4 +1,4 @@
-classdef Contour < handle
+classdef Contour < handle & matlab.mixin.Copyable
     properties
         moves;
     end%properties

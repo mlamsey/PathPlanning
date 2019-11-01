@@ -1,4 +1,4 @@
-classdef Part < handle
+classdef Part < handle & matlab.mixin.Copyable
 	properties
 		segments;
 	end%properties
