@@ -13,8 +13,9 @@ function part = TestPlot
     for i = 1:length(part.segments{1}.contours)
     	contour_i = part.segments{1}.contours{i};
 
-    	% ContourAlgorithms.BisectMove(contour_i,rem(i,length(contour_i.moves))+1);
-    	% ContourAlgorithms.StaggerStartByMoves(contour_i,rem(i-1,length(contour_i.moves) - 1)+1);
+    	ContourAlgorithms.BisectMove(contour_i,rem(i,length(contour_i.moves))+1);
+    	ContourAlgorithms.StaggerStartByMoves(contour_i,rem(i-1,length(contour_i.moves) - 1)+1);
+
     	if(rem(i,2) == 0)
     		ContourAlgorithms.ReverseContourPointOrder(contour_i);
     	end%if
