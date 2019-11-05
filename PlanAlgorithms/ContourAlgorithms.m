@@ -1,18 +1,14 @@
 classdef ContourAlgorithms
-    properties(Constant)
-        minimum_move_length = 1; % mm
-    end%properties
-
 	methods(Static)
 
-        function DecimateContourByMoveLength(original_contour)
+        function DecimateContourByMoveLength(original_contour,mm_decimate_move_length)
             if(~isa(original_contour,'Contour'))
                 fprintf('ContourAlgorithms::DecimateContourByMoveLength: Input not a Contour\n');
                 return;
             end%if
 
             moves = original_contour.moves;
-            threshold = ContourAlgorithms.minimum_move_length;
+            threshold = mm_decimate_move_length;
 
             i = 1;
             while(i < length(moves))

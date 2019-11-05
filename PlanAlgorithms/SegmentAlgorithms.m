@@ -1,14 +1,14 @@
 classdef SegmentAlgorithms
 	methods(Static)
 
-		function DecimateContoursByMoveLength(original_segment)
+		function DecimateContoursByMoveLength(original_segment,mm_decimate_move_length)
 			if(~isa(original_segment,'Segment'))
 				fprintf('SegmentAlgorithms::DecimateContoursByMoveLength: Input not a segment\n');
 				return;
 			end%if
 
 			for i = 1:length(original_segment.contours)
-				ContourAlgorithms.DecimateContourByMoveLength(original_segment.contours{i});
+				ContourAlgorithms.DecimateContourByMoveLength(original_segment.contours{i},mm_decimate_move_length);
 			end%for i
 		end%func DecimateContoursByMoveLength
 
@@ -41,7 +41,22 @@ classdef SegmentAlgorithms
 		end%func UpdateTorchQuaternionsUsingInterContourVectors
 
 		function StaggerContourStartPoints(original_segment)
+			if(~isa(original_segment,'Segment'))
+				fprintf('SegmentAlgorithms::StaggerContourStartPoints: Input not a segmetn\n');
+				return;
+			end%if
 
+			for i = 1:length(original_segment.contours)
+				contour_i = original_segment.contours{i};
+				max_stagger = length(contour_i.moves);
+
+				number_of_moves_to_stagger_by = i;
+				if(number_of_moves_to_stagger_by > max_stagger)
+					number_of_moves_to_stagger_by = max_stagger - 1;
+				end%if
+
+				ContourAlgorithms.StaggerStartByMoves(contour_i,number_of_moves_to_stagger_by);
+			end%for i
 		end%func
 	end%methods
 end%class SegmentAlgorithms

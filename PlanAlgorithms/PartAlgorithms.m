@@ -40,15 +40,15 @@ classdef PartAlgorithms
 			fprintf('Quaternions calculated in %1.2f seconds\n',toc);
 		end%func UpdateTorchQuaternionsUsingInterContourVectors
 
-		function DecimateContoursByMoveLength(original_part)
+		function DecimateContoursByMoveLength(original_part,mm_decimate_move_length)
 			if(~isa(original_part,'Part'))
 				fprintf('PartAlgorithms::DecimateContoursByMoveLength: Input not a part\n');
 				return;
 			end%if
 
-			fprintf('Decimating Part Contours by Minimum Move Length: %1.3fmm\n',ContourAlgorithms.minimum_move_length);
+			fprintf('Decimating Part Contours by Minimum Move Length: %1.3fmm\n',mm_decimate_move_length);
 			for i = 1:length(original_part.segments)
-				SegmentAlgorithms.DecimateContoursByMoveLength(original_part.segments{i});
+				SegmentAlgorithms.DecimateContoursByMoveLength(original_part.segments{i},mm_decimate_move_length);
 			end%for i
 		end%func DecimateContoursByMoveLength
 
@@ -64,5 +64,11 @@ classdef PartAlgorithms
 				SegmentAlgorithms.CombineCollinearMoves(original_part.segments{i});
 			end%for i
 		end%func
+
+		function StaggerPartStartPoints(original_part)
+			for i = 1:length(original_part.segments)
+				SegmentAlgorithms.StaggerContourStartPoints(original_part.segments{i});
+			end%for i 
+		end%func StaggerPartStartPoints
 	end%methods
 end%class PartAlgorithms
