@@ -35,6 +35,18 @@ classdef Utils
 
 		end%func AreAll
 
+		function normalized_quaternion = NormalizeQuaternion(quat)
+			if(~isa(quat,'quaternion'))
+				fprintf('Utils::NormalizeQuaternion: Input not a quaternion\n');
+				normalized_quaternion = quat;
+				return;
+			end%if
+
+			quaternion_elements = quat.compact;
+			normalized_quaternion = quaternion(quaternion_elements ./ norm(quaternion_elements));
+
+		end%func NormalizeQuaternion
+
 		function direction_vector = GetDirectionVectorFromQuaternion(torch_quaternion)
 			if(~isa(torch_quaternion,'quaternion'))
 				fprintF('Utils::GetDirectionVectorFromQuaternion: Input not a quaternion\n');
@@ -77,7 +89,7 @@ classdef Utils
 
 			q = quaternion(R,'rotmat','frame');
 			% Normalize quaternion
-			% q = quaternion(quatnormalize(q.compact));
+			q = Utils.NormalizeQuaternion(q);
 
 		end%func GetQuaternionFromNormalVectorAndTravelVector
 

@@ -59,10 +59,10 @@ classdef WaypointAlgorithms
 			y = point2.y - n * (point2.y - point1.y);
 			z = point2.z - n * (point2.z - point1.z);
 
-			quaternion_1 = quatnormalize(point1.torch_quaternion.compact);
-			quaternion_2 = quatnormalize(point2.torch_quaternion.compact);
+			quaternion_1 = Utils.NormalizeQuaternion(point1.torch_quaternion);
+			quaternion_2 = Utils.NormalizeQuaternion(point2.torch_quaternion);
 
-			torch_quaternion = quatinterp(quaternion_1,quaternion_2,percent_along_line,'slerp');
+			torch_quaternion = slerp(quaternion_1,quaternion_2,percent_along_line);
 
 			speed = n * (point2.speed - point1.speed);
 			between_point = Waypoint(x,y,z,torch_quaternion,speed);
