@@ -4,8 +4,8 @@ classdef PathFileWriter
 		cmd_linear_move = 'L';
 		cmd_contour_move = 'C';
 		mm_retract_z_offset = 25.4; % mm
-		mms_welding_speed = 6.418; % mm/s // 2.75 mm/s
-		mms_travel_speed = 100; % mm/s // 75 -- put this in the retract moves
+		mms_welding_speed = 2.75; % mm/s // 2.75 mm/s // used to be 6.418
+		mms_travel_speed = 75; % mm/s // 75 -- put this in the retract moves
 	end%properties
 
 	methods(Static)
@@ -96,8 +96,8 @@ classdef PathFileWriter
 			retracted_point = PathFileWriter.GenerateRetractedWaypoint(waypoint);
 
 			% Write offset point and then contour start point
-			appended_string = PathFileWriter.WriteRetractMotion(retracted_point,working_string);
-			appended_string = PathFileWriter.WriteRetractMotion(motion_start_point,appended_string);
+			appended_string = PathFileWriter.WriteLinearMotion(retracted_point,working_string);
+			appended_string = PathFileWriter.WriteLinearMotion(motion_start_point,appended_string);
 
 		end%func WriteStartContour
 
@@ -107,8 +107,8 @@ classdef PathFileWriter
 			retracted_point = PathFileWriter.GenerateRetractedWaypoint(waypoint);
 
 			% Write contour end point and then offset point
-			appended_string = PathFileWriter.WriteRetractMotion(motion_end_point,working_string);
-			appended_string = PathFileWriter.WriteRetractMotion(retracted_point,working_string);
+			appended_string = PathFileWriter.WriteLinearMotion(motion_end_point,working_string);
+			appended_string = PathFileWriter.WriteLinearMotion(retracted_point,working_string);
 
 		end%func WriteEndContour
 
