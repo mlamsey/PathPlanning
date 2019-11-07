@@ -1,30 +1,5 @@
 classdef PartAlgorithms
 	methods(Static)
-		function PlotNumberOfMovesInEachContour(original_part)
-			if(~isa(original_part,'Part'))
-				fprintf('PartAlgorithms::PlotNumberOfMovesInEachContour: Input not a part\n');
-				return;
-			end%if
-
-			f = figure;
-			a = axes('parent',f);
-
-			move_counts = [];
-
-			for i = 1:length(original_part.segments)
-				for j = 1:length(original_part.segments{i}.contours)
-					move_counts = [move_counts,length(original_part.segments{i}.contours{j}.moves)];
-				end%for j
-			end%for i
-
-			plot(move_counts);
-			title('Number of Moves Per Contour');
-			xlabel('Contour Index');
-			ylabel('Number of Moves');
-			grid on;
-
-		end%func PlotNumberOfMovesInEachContour
-
 		function UpdateTorchQuaternionsUsingInterContourVectors(original_part)
 			if(~isa(original_part,'Part'))
 				fprintf('PartAlgorithms::UpdateTorchQuaternionsUsingInterContourVectors: Input not a part\n');
@@ -81,9 +56,9 @@ classdef PartAlgorithms
 				fprintf('PartAlgorithms::AlternateContourDirections: Input not a part\n');
 				return;
 			end%if
-			
+
 			for i = 1:length(original_part.segments)
-				SegmentAlgorithms.AlternateContourDirections(original_part.segments{i});
+				SegmentAlgorithms.AlternateContourDirections(original_part.segments{i},number_of_layers_per_alternation);
 			end%for i
 		end%func AlternateContourDirections
 	end%methods

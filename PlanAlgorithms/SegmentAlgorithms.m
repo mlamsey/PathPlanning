@@ -66,7 +66,7 @@ classdef SegmentAlgorithms
 			end%if
 
 			for i = 1:length(segment.contours)
-				if(rem(i,number_of_layers_per_alternation == 0))
+				if(rem(i,number_of_layers_per_alternation + 1) == 0)
 					for j = 1:number_of_layers_per_alternation
 						if(j <= length(segment.contours))
 							ContourAlgorithms.ReverseContourPointOrder(segment.contours{i});

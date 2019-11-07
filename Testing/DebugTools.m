@@ -115,5 +115,30 @@ classdef DebugTools
             quiver3(a1(1),a1(2),a1(3),a2(1),a2(2),a2(3),'color','g','autoscalefactor',1);
             hold off;
         end%func PlotVectorProjection
+
+        function PlotNumberOfMovesInEachContourForPart(original_part)
+            if(~isa(original_part,'Part'))
+                fprintf('PartAlgorithms::PlotNumberOfMovesInEachContour: Input not a part\n');
+                return;
+            end%if
+
+            f = figure;
+            a = axes('parent',f);
+
+            move_counts = [];
+
+            for i = 1:length(original_part.segments)
+                for j = 1:length(original_part.segments{i}.contours)
+                    move_counts = [move_counts,length(original_part.segments{i}.contours{j}.moves)];
+                end%for j
+            end%for i
+
+            plot(move_counts);
+            title('Number of Moves Per Contour');
+            xlabel('Contour Index');
+            ylabel('Number of Moves');
+            grid on;
+
+        end%func PlotNumberOfMovesInEachContour
 	end%methods
 end%class DebugTools

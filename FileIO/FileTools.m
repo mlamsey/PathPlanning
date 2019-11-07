@@ -43,7 +43,11 @@ classdef FileTools
                 % check if filenames are NOT navigation targets
                 if(~strcmp(file_name,'.') && ~strcmp(file_name,'..'))
                     % Generate path, import contour data, assign contour in set
-                    full_path = strcat(dir_info(i).folder,'\',file_name);
+                    if(ispc)
+                        full_path = strcat(dir_info(i).folder,'\',file_name);
+                    else
+                        full_path = strcat(dir_info(i).folder,'/',file_name);
+                    end%if
                     [positions,orientations] = FileTools.ImportContour(full_path);
 
                     % Spoof speed
