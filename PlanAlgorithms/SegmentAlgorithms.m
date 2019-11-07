@@ -40,9 +40,9 @@ classdef SegmentAlgorithms
 			end%if
 		end%func UpdateTorchQuaternionsUsingInterContourVectors
 
-		function StaggerContourStartPoints(original_segment)
+		function StaggerSegmentStartPoints(original_segment)
 			if(~isa(original_segment,'Segment'))
-				fprintf('SegmentAlgorithms::StaggerContourStartPoints: Input not a segmetn\n');
+				fprintf('SegmentAlgorithms::StaggerSegmentStartPoints: Input not a segmetn\n');
 				return;
 			end%if
 

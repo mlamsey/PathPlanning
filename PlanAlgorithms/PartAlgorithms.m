@@ -47,7 +47,7 @@ classdef PartAlgorithms
 			end%if
 
 			for i = 1:length(original_part.segments)
-				SegmentAlgorithms.StaggerContourStartPoints(original_part.segments{i});
+				SegmentAlgorithms.StaggerSegmentStartPoints(original_part.segments{i});
 			end%for i 
 		end%func StaggerPartStartPoints
 
