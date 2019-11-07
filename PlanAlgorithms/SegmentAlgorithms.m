@@ -59,22 +59,33 @@ classdef SegmentAlgorithms
 			end%for i
 		end%func StaggerContourStartPoints
 
-		function AlternateContourDirections(segment, number_of_layers_per_alternation)
-			if(~isa(segment,'Segment'))
+		function AlternateContourDirections(original_segment, number_of_layers_per_alternation)
+			if(~isa(original_segment,'Segment'))
 				fprintf('SegmentAlgorithms::AlternateContourDirections: Input 1 not a segment\n');
 				return;
 			end%if
 
-			for i = 1:length(segment.contours)
+			for i = 1:length(original_segment.contours)
 				if(rem(i,number_of_layers_per_alternation + 1) == 0)
 					for j = 1:number_of_layers_per_alternation
-						if(j <= length(segment.contours))
-							ContourAlgorithms.ReverseContourPointOrder(segment.contours{i});
+						if(j <= length(original_segment.contours))
+							ContourAlgorithms.ReverseContourPointOrder(original_segment.contours{i});
 						end%if
 					end%for j
 				end%if
 			end%for i
 
-		end%func
+		end%func AlternateContourDirections
+
+		function RepairContourEndContinuity(original_segment)
+			if(~isa(original_segment,'Segment'))
+				fprintf('SegmentAlgorithms::RepairContourEndContinuity: Input 1 not a segment\n');
+				return;
+			end%if
+
+			for i = 1:length(original_segment.contours)
+				ContourAlgorithms.RepairContourEndContinuity(original_segment.contours{i});
+			end%for i
+		end%func RepairContourEndContinuity
 	end%methods
 end%class SegmentAlgorithms

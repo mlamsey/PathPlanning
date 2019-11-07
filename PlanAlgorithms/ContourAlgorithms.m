@@ -250,5 +250,41 @@ classdef ContourAlgorithms
 
         end%func CombineCollinearMoves
 
+        function RepairContourEndContinuity(original_contour)
+            if(~isa(original_contour,'Contour'))
+                fprintf('ContourAlgorithms::RepairContourEndContinuity: Input 1 is not a contour\n');
+                return;
+            end%if
+
+            start_move = original_contour.moves{1};
+            end_move = original_contour.moves{end};
+            if(~MoveAlgorithms.IsContinuous(end_move,start_move))
+                repair_point1 = end_move.point2;
+                repair_point2 = start_move.point1;
+                repair_move = Move(repair_point1,repair_point2);
+                ContourAlgorithms.AddMoveAtBeginningOfContour(original_contour,repair_move);
+            end%if
+        end%func RepairContourEndContinuity
+
+        function AddMoveAtBeginningOfContour(original_contour,move)
+            if(~isa(original_contour,'Contour'))
+                fprintf('ContourAlgorithms::AddMoveAtBeginningOfContour: Input 1 is not a contour\n');
+                return;
+            end%if
+
+            if(~isa(move,'Move'))
+                fprintf('ContourAlgorithms::AddMoveAtBeginningOfContour: Input 2 is not a move\n');
+                return;
+            end%if
+
+            n_moves = length(original_contour.moves) + 1;
+            for i = 0:n_moves - 2
+                j = n_moves - i;
+                original_contour.moves{j} = original_contour.moves{j - 1};
+            end%for i
+
+            original_contour.moves{1} = move;
+
+        end%func AddMoveAtBeginningOfContour
     end%methods
 end%classdef ContourAlgorithms

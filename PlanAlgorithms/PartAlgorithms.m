@@ -61,5 +61,16 @@ classdef PartAlgorithms
 				SegmentAlgorithms.AlternateContourDirections(original_part.segments{i},number_of_layers_per_alternation);
 			end%for i
 		end%func AlternateContourDirections
+
+		function RepairContourEndContinuity(original_part)
+			if(~isa(original_part,'Part'))
+				fprintf('PartAlgorithms::RepairContourEndContinuity: Input 1 not a part\n');
+				return;
+			end%if
+
+			for i = 1:length(original_part.segments)
+				SegmentAlgorithms.RepairContourEndContinuity(original_part.segments{i});
+			end%for i
+		end%func RepairContourEndContinuity
 	end%methods
 end%class PartAlgorithms

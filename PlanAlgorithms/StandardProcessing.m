@@ -22,6 +22,7 @@ classdef StandardProcessing
 			fprintf('Standard Processing: Default Part Cleanup\n');
 
 			PartAlgorithms.CombineCollinearMoves(part);
+			PartAlgorithms.RepairContourEndContinuity(part);
 			PartAlgorithms.DecimateContoursByMoveLength(part,StandardProcessing.mm_decimate_move_length);
 			PartAlgorithms.UpdateTorchQuaternionsUsingInterContourVectors(part);
 
@@ -33,7 +34,7 @@ classdef StandardProcessing
 				return;
 			end%if
 
-			min_move_length = 5; % mm
+			min_move_length = 2.5; % mm
 			PartAlgorithms.DecimateContoursByMoveLength(part,min_move_length);
 
 			PartAlgorithms.AlternateContourDirections(part,1);
