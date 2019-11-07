@@ -51,6 +51,12 @@ classdef PartAlgorithms
 			end%for i 
 		end%func StaggerPartStartPoints
 
+		function StaggerStartPointsByIndices(original_part,indices_per_layer)
+			for i = 1:length(original_part.segments)
+				SegmentAlgorithms.StaggerSegmentStartPointsByIndices(original_part.segments{i},indices_per_layer);
+			end%for i
+		end%func StaggerStartPointsByIndices
+
 		function AlternateContourDirections(original_part, number_of_layers_per_alternation)
 			if(~isa(original_part,'Part'))
 				fprintf('PartAlgorithms::AlternateContourDirections: Input not a part\n');

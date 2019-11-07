@@ -37,6 +37,10 @@ classdef StandardProcessing
 			min_move_length = 2.5; % mm
 			PartAlgorithms.DecimateContoursByMoveLength(part,min_move_length);
 
+			stagger_distance = 10; % mm
+			n_stagger_indices = ceil(stagger_distance / min_move_length);
+			PartAlgorithms.StaggerStartPointsByIndices(part,n_stagger_indices);
+
 			PartAlgorithms.AlternateContourDirections(part,1);
 		end%func ProcessEllipticalBowl
 	end%methods

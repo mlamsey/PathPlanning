@@ -59,6 +59,14 @@ classdef SegmentAlgorithms
 			end%for i
 		end%func StaggerContourStartPoints
 
+		function StaggerSegmentStartPointsByIndices(original_segment,indices_per_layer)
+			for i = 1:length(original_segment.contours)
+				n_moves = length(original_segment.contours{i}.moves);
+				number_of_moves_to_stagger_by = mod(i * indices_per_layer,n_moves);
+				ContourAlgorithms.StaggerStartByMoves(original_segment.contours{i},number_of_moves_to_stagger_by);
+			end%for i
+		end%func StaggerSegmentStartPointsByIndices
+
 		function AlternateContourDirections(original_segment, number_of_layers_per_alternation)
 			if(~isa(original_segment,'Segment'))
 				fprintf('SegmentAlgorithms::AlternateContourDirections: Input 1 not a segment\n');
