@@ -66,9 +66,25 @@ classdef PartAlgorithms
 		end%func
 
 		function StaggerPartStartPoints(original_part)
+			if(~isa(original_part,'Part'))
+				fprintf('PartAlgorithms::StaggerPartStartPoints: Input not a part\n');
+				return;
+			end%if
+
 			for i = 1:length(original_part.segments)
 				SegmentAlgorithms.StaggerContourStartPoints(original_part.segments{i});
 			end%for i 
 		end%func StaggerPartStartPoints
+
+		function AlternateContourDirections(original_part, number_of_layers_per_alternation)
+			if(~isa(original_part,'Part'))
+				fprintf('PartAlgorithms::AlternateContourDirections: Input not a part\n');
+				return;
+			end%if
+			
+			for i = 1:length(original_part.segments)
+				SegmentAlgorithms.AlternateContourDirections(original_part.segments{i});
+			end%for i
+		end%func AlternateContourDirections
 	end%methods
 end%class PartAlgorithms

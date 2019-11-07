@@ -26,5 +26,17 @@ classdef StandardProcessing
 			PartAlgorithms.UpdateTorchQuaternionsUsingInterContourVectors(part);
 
 		end%func DefaultCleanup
+
+		function ProcessEllipticalBowl(part)
+			if(~isa(part,'Part'))
+				fprintf('StandardProcessing::ProcessEllipticalBowl: Input not a part\n');
+				return;
+			end%if
+
+			min_move_length = 5; % mm
+			PartAlgorithms.DecimateContoursByMoveLength(part,min_move_length);
+
+			PartAlgorithms.AlternateContourDirections(part);
+		end%func ProcessEllipticalBowl
 	end%methods
 end%class StandardProcessing
