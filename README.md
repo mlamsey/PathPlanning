@@ -4,7 +4,7 @@ Path Planning Software written in MATLAB by the UTK ARC Laboratory Research Team
 ## Purpose + Summary
 This project aims to create an integrated software system that will convert previously generated contours (continuous sets of points in 3-space) into robot trajectories. Currently, the contours are generated using the metrology software GOM Inspect, and the target environment for the robot trajectories is Octopuz (via .path files).
 
-This software uses a five-tier heirarchy to organize builds. An entire plan is encapsulated in a Part, which is composed of a series of Segments. Each segment is composed of a series of contours, which are defined as continuous sets of points in 3-space which must be deposited in the order specified by their arrangement within the segment. Contours consist of Moves, which contain a start and stop Waypoint. This facilitates integration with systems such as KUKA's KRL-based controllers, which interpolates process parameters between points on the part.
+This software uses a five-tier heirarchy to organize builds. An entire plan is encapsulated in a Part, which is composed of a series of Segments. Each segment is composed of a series of contours, which are defined as continuous sets of points in 3-space which must be deposited in the order specified by their arrangement within the segment. Contours consist of Moves, which each contain a start and stop Waypoint. This facilitates integration with systems such as KUKA's KRL-based controllers, which interpolate process parameters between points on the part.
 
 ## Table of Contents
 **Code Organization, Formatting + Syntax**
