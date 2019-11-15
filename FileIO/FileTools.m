@@ -1,6 +1,6 @@
 classdef FileTools
     properties(Constant)
-        default_speed = 6.418;
+        default_speed = 2.75;
     end%properties
 
     methods(Static)

@@ -174,17 +174,17 @@ classdef ContourAlgorithms
         function StaggerStartByMoves(original_contour,moves_to_stagger)
             if(~isa(original_contour,'Contour'))
                 fprinf('ContourAlgorithms::StaggerStartByMoves: Input not a contour\n');
-                updated_contour = original_contour;
                 return;
             end%if
 
             n_moves = length(original_contour.moves);
 
-            if(~(0 < moves_to_stagger && moves_to_stagger < n_moves))
-                fprintf('ContourAlgorithms::StaggerStartByMoves: number of contours to stagger by is outside of range\n');
-                updated_contour = original_contour;
+            if(~(0 < moves_to_stagger))
+                fprintf('ContourAlgorithms::StaggerStartByMoves: number of contours to stagger by 0\n');
                 return;
             end%if
+
+            moves_to_stagger = mod(moves_to_stagger,n_moves);
 
             tail_moves = {original_contour.moves{end-(moves_to_stagger-1):end,:}};
             [original_contour.moves{moves_to_stagger + 1:end,:}] = original_contour.moves{1:end-moves_to_stagger,:};
