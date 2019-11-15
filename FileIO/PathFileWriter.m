@@ -116,7 +116,7 @@ classdef PathFileWriter
 			% Write generic retract motion
 			appended_string = [working_string ...
 			PathFileWriter.cmd_retract_move ...
-			':' PathFileWriter.GetWaypointString(destination_waypoint) '\n'];
+			':' PathFileWriter.GetWaypointStringWithCustomVelocity(destination_waypoint,PathFileWriter.mms_travel_speed) '\n'];
 
 		end%func WriteRetractMove
 
@@ -161,6 +161,31 @@ classdef PathFileWriter
 			str_speed];
 
 		end%func GetWaypointString
+
+		function waypoint_string = GetWaypointStringWithCustomVelocity(waypoint,velocity)
+			if(~isa(waypoint,'Waypoint'))
+				fprintf('PathFileWriter::GetWaypointString: Input not a Waypoint\n');
+				waypoint_string = '';
+				return;
+			end%if
+
+			% Extract info w/ 3 decimal points precision
+			str_x = num2str(waypoint.x,'%1.3f');
+			str_y = num2str(waypoint.y,'%1.3f');
+			str_z = num2str(waypoint.z,'%1.3f');
+
+			[a,b,c] = Utils.GetABCFromQuaternion(waypoint.torch_quaternion);
+
+			str_a = num2str(a,'%1.3f');
+			str_b = num2str(b,'%1.3f');
+			str_c = num2str(c,'%1.3f');
+			str_speed = num2str(velocity,'%1.3f');
+
+			% Create comma separated string
+			waypoint_string = [str_x,',',str_y,',',str_z,',',...
+			str_a,',',str_b,',',str_c,',',...
+			str_speed];
+		end%func GetWaypointStringWithCustomVelocity
 
 		% Utilities
 		function retracted_point = GenerateRetractedWaypoint(waypoint_on_contour)
