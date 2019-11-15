@@ -8,8 +8,11 @@ classdef ContourManipulator < handle
 
 	properties
 		ui_window;
-		plot_axes;
 		ui_elements;
+
+		part_panel;
+		segment_panel;
+		contour_panel;
 
 		current_part;
 
@@ -22,8 +25,11 @@ classdef ContourManipulator < handle
 			close all;
 			
 			obj.ui_window = obj.CreateWindow;
-			obj.plot_axes = obj.CreateAxes(obj.ui_window);
+			obj.part_panel = PartPanel(obj.ui_window);
+			ui.segment_panel = SegmentPanel(obj.ui_window);
+
 			obj.ui_elements = obj.CreateUIElements(obj.ui_window);
+
 		end%func Constructor
 
 		function figure_ref = CreateWindow(obj)
@@ -32,7 +38,7 @@ classdef ContourManipulator < handle
 			screen_height = screen_dimensions(4);
 			screen_width = screen_dimensions(3);
 			window_x = (screen_width - obj.window_width) / 2;
-			window_y = (screen_height - obj.window_height) / 2;
+			window_y = (screen_height - obj.window_height) / 2 - 20;
 
 			figure_ref = figure('Name','Contour Manipulator',...
 				'NumberTitle','off',...
@@ -40,18 +46,6 @@ classdef ContourManipulator < handle
 				'Resize','off',...
 				'Color',[0.75,0.75,0.75]);
 		end%func CreateWindow
-
-		function axes_ref = CreateAxes(obj,figure_parent)
-			axes_ref = axes('position',[0.075,0.075,0.625,0.85],'parent',figure_parent,...
-				'gridcolor',[0,0,0],...
-				'gridalpha',0.5);
-			view(45,25);
-			grid on;
-			xlabel('X (mm)');
-			ylabel('Y (mm)');
-			zlabel('Z (mm)');
-			title('Contour Preview','fontsize',20);
-		end%func CreateAxes
 
 		function ui_elements = CreateUIElements(obj,figure_parent)
 			ui_elements.btn_load_part = uicontrol('style','pushbutton',...
@@ -69,6 +63,7 @@ classdef ContourManipulator < handle
 				'callback',{@obj.CallbackRemoveCollinearPoints,obj});
 		end%CreateUIElements
 
+		% UI Pushbutton Callbacks
 		function CallbackLoadPart(hObject, source, event, obj)
 			part = FileTools.PromptForPartImportFromGOM;
 			if(isa(part,'Part'))
@@ -77,7 +72,8 @@ classdef ContourManipulator < handle
 			else
 				fprintf('ContourManipulator::CallbackLoadPart: Invalid file selection.\n');
 			end%if
-			obj.UpdatePlot;
+			pause(1);
+			obj.UpdatePartPlot;
 		end%func CallbackLoadPart
 
 		function CallbackRemoveCollinearPoints(hObject, source, event, obj)
@@ -85,15 +81,21 @@ classdef ContourManipulator < handle
 				PartAlgorithms.CombineCollinearMoves(obj.current_part);
 				obj.bool_part_updated = true;
 			end%if
-			obj.UpdatePlot;
+			obj.UpdatePartPlot;
 		end%func
 
-		function UpdatePlot(obj)
-			if(isa(obj.current_part,'Part'))
+		% Plotting
+		function UpdatePartPlot(obj)
+			part_axes = obj.part_panel.part_axes;
+			current_part = obj.current_part;
+
+			axes(part_axes);
+			
+			if(isa(current_part,'Part'))
 				if(obj.bool_part_updated)
-					reset(obj.plot_axes);
+					reset(part_axes);
 					delete(findobj('tag','move_line'));
-					PlotTools.PlotPart(obj.current_part,obj.plot_axes);
+					PlotTools.PlotPart(current_part,part_axes);
 					obj.bool_part_updated = false;
 				end%if
 			else
