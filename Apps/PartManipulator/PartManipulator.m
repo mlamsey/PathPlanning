@@ -1,4 +1,4 @@
-classdef ContourManipulator < handle
+classdef PartManipulator < handle
 
 	properties(Constant)
 		window_width = 1400;
@@ -21,7 +21,7 @@ classdef ContourManipulator < handle
 
 	methods
 
-		function obj = ContourManipulator(obj)
+		function obj = PartManipulator(obj)
 			close all;
 			
 			obj.ui_window = obj.CreateWindow;
