@@ -2,6 +2,7 @@ classdef PartPanel < handle
 	properties
 		panel;
 		axes_part;
+		label_number_of_segments;
 	end%properties
 
 	methods
@@ -9,6 +10,7 @@ classdef PartPanel < handle
 			panel_position_in_parent = [0.025,0.5125,0.45,0.45];
 			obj.panel = uipanel('position',panel_position_in_parent,'parent',parent_figure);
 			obj.axes_part = PartPanel.CreatePartAxes(obj.panel);
+			obj.label_number_of_segments = PartPanel.CreateCurrentSegmentLabel(obj.panel);
 		end%func Constructor
 	end%methods
 
@@ -26,10 +28,14 @@ classdef PartPanel < handle
 			title('Part Preview','fontsize',20);
 		end%func CreatePartAxes
 
-		function UpdatePlot(part_data,plot_axes)
-			axes(plot_axes);
-			PlotTools.PlotPartSimple(part_data,plot_axes);
-		end%func UpdatePlot
+		function label_ref = CreateCurrentSegmentLabel(panel_parent)
+			label_pos = [0.7,0.8,0.25,0.15];
+			label_ref = uicontrol('Style','text','units','normalized',...
+				'position',label_pos,...
+				'string','Number of Segments: 0',...
+				'parent',panel_parent);
+		end%func CreateCurrentSegmentLabel
+
 	end%static methods
 
 end%class PartPanel
