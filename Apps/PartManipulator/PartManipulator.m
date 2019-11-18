@@ -10,9 +10,12 @@ classdef PartManipulator < handle
 		ui_window;
 		ui_elements;
 
-		part_panel;
-		segment_panel;
-		contour_panel;
+		panel_part;
+		panel_segment;
+		panel_contour;
+
+		listbox_part;
+		listbox_segment;
 
 		current_part;
 
@@ -25,8 +28,10 @@ classdef PartManipulator < handle
 			close all;
 			
 			obj.ui_window = obj.CreateWindow;
-			obj.part_panel = PartPanel(obj.ui_window);
-			ui.segment_panel = SegmentPanel(obj.ui_window);
+			obj.panel_part = PartPanel(obj.ui_window);
+			obj.panel_segment = SegmentPanel(obj.ui_window);
+			obj.listbox_part = obj.CreatePartListbox(obj.ui_window);
+			obj.listbox_segment = obj.CreateSegmentListbox(obj.ui_window);
 
 			obj.ui_elements = obj.CreateUIElements(obj.ui_window);
 
@@ -40,7 +45,7 @@ classdef PartManipulator < handle
 			window_x = (screen_width - obj.window_width) / 2;
 			window_y = (screen_height - obj.window_height) / 2 - 20;
 
-			figure_ref = figure('Name','Contour Manipulator',...
+			figure_ref = figure('Name','Part Manipulator',...
 				'NumberTitle','off',...
 				'position',[window_x,window_y,obj.window_width,obj.window_height],...
 				'Resize','off',...
@@ -62,6 +67,18 @@ classdef PartManipulator < handle
 				'fontsize',obj.font_size_btn,...
 				'callback',{@obj.CallbackRemoveCollinearPoints,obj});
 		end%CreateUIElements
+
+		function listbox_ref = CreatePartListbox(obj,figure_parent)
+			listbox_pos = [0.475,0.5125,0.05,0.45];
+			listbox_ref = uicontrol('style','listbox','units','normalized',...
+				'position',listbox_pos,'parent',figure_parent);
+		end%func CreateSegmentListbox
+
+		function listbox_ref = CreateSegmentListbox(obj,figure_parent)
+			listbox_pos = [0.475,0.025,0.05,0.45];
+			listbox_ref = uicontrol('style','listbox','units','normalized',...
+				'position',listbox_pos,'parent',figure_parent);
+		end%func CreateSegmentListbox
 
 		% UI Pushbutton Callbacks
 		function CallbackLoadPart(hObject, source, event, obj)
@@ -86,17 +103,13 @@ classdef PartManipulator < handle
 
 		% Plotting
 		function UpdatePartPlot(obj)
-			part_axes = obj.part_panel.part_axes;
+			plot_axes = obj.panel_part.axes_part;
 			current_part = obj.current_part;
-
-			axes(part_axes);
 			
 			if(isa(current_part,'Part'))
 				if(obj.bool_part_updated)
-					reset(part_axes);
-					delete(findobj('tag','move_line'));
-					PlotTools.PlotPart(current_part,part_axes);
-					obj.bool_part_updated = false;
+					delete(findobj('tag','simple_plot'));
+					PartPanel.UpdatePlot(current_part,plot_axes);
 				end%if
 			else
 				fprintf('ContourManipulator::UpdatePlot: Current Part not populated.\n');

@@ -286,5 +286,31 @@ classdef ContourAlgorithms
             original_contour.moves{1} = move;
 
         end%func AddMoveAtBeginningOfContour
+
+        function [x,y,z] = GetContourWaypointVectors(original_contour)
+            if(~isa(original_contour,'Contour'))
+                fprintf('ContourAlgorithms::GetContourWaypointVectors: Input is not a Contour\n');
+                x = null;
+                y = null;
+                z = null;
+                return;
+            end%if
+
+            n_moves = length(original_contour.moves);
+            x = zeros(1,n_moves + 1);
+            y = x;
+            z = x;
+
+            for i = 1:n_moves
+                current_move = original_contour.moves{i};
+                x(i) = current_move.point1.x;
+                y(i) = current_move.point1.y;
+                z(i) = current_move.point1.z;
+            end%for i
+
+            x(end) = original_contour.moves{end}.point2.x;
+            y(end) = original_contour.moves{end}.point2.y;
+            z(end) = original_contour.moves{end}.point2.z;
+        end%func GetContourWaypointVectors
     end%methods
 end%classdef ContourAlgorithms

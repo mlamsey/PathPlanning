@@ -1,16 +1,16 @@
 classdef SegmentPanel < handle
 	properties
 		panel;
-		segment_axes;
-		contour_listbox;
+		axes_segment;
+		label_current_segment;
 	end%properties
 
 	methods
 		function obj = SegmentPanel(parent_figure)
-			panel_position_in_parent = [0.025,0.025,0.45,0.475];
+			panel_position_in_parent = [0.025,0.025,0.45,0.45];
 			obj.panel = uipanel('position',panel_position_in_parent,'parent',parent_figure);
-			obj.segment_axes = SegmentPanel.CreateSegmentAxes(obj.panel);
-			obj.contour_listbox = SegmentPanel.CreateContourListbox(obj.panel);
+			obj.axes_segment = SegmentPanel.CreateSegmentAxes(obj.panel);
+			obj.label_current_segment = SegmentPanel.CreateCurrentSegmentLabel(obj.panel);
 		end%func Constructor
 	end%methods
 
@@ -28,11 +28,13 @@ classdef SegmentPanel < handle
 			title('Segment Preview','fontsize',20);
 		end%func CreateSegmentAxes
 
-		function listbox_ref = CreateContourListbox(panel_parent)
-			listbox_pos = [0.8,0.1,0.175,0.8];
-			listbox_ref = uicontrol('style','listbox','units','normalized',...
-				'position',listbox_pos,'parent',panel_parent);
-		end%func CreateContourListbox
+		function label_ref = CreateCurrentSegmentLabel(panel_parent)
+			label_pos = [0.7,0.8,0.25,0.15];
+			label_ref = uicontrol('Style','text','units','normalized',...
+				'position',label_pos,...
+				'string','Current Segment: none',...
+				'parent',panel_parent);
+		end%func CreateCurrentSegmentLabel
 	end%static methods
 
 end%class PartPanel

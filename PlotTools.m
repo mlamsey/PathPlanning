@@ -1,5 +1,27 @@
 classdef PlotTools
 	methods(Static)
+        function figure_ref = PlotPartSimple(part_data,parent_axes)
+            if(~isa(part_data,'Part'))
+                fprintf('PlotTools::PlotPartSimple: Input is not a Part\n');
+                figure_ref = null;
+                return;
+            end%if
+
+            hold on;
+
+            for i_segment = 1:length(part_data.segments)
+                current_segment = part_data.segments{i_segment};
+                for i_contour = 1:length(current_segment.contours)
+                    current_contour = current_segment.contours{i_contour};
+                    [x,y,z] = ContourAlgorithms.GetContourWaypointVectors(current_contour);
+                    plot3(x,y,z,'k-','parent',parent_axes,'tag','simple_plot');
+                end%for i_contour
+            end%for i_segment
+
+            hold off;
+
+        end%func PlotPartSimple
+
         function figure_ref = PlotPartOnNewFigure(part_data)
             f = figure;
             a = axes('parent',f,'gridcolor',[0,0,0],'gridalpha',0.5);

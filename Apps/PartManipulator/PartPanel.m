@@ -1,16 +1,14 @@
 classdef PartPanel < handle
 	properties
 		panel;
-		part_axes;
-		segment_listbox;
+		axes_part;
 	end%properties
 
 	methods
 		function obj = PartPanel(parent_figure)
 			panel_position_in_parent = [0.025,0.5125,0.45,0.45];
 			obj.panel = uipanel('position',panel_position_in_parent,'parent',parent_figure);
-			obj.part_axes = PartPanel.CreatePartAxes(obj.panel);
-			obj.segment_listbox = PartPanel.CreateSegmentListbox(obj.panel);
+			obj.axes_part = PartPanel.CreatePartAxes(obj.panel);
 		end%func Constructor
 	end%methods
 
@@ -28,11 +26,10 @@ classdef PartPanel < handle
 			title('Part Preview','fontsize',20);
 		end%func CreatePartAxes
 
-		function listbox_ref = CreateSegmentListbox(panel_parent)
-			listbox_pos = [0.8,0.1,0.175,0.8];
-			listbox_ref = uicontrol('style','listbox','units','normalized',...
-				'position',listbox_pos,'parent',panel_parent);
-		end%func CreateSegmentListbox
+		function UpdatePlot(part_data,plot_axes)
+			axes(plot_axes);
+			PlotTools.PlotPartSimple(part_data,plot_axes);
+		end%func UpdatePlot
 	end%static methods
 
 end%class PartPanel
