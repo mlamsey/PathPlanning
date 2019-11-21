@@ -96,8 +96,8 @@ classdef PathFileWriter
 			retracted_point = PathFileWriter.GenerateRetractedWaypoint(waypoint);
 
 			% Write offset point and then contour start point
-			appended_string = PathFileWriter.WriteLinearMotion(retracted_point,working_string);
-			appended_string = PathFileWriter.WriteLinearMotion(motion_start_point,appended_string);
+			appended_string = PathFileWriter.WriteTravelLinearMotion(retracted_point,working_string);
+			appended_string = PathFileWriter.WriteTravelLinearMotion(motion_start_point,appended_string);
 
 		end%func WriteStartContour
 
@@ -107,8 +107,8 @@ classdef PathFileWriter
 			retracted_point = PathFileWriter.GenerateRetractedWaypoint(waypoint);
 
 			% Write contour end point and then offset point
-			appended_string = PathFileWriter.WriteLinearMotion(motion_end_point,working_string);
-			appended_string = PathFileWriter.WriteLinearMotion(retracted_point,working_string);
+			appended_string = PathFileWriter.WriteTravelLinearMotion(motion_end_point,working_string);
+			appended_string = PathFileWriter.WriteTravelLinearMotion(retracted_point,working_string);
 
 		end%func WriteEndContour
 
@@ -119,6 +119,14 @@ classdef PathFileWriter
 			':' PathFileWriter.GetWaypointStringWithCustomVelocity(destination_waypoint,PathFileWriter.mms_travel_speed) '\n'];
 
 		end%func WriteRetractMove
+
+		function appended_string = WriteTravelLinearMotion(destination_waypoint,working_string)
+			% Write a fast p2p move
+			appended_string = [working_string ...
+			PathFileWriter.cmd_linear_move ...
+			':' PathFileWriter.GetWaypointStringWithCustomVelocity(destination_waypoint,PathFileWriter.mms_travel_speed) '\n'];
+		
+		end%func WriteJointMotion
 
 		function appended_string = WriteLinearMotion(destination_waypoint,working_string)
 			% Write generic linear motion
