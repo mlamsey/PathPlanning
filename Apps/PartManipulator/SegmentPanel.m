@@ -3,6 +3,7 @@ classdef SegmentPanel < handle
 		panel;
 		axes_segment;
 		label_current_segment;
+		current_contour_number;
 	end%properties
 
 	methods
@@ -35,6 +36,14 @@ classdef SegmentPanel < handle
 				'string','Current Segment: none',...
 				'parent',panel_parent);
 		end%func CreateCurrentSegmentLabel
+
+		function UpdateCurrentSegmentLabel(obj)
+			label = obj.label_current_segment;
+			old_string = label.string;
+			new_string = Utils.RemoveNumberFromEndOfString(old_string);
+			new_string = strcat(new_string,' ',num2str(obj.current_contour_number));
+			label.string = new_string;
+		end%func UpdateCurrentSegmentLabel
 	end%static methods
 
 end%class PartPanel

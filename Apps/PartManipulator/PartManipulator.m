@@ -110,7 +110,8 @@ classdef PartManipulator < handle
 				if(obj.bool_part_updated)
 					delete(findobj('tag','simple_plot'));
 					axes(plot_axes);
-					PlotTools.PlotPartSimple(part_data,plot_axes);
+					PlotTools.PlotPartSimple(current_part,plot_axes);
+					PartPanel.UpdateNumberOfSegments(obj.panel_part,length(obj.current_part));
 				end%if
 			else
 				fprintf('ContourManipulator::UpdatePlot: Current Part not populated.\n');

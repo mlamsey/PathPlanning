@@ -61,7 +61,7 @@ classdef Utils
 		end%func GetDirectionVectorFromQuaternion
 
 		function [a,b,c] = GetABCFromQuaternion(torch_quaternion)
-			angles = eulerd(torch_quaternion,'XYZ','frame');
+			angles = eulerd(torch_quaternion,'ZYZ','frame');
 			a = angles(1);
 			b = angles(2);
 			c = angles(3);
@@ -136,6 +136,15 @@ classdef Utils
 				str = [str num2str(vector(i),'%1.3f') ','];
 			end%for i
 		end%func GetCommaSeparatedString
+
+		function str = RemoveNumberFromEndOfString(original_string)
+			reversed_string = reverse(original_string);
+			i = 0;
+			while(~isletter(reversed_string(i + 1)))
+				i = i + 1;
+			end%while
+			str = original_string(1:end - i);
+		end%func RemoveNumberFromEndOfString
 
 	end%methods
 end%class Utils
