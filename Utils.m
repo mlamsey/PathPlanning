@@ -60,8 +60,21 @@ classdef Utils
 			direction_vector = direction_vector ./ norm(direction_vector);
 		end%func GetDirectionVectorFromQuaternion
 
-		function [a,b,c] = GetABCFromQuaternion(torch_quaternion)
-			angles = eulerd(torch_quaternion,'ZYZ','frame');
+		function [a,b,c] = GetEulerAnglesFromQuaternion(torch_quaternion,angle_format_string)
+			if(~isa(angle_format_string,'char'))
+				fprintf('Utils::GetEulerAnglesFromQuaternion: Input not a char\n');
+				a = 0;
+				b = 0;
+				c = 0;
+				return;
+			elseif(length(angle_format_string) ~= 3)
+				fprintf('')
+				a = 0;
+				b = 0;
+				c = 0;
+			end%if
+
+			angles = eulerd(torch_quaternion,'ZYZ','point');
 			a = angles(1);
 			b = angles(2);
 			c = angles(3);

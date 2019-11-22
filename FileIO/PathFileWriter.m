@@ -156,7 +156,7 @@ classdef PathFileWriter
 			str_y = num2str(waypoint.y,'%1.3f');
 			str_z = num2str(waypoint.z,'%1.3f');
 
-			[a,b,c] = Utils.GetABCFromQuaternion(waypoint.torch_quaternion);
+			[a,b,c] = Utils.GetEulerAnglesFromQuaternion(waypoint.torch_quaternion,'ZYZ');
 
 			str_a = num2str(a,'%1.3f');
 			str_b = num2str(b,'%1.3f');
@@ -182,7 +182,7 @@ classdef PathFileWriter
 			str_y = num2str(waypoint.y,'%1.3f');
 			str_z = num2str(waypoint.z,'%1.3f');
 
-			[a,b,c] = Utils.GetABCFromQuaternion(waypoint.torch_quaternion);
+			[a,b,c] = Utils.GetEulerAnglesFromQuaternion(waypoint.torch_quaternion,'ZYZ');
 
 			str_a = num2str(a,'%1.3f');
 			str_b = num2str(b,'%1.3f');
