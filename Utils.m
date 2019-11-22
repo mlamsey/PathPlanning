@@ -74,7 +74,7 @@ classdef Utils
 				c = 0;
 			end%if
 
-			angles = eulerd(torch_quaternion,'ZYZ','point');
+			angles = eulerd(torch_quaternion,'ZYZ','frame');
 			a = angles(1);
 			b = angles(2);
 			c = angles(3);
