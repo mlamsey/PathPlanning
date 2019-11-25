@@ -1,10 +1,12 @@
 classdef CoordinateSystemPlot < handle
 	properties
+		% Data
 		x_axis_direction;
 		y_axis_direction;
 		z_axis_direction;
 		origin;
 
+		% Plot Objects
 		x_line;
 		y_line;
 		z_line;
@@ -29,18 +31,18 @@ classdef CoordinateSystemPlot < handle
 				return;
 			end%if
 
-			obj.x_axis_direction = x_direction ./ norm(x_direction);
-			obj.y_axis_direction = y_direction ./ norm(y_direction);
-			obj.z_axis_direction = z_direction ./ norm(z_direction);
+			obj.x_axis_direction = x_direction' ./ norm(x_direction);
+			obj.y_axis_direction = y_direction' ./ norm(y_direction);
+			obj.z_axis_direction = z_direction' ./ norm(z_direction);
 			obj.origin = origin;
 		end%func Constructor
 
 		function obj = Plot(obj,plot_parent,line_length)
-			if(~isa(plot_parent,'axes'))
+			if(~isa(plot_parent,'matlab.graphics.axis.Axes'))
 				fprintf('CoordinateSystemPlot::Plot: Input 1 not axes\n');
 				return;
 			end%if
-			
+
 			obj.plot_parent = plot_parent;
 
 			x_start = obj.origin;

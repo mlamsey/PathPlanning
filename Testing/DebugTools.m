@@ -51,7 +51,7 @@ classdef DebugTools
             end%for i
         end%func IterativeSegmentQuatPlot
 
-        function ref = PlotContourWithTorchQuaternions(previous_contour,this_contour)
+        function ref = PlotContoursWithTorchQuaternions(previous_contour,this_contour)
             if(~isa(previous_contour,'Contour') || ~isa(this_contour,'Contour'))
                 fprintf('DebugTools::PlotContourWithTorchQuaternions: Inputs not a contour\n');
                 return;
@@ -103,7 +103,46 @@ classdef DebugTools
 
             ref = a;
 
-        end%func PlotContourWithTorchQuaternions
+        end%func PlotContoursWithTorchQuaternions
+
+        function PlotContourWithToolCoordinateFrames(original_contour)
+            if(~isa(original_contour,'Contour'))
+                fprintf('DebugTools::PlotContourWithToolCoordinateFrames: Input not a contour\n');
+                return;
+            end%if
+
+            close all;
+            f = figure('units','normalized','outerposition',[0,0,1,1]);
+            a = axes('parent',f);
+            view(25,45);
+            hold on;
+
+            PlotTools.PlotContour(original_contour,a);
+
+            for i = 1:length(original_contour.moves)
+                this_move = original_contour.moves{i};
+
+                % Get info from point 1 on move
+                quat = this_move.point1.torch_quaternion;
+                R = rotmat(quat,'frame');
+
+                cs_x_direction = R(:,1);
+                cs_y_direction = R(:,2);
+                cs_z_direction = R(:,3);
+                cs_origin = [this_move.point1.x,this_move.point1.y,this_move.point1.z];
+
+                cs = CoordinateSystemPlot(cs_origin,cs_x_direction,cs_y_direction,cs_z_direction);
+                cs.Plot(a,10);
+            end%for i
+
+            hold off;
+            grid on;
+            zlim([min([xlim,ylim,zlim]),max([xlim,ylim,zlim])]);
+            xlabel('X (mm)');
+            ylabel('Y (mm)');
+            zlabel('Z (mm)');
+
+        end%func PlotContourWithToolCoordinateFrames
 
         function PlotVectorProjection(a,b)
             [a1,a2] = Utils.VectorProjection(a,b);

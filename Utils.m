@@ -54,7 +54,7 @@ classdef Utils
 				return;
 			end%if
 
-			R = rotmat(torch_quaternion,'frame');
+			R = rotmat(torch_quaternion,'point');
 			direction_vector = R*[0;0;-1];
 
 			direction_vector = direction_vector ./ norm(direction_vector);
@@ -74,7 +74,7 @@ classdef Utils
 				c = 0;
 			end%if
 
-			angles = eulerd(torch_quaternion,angle_format_string,'frame');
+			angles = eulerd(torch_quaternion,angle_format_string,'point');
 			a = angles(1);
 			b = angles(2);
 			c = angles(3);
