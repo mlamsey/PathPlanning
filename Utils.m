@@ -50,7 +50,7 @@ classdef Utils
 		function direction_vector = GetDirectionVectorFromQuaternion(torch_quaternion)
 			if(~isa(torch_quaternion,'quaternion'))
 				fprintF('Utils::GetDirectionVectorFromQuaternion: Input not a quaternion\n');
-				direction_vector = [0,0,1];
+				direction_vector = [0,0,-1];
 				return;
 			end%if
 
@@ -68,7 +68,7 @@ classdef Utils
 				c = 0;
 				return;
 			elseif(length(angle_format_string) ~= 3)
-				fprintf('')
+				fprintf('Utils::GetEulerAnglesFromQuaternion: Input not length 3\n');
 				a = 0;
 				b = 0;
 				c = 0;
