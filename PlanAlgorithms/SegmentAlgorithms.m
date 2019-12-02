@@ -29,6 +29,8 @@ classdef SegmentAlgorithms
 				return;
 			end%if
 
+			ContourAlgorithms.UpdateTorchQuaternionsUsingTravelVectorOnly(original_segment.contours{1});
+
 			if(length(original_segment.contours) > 1)
 				% for i = 2:end b/c first contour has GA torch orientation
 				for i = 2:length(original_segment.contours)

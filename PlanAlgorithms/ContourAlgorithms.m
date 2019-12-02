@@ -1,4 +1,8 @@
 classdef ContourAlgorithms
+    properties(Constant)
+        default_GA_torch_angle = [0,0,1];
+    end%properties
+
 	methods(Static)
 
         function DecimateContourByMoveLength(original_contour,mm_decimate_move_length)
@@ -26,6 +30,23 @@ classdef ContourAlgorithms
             original_contour.moves = moves;
 
         end%func
+
+        function UpdateTorchQuaternionsUsingTravelVectorOnly(this_contour)
+            if(~isa(this_contour,'Contour'))
+                fprintf('ContourAlgorithms::UpdateTorchQuaternionUsingTravelVectorOnly: Input not a Contour\n');
+                return;
+            end%if
+
+            n_moves = length(this_contour.moves);
+
+            for i = 1:n_moves
+                current_move = this_contour.moves{i};
+
+                travel_vector = MoveAlgorithms.GetMoveDirectionVector(current_move);
+                torch_quaternion = Utils.GetQuaternionFromNormalVectorAndTravelVector(ContourAlgorithms.default_GA_torch_angle,travel_vector);
+                MoveAlgorithms.UpdateTorchOrientation(current_move,torch_quaternion);
+            end%for i
+        end%func UpdateTorchQuaternionUsingTravelVectorOnly
 
         function UpdateTorchQuaternionsUsingInterContourVectors(this_contour,previous_contour)
             if(~isa(this_contour,'Contour') || ~isa(previous_contour,'Contour'))
