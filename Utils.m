@@ -1,6 +1,7 @@
 classdef Utils
 	properties(Constant)
 		e = 10^-9; % epsilon
+		rotation_type = 'frame';
 	end%properties
 
 	methods(Static)
@@ -54,7 +55,7 @@ classdef Utils
 				return;
 			end%if
 
-			R = rotmat(torch_quaternion,'point');
+			R = rotmat(torch_quaternion,Utils.rotation_type);
 			direction_vector = R*[0;0;-1];
 
 			direction_vector = direction_vector ./ norm(direction_vector);
@@ -74,7 +75,7 @@ classdef Utils
 				c = 0;
 			end%if
 
-			angles = eulerd(torch_quaternion,angle_format_string,'point');
+			angles = eulerd(torch_quaternion,angle_format_string,Utils.rotation_type);
 			a = angles(1);
 			b = angles(2);
 			c = angles(3);
@@ -100,7 +101,7 @@ classdef Utils
 			x_axis(2),y_axis(2),z_axis(2)
 			x_axis(3),y_axis(3),z_axis(3)];
 
-			q = quaternion(R,'rotmat','frame');
+			q = quaternion(R,'rotmat',Utils.rotation_type);
 			% Normalize quaternion
 			q = Utils.NormalizeQuaternion(q);
 
