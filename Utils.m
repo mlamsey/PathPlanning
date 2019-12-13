@@ -61,6 +61,16 @@ classdef Utils
 			direction_vector = direction_vector ./ norm(direction_vector);
 		end%func GetDirectionVectorFromQuaternion
 
+		function [a,b,c] = GetZYZEulerAnglesFromRotationMatrix(R)
+			a = atan2(R(2,3),R(1,3));
+			b = atan2(sqrt(R(1,3)^2 + R(2,3)^2),R(3,3));
+			c = atan2(R(3,2),-1*R(3,1));
+
+			a = rad2deg(a);
+			b = rad2deg(b);
+			c = rad2deg(c);
+		end%func GetZYZEulerAnglesFromRotationMatrix
+
 		function [a,b,c] = GetEulerAnglesFromQuaternion(torch_quaternion,angle_format_string)
 			if(~isa(angle_format_string,'char'))
 				fprintf('Utils::GetEulerAnglesFromQuaternion: Input not a char\n');

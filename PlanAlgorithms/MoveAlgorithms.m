@@ -6,7 +6,7 @@ classdef MoveAlgorithms
 
 	methods(Static)
 
-		function UpdateTorchOrientation(move,torch_quaternion)
+		function UpdateTorchQuaternion(move,torch_quaternion)
 			if(~isa(move,'Move'))
 				fprintf('MoveAlgorithms::UpdateTorchOrientation: Input 1 not a Move\n');
 				return;
@@ -18,6 +18,21 @@ classdef MoveAlgorithms
 
             move.point1.torch_quaternion = torch_quaternion;
             move.point2.torch_quaternion = torch_quaternion;
+		end%func UpdateABC
+
+		function UpdateRotationMatrix(move,R)
+			if(~isa(move,'Move'))
+				fprintf('MoveAlgorithms::UpdateTorchOrientation: Input 1 not a Move\n');
+				return;
+			end%if
+			R_size = size(R);
+			if(R_size(1) ~= 3 || R_size(2) ~= 3)
+				fprintf('MoveAlgorithms::UpdateTorchOrientation: Input 2 not 3x3\n');
+				return;
+			end%if
+
+            move.point1.R = R;
+            move.point2.R = R;
 		end%func UpdateABC
 
 		function move_direction_vector = GetMoveDirectionVector(move)

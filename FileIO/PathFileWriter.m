@@ -156,8 +156,9 @@ classdef PathFileWriter
 			str_y = num2str(waypoint.y,'%1.3f');
 			str_z = num2str(waypoint.z,'%1.3f');
 
-			[a,b,c] = Utils.GetEulerAnglesFromQuaternion(waypoint.torch_quaternion,'ZYZ');
-
+			% [a,b,c] = Utils.GetEulerAnglesFromQuaternion(waypoint.torch_quaternion,'ZYZ');
+			[a,b,c] = Utils.GetZYZEulerAnglesFromRotationMatrix(waypoint.R);
+			
 			str_a = num2str(a,'%1.3f');
 			str_b = num2str(b,'%1.3f');
 			str_c = num2str(c,'%1.3f');
