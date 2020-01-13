@@ -5,7 +5,7 @@ classdef FileTools
 
     methods(Static)
         function part = PromptForPartImportFromGOM
-            msg = questdlg('Please select a folder containing contours from GOM','ContourManipulator INFO','OK','OK');
+            msg = questdlg('Please select a folder containing contours from GOM','INFO','OK','OK');
             directory = uigetdir;
             if(~directory)
                 fprintf('FileTools::PromptForPartImportFromGOM: No directory selected!\n');
