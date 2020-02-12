@@ -21,6 +21,7 @@ classdef PathFileWriterApp < handle
 
 	methods
 		function obj = PathFileWriterApp(obj)
+            close all;
 			obj.ui_window = obj.CreateWindow;
 			obj.axes_part = obj.CreatePartAxes(obj.ui_window);
 			obj.ui_elements = obj.CreateUIElements(obj.ui_window);
