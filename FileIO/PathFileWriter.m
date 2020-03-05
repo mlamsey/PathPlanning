@@ -156,7 +156,6 @@ classdef PathFileWriter
 			str_y = num2str(waypoint.y,'%1.3f');
 			str_z = num2str(waypoint.z,'%1.3f');
 
-			% [a,b,c] = Utils.GetEulerAnglesFromQuaternion(waypoint.torch_quaternion,'ZYZ');
 			[a,b,c] = Utils.GetZYZEulerAnglesFromRotationMatrix(waypoint.R);
 			
 			str_a = num2str(a,'%1.3f');
@@ -183,7 +182,7 @@ classdef PathFileWriter
 			str_y = num2str(waypoint.y,'%1.3f');
 			str_z = num2str(waypoint.z,'%1.3f');
 
-			[a,b,c] = Utils.GetEulerAnglesFromQuaternion(waypoint.torch_quaternion,'ZYZ');
+			[a,b,c] = Utils.GetZYZEulerAnglesFromRotationMatrix(waypoint.R);
 
 			str_a = num2str(a,'%1.3f');
 			str_b = num2str(b,'%1.3f');
@@ -204,19 +203,17 @@ classdef PathFileWriter
 				return;
 			end%if
 
-			torch_quaternion = waypoint_on_contour.torch_quaternion;
-
 			% Find torch direction + retract distance
-			retract_direction = Utils.GetDirectionVectorFromQuaternion(torch_quaternion);
-			retracted_point_offset = PathFileWriter.mm_retract_z_offset .* retract_direction;
+			retract_vector = [0,0,PathFileWriter.mm_retract_z_offset];
+			retracted_point_offset = retract_vector * transpose(waypoint_on_contour.R);
 
 			% Generate point away from workpiece in torch direction
 			retracted_x = waypoint_on_contour.x - retracted_point_offset(1);
 			retracted_y = waypoint_on_contour.y - retracted_point_offset(2);
 			retracted_z = waypoint_on_contour.z - retracted_point_offset(3);
 
-			retracted_point = Waypoint(retracted_x,retracted_y,retracted_z,torch_quaternion,PathFileWriter.mms_welding_speed);
-
+			retracted_point = Waypoint(retracted_x,retracted_y,retracted_z,waypoint_on_contour.torch_quaternion,PathFileWriter.mms_welding_speed);
+			retracted_waypoint.R = waypoint_on_contour.R;
 		end%func GenerateRetractedWaypoint
 	end%methods
 end%class PathFileWriter

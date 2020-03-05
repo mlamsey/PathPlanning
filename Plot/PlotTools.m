@@ -7,6 +7,12 @@ classdef PlotTools
                 return;
             end%if
 
+            start_color = [0,1,0];
+            end_color = [1,0,0];
+            colors = [linspace(start_color(1),end_color(1),length(part_data.segments{1}.contours));...
+                linspace(start_color(2),end_color(2),length(part_data.segments{1}.contours));...
+                linspace(start_color(3),end_color(3),length(part_data.segments{1}.contours))];
+
             hold on;
 
             for i_segment = 1:length(part_data.segments)
@@ -14,7 +20,8 @@ classdef PlotTools
                 for i_contour = 1:length(current_segment.contours)
                     current_contour = current_segment.contours{i_contour};
                     [x,y,z] = ContourAlgorithms.GetContourWaypointVectors(current_contour);
-                    plot3(x,y,z,'k-','parent',parent_axes,'tag','simple_plot');
+                    plot_color = colors(:,i_contour) ./ norm(colors(:,i_contour));
+                    plot3(x,y,z,'-','color',plot_color,'parent',parent_axes,'tag','simple_plot');
                 end%for i_contour
             end%for i_segment
 

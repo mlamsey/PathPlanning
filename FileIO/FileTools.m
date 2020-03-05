@@ -145,5 +145,40 @@ classdef FileTools
 
         end%func PadFileNameZeros
 
+        function ReverseFileOrder(filename_prefix,directory)
+            working_dir = dir(directory);
+            if(length(working_dir) == 0)
+                fprintf('FileTools::PadFileNameZeros: Directory not found\n');
+                return;
+            end%if
+
+            file_numbers = [];
+
+            for i = 1:length(working_dir)
+                filename = working_dir(i).name;
+                if(contains(filename,filename_prefix));
+                    file_number_index = max(strfind(filename,' ')) + 1;
+                    end_number_index = strfind(filename(file_number_index:end),'.') + file_number_index - 1;
+                    file_numbers = [file_numbers,str2num(filename(file_number_index:end_number_index))];
+                end%if
+            end%for i
+            file_numbers
+
+            % for i = 1:length(working_dir)
+            %     filename = working_dir(i).name;
+            %     old_file_string = strcat(working_dir(i).folder,'\',filename);
+
+            %     if(contains(filename,filename_prefix))
+
+
+            %         new_file_string = strcat(working_dir(i).folder,'\',filename);
+
+            %         if(~strcmp(old_file_string,new_file_string))
+            %             movefile(old_file_string,new_file_string);
+            %         end%if
+            %     end%if
+            % end%for i
+        end%func ReverseFileOrder
+
     end%Static Methods
 end%class ContourTools

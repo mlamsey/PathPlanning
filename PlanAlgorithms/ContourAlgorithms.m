@@ -1,6 +1,6 @@
 classdef ContourAlgorithms
     properties(Constant)
-        default_GA_torch_angle = [0,0,1];
+        default_GA_torch_angle = [0,0,-1];
     end%properties
 
 	methods(Static)
@@ -68,7 +68,7 @@ classdef ContourAlgorithms
                 torch_quaternion = Utils.GetQuaternionFromNormalVectorAndTravelVector(normal_vector,travel_vector);
 
                 MoveAlgorithms.UpdateTorchQuaternion(current_move,torch_quaternion);
-                %test
+
                 z_axis = normal_vector ./ norm(normal_vector);
                 x_axis = travel_vector ./ norm(travel_vector);
                 y_axis = cross(z_axis,x_axis);
@@ -110,7 +110,7 @@ classdef ContourAlgorithms
             this_move_direction_vector = MoveAlgorithms.GetMoveDirectionVector(move_on_current_contour);
             [proj,normal] = Utils.VectorProjection(vector_between_moves,this_move_direction_vector);
 
-            normalized_normal_vector = normal ./ norm(normal);
+            normalized_normal_vector = -1 .* normal ./ norm(normal);
             
         end%func GetNormalVectorFromClosestMoveOnPreviousContour
 
