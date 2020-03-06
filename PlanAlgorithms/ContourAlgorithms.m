@@ -45,6 +45,16 @@ classdef ContourAlgorithms
                 travel_vector = MoveAlgorithms.GetMoveDirectionVector(current_move);
                 torch_quaternion = Utils.GetQuaternionFromNormalVectorAndTravelVector(ContourAlgorithms.default_GA_torch_angle,travel_vector);
                 MoveAlgorithms.UpdateTorchQuaternion(current_move,torch_quaternion);
+
+                z_axis = [0,0,1];
+                x_axis = travel_vector ./ norm(travel_vector);
+                y_axis = cross(z_axis,x_axis);
+                y_axis = y_axis ./ norm(y_axis);
+
+                R = [x_axis(1),y_axis(1),z_axis(1)
+                x_axis(2),y_axis(2),z_axis(2)
+                x_axis(3),y_axis(3),z_axis(3)];
+                MoveAlgorithms.UpdateRotationMatrix(current_move,R);
             end%for i
         end%func UpdateTorchQuaternionUsingTravelVectorOnly
 
@@ -78,7 +88,7 @@ classdef ContourAlgorithms
                 x_axis(2),y_axis(2),z_axis(2)
                 x_axis(3),y_axis(3),z_axis(3)];
                 MoveAlgorithms.UpdateRotationMatrix(current_move,R);
-                %end test
+
                 number_of_search_iterations_average = number_of_search_iterations_average + ((number_of_search_iterations - number_of_search_iterations_average) / i);
             end%for i
 

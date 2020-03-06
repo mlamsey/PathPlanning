@@ -22,7 +22,7 @@ classdef StandardProcessing
 			fprintf('Standard Processing: Default Part Cleanup\n');
 
 			PartAlgorithms.CombineCollinearMoves(part);
-			PartAlgorithms.RepairContourEndContinuity(part);
+			% PartAlgorithms.RepairContourEndContinuity(part);
 			PartAlgorithms.DecimateContoursByMoveLength(part,StandardProcessing.mm_decimate_move_length);
 			PartAlgorithms.UpdateTorchQuaternionsUsingInterContourVectors(part);
 
