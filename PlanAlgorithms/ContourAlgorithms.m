@@ -1,6 +1,6 @@
 classdef ContourAlgorithms
     properties(Constant)
-        default_GA_torch_angle = [0,0,-1];
+        default_GA_torch_angle = [0,0,1];
     end%properties
 
 	methods(Static)
@@ -69,7 +69,7 @@ classdef ContourAlgorithms
 
                 MoveAlgorithms.UpdateTorchQuaternion(current_move,torch_quaternion);
 
-                z_axis = normal_vector ./ norm(normal_vector);
+                z_axis = -1 .* normal_vector ./ norm(normal_vector);
                 x_axis = travel_vector ./ norm(travel_vector);
                 y_axis = cross(z_axis,x_axis);
                 y_axis = y_axis ./ norm(y_axis);

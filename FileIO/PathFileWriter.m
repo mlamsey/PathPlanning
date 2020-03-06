@@ -75,11 +75,11 @@ classdef PathFileWriter
 			for i = 1:length(current_contour.moves)
 				current_move = current_contour.moves{i};
 
-				% Write first move
-				if(i == 1)
+				% Write moves
+				if(i == 1) % first move
 					write_string = PathFileWriter.WriteStartContour(current_move.point1,write_string);
 					write_string = PathFileWriter.WriteLinearMotion(current_move.point2,write_string);
-				elseif(i == length(current_contour.moves))
+				elseif(i == length(current_contour.moves)) % last move
 					write_string = PathFileWriter.WriteEndContour(current_move.point2,write_string);
 				else
 					write_string = PathFileWriter.WriteLinearMotion(current_move.point2,write_string);
@@ -208,9 +208,9 @@ classdef PathFileWriter
 			retracted_point_offset = retract_vector * transpose(waypoint_on_contour.R);
 
 			% Generate point away from workpiece in torch direction
-			retracted_x = waypoint_on_contour.x - retracted_point_offset(1);
-			retracted_y = waypoint_on_contour.y - retracted_point_offset(2);
-			retracted_z = waypoint_on_contour.z - retracted_point_offset(3);
+			retracted_x = waypoint_on_contour.x + retracted_point_offset(1);
+			retracted_y = waypoint_on_contour.y + retracted_point_offset(2);
+			retracted_z = waypoint_on_contour.z + retracted_point_offset(3);
 
 			retracted_point = Waypoint(retracted_x,retracted_y,retracted_z,waypoint_on_contour.torch_quaternion,PathFileWriter.mms_welding_speed);
 			retracted_waypoint.R = waypoint_on_contour.R;
