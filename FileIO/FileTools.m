@@ -162,22 +162,61 @@ classdef FileTools
                     file_numbers = [file_numbers,str2num(filename(file_number_index:end_number_index))];
                 end%if
             end%for i
-            file_numbers
+            % file_numbers is now in the order found in the directory
 
-            % for i = 1:length(working_dir)
-            %     filename = working_dir(i).name;
-            %     old_file_string = strcat(working_dir(i).folder,'\',filename);
+            max_file_number_order = floor(log10(max(file_numbers)));
 
-            %     if(contains(filename,filename_prefix))
+            reversed_file_numbers = flip(file_numbers);
+            j = 1;
 
+            for i = 1:length(working_dir)
+                filename = working_dir(i).name;
+                old_file_string = strcat(working_dir(i).folder,'\',filename);
 
-            %         new_file_string = strcat(working_dir(i).folder,'\',filename);
+                if(contains(filename,filename_prefix))
+                    file_number_index = max(strfind(filename,' ')) + 1;
+                    end_number_index = strfind(filename(file_number_index:end),'.') + file_number_index - 1;
 
-            %         if(~strcmp(old_file_string,new_file_string))
-            %             movefile(old_file_string,new_file_string);
-            %         end%if
-            %     end%if
-            % end%for i
+                    filename = strcat(filename(1:file_number_index - 1),{' '},num2str(reversed_file_numbers(j)),filename(end_number_index:end));
+                    filename = filename{1};
+
+                    file_number_order = floor(log10(reversed_file_numbers(j)));
+
+                    if(file_number_order < 0)
+                        file_number_order = 0;
+                    end%if
+
+                    while(file_number_order < max_file_number_order)
+                        filename = strcat(filename(1:file_number_index-1),{' '},'0',filename(file_number_index:end));
+                        filename = filename{1};
+                        file_number_order = file_number_order + 1;
+                    end%while
+
+                    % move to temp to prevent overwrite
+                    new_file_string = strcat(working_dir(i).folder,'\','temp',filename);
+
+                    if(~strcmp(old_file_string,new_file_string))
+                        movefile(old_file_string,new_file_string);
+                    end%if
+                    j = j + 1;
+                end%if
+            end%for i
+
+            working_dir = dir(directory);
+            j = 1;
+            for i = 1:length(working_dir)
+                filename = working_dir(i).name;
+                old_file_string = strcat(working_dir(i).folder,'\',filename);
+                if(contains(filename,filename_prefix))
+                    filename = filename(5:end)
+                    new_file_string = strcat(working_dir(i).folder,'\',filename);
+
+                    if(~strcmp(old_file_string,new_file_string))
+                        movefile(old_file_string,new_file_string);
+                    end%if
+                    j = j + 1;
+                end%if
+            end%for i
         end%func ReverseFileOrder
 
     end%Static Methods
