@@ -1,5 +1,5 @@
 classdef Waypoint < handle & matlab.mixin.Copyable
-	properties % from Matt's PC
+	properties
 		x;
 		y;
 		z;
