@@ -26,7 +26,7 @@ classdef DebugTools
 
 			for i = 1:length(contour_data.moves)
 				current_point = contour_data.moves{i}.point1;
-				[ai,bi,ci] = Utils.GetABCFromQuaternion(current_point.torch_quaternion);
+				[ai,bi,ci] = Utils.GetZYZEulerAnglesFromRotationMatrix(current_point.R);
 				a(i) = ai;
 				b(i) = bi;
 				c(i) = ci;
@@ -44,6 +44,7 @@ classdef DebugTools
 		end%func PlotContourEulerAngles
 
 		function IterativeSegmentQuatPlot(seg)
+            fprintf('Press Space to iterate.\n');
             for i = 1:length(seg.contours)
                 p = PlotTools.PlotContourWithTorchQuaternions(seg.contours{i});
                 title(p,num2str(i));
@@ -114,7 +115,7 @@ classdef DebugTools
             close all;
             f = figure('units','normalized','outerposition',[0,0,1,1]);
             a = axes('parent',f);
-            view(25,45);
+            view(45,45);
             hold on;
 
             PlotTools.PlotContour(original_contour,a);
