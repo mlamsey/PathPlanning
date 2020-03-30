@@ -62,13 +62,22 @@ classdef Utils
 		end%func GetDirectionVectorFromQuaternion
 
 		function [a,b,c] = GetZYZEulerAnglesFromRotationMatrix(R)
-			a = atan2(R(2,3),R(1,3));
-			b = atan2(sqrt(R(1,3)^2 + R(2,3)^2),R(3,3));
-			c = atan2(R(3,2),-1*R(3,1));
+			% From Siciliano p.31
+			if(R(3,3) < 0.999) % Check if vertical (solution degenerates)
+				a = atan2(R(2,3),R(1,3));
+				b = atan2(sqrt(R(1,3)^2 + R(2,3)^2),R(3,3));
+				c = atan2(R(3,2),-1*R(3,1));
 
-			a = rad2deg(a);
-			b = rad2deg(b);
-			c = rad2deg(c);
+				a = rad2deg(a);
+				b = rad2deg(b);
+				c = rad2deg(c);
+			else % if is vertical, just use one Z rotation
+				a = 0;
+				b = 0;
+				c = atan2(R(2,1),R(1,1));
+
+				c = rad2deg(c);
+			end%if
 		end%func GetZYZEulerAnglesFromRotationMatrix
 
 		function [a,b,c] = GetEulerAnglesFromQuaternion(torch_quaternion,angle_format_string)
