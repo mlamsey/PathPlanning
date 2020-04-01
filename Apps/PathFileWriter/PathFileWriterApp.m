@@ -9,13 +9,11 @@ classdef PathFileWriterApp < handle
 	properties
 		ui_window;
 		ui_elements;
+		cleanup_popout;
 
 		axes_part;
-
 		current_part;
-
 		save_path;
-
 		bool_part_updated;
 	end%properties
 
