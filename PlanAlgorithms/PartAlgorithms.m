@@ -78,5 +78,52 @@ classdef PartAlgorithms
 				SegmentAlgorithms.RepairContourEndContinuity(original_part.segments{i});
 			end%for i
 		end%func RepairContourEndContinuity
+
+		function RemoveTailOfContours(original_part,percent_of_each_contour_to_remove)
+			if(~isa(original_part,'Part'))
+				fprintf('PartAlgoritms::RemoveTailOfContours: Input 1 not a contour!\n');
+				return;
+			end%if
+			if(percent_of_each_contour_to_remove <= 0 || percent_of_each_contour_to_remove >= 1)
+				fprintf('PartAlgorithms::RemoveTailOfContours: Input 2 outside range [0,1]\n');
+				return;
+			end%if
+
+			for i = 1:length(original_part.segments)
+				current_segment = original_part.segments{i};
+
+				for j = 1:length(current_segment.contours)
+					current_contour = current_segment.contours{j};
+					n_moves = length(current_contour.moves);
+					reduced_n_moves = floor(n_moves * percent_of_each_contour_to_remove);
+					current_contour.moves = {current_contour.moves{1:reduced_n_moves}};
+				end%for j
+			end%for i
+		end%func RemoveTailOfContour
+
+		function RemoveContourLessThanZero(original_part)
+			if(~isa(original_part,'Part'))
+				fprintf('PartAlgoritms::RemoveContourLessThanZero: Input 1 not a contour!\n');
+				return;
+			end%if
+
+			for i = 1:length(original_part.segments)
+				current_segment = original_part.segments{i};
+
+				for j = 1:length(current_segment.contours)
+					current_contour = current_segment.contours{j};
+					n_moves = length(current_contour.moves);
+					state = zeros(1,n_moves);
+					for k = 1:n_moves
+						if(current_contour.moves{k}.point2.x < 0.1)
+							state(k) = 0;
+						else
+							state(k) = 1;
+						end%if
+					end%for k
+					current_contour.moves = {current_contour.moves{logical(state)}};
+				end%for j
+			end%for i
+		end%func RemoveContourLessThanZero
 	end%methods
 end%class PartAlgorithms

@@ -26,6 +26,7 @@ classdef PlotTools
             end%for i_segment
 
             hold off;
+            view(25,45);
 
         end%func PlotPartSimple
 
