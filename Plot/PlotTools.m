@@ -197,6 +197,91 @@ classdef PlotTools
             end%if
         end%func PlotMoveVector
 
+        function ref = PlotPartBeads(ax,part_data)
+            if(~isa(part_data,'Part'))
+                fprintf('PlotTools::PlotPartBeads: Input 2 not a part\n');
+                ref = [];
+                return;
+            end%if
+
+            % Quick and dirty for now because segments are irrelevant as of 20 may 2020
+            % needs insertion of PlotSegmentBeads()
+            for i = 1:length(part_data.segments)
+                current_segment = part_data.segments{i};
+                for j = 1:length(current_segment.contours)
+                    fprintf('%i/%i\n',j,length(current_segment.contours));
+                    hold on;
+                    current_contour = current_segment.contours{j};
+                    PlotTools.PlotContourBeads(ax,current_contour);
+                    hold off;
+                end%for j
+            end%for i
+            PlotTools.BufferPlotAxes(ax,0.25);
+        end%func PlotPartBeads
+
+        function ref = PlotContourBeads(ax,contour_data)
+            if(nargin == 1)
+                if(~isa(ax,'Contour'))
+                    fprintf('PlotTools::PlotContourBeads: 1 argument provided, not a Contour\n');
+                    ref = [];
+                    return;
+                else
+                    contour_data = ax;
+                    ax = axes;
+                end%if
+            elseif(nargin == 2)
+                if(~isa(ax,'matlab.graphics.axis.Axes'))
+                    fprintf('PlotTools::PlotContourBeads: Input 1 not Axes\n');
+                    ref = [];
+                    return;
+                end%if
+                if(~isa(contour_data,'Contour'))
+                    fprintf('PlotTools::PlotContourBeads: Input 2 not a Contour\n');
+                    ref = [];
+                    return;
+                end%if
+            else
+                fprintf('PlotTools::PlotContourBeads: Wrong number of inputs\n');
+                ref = [];
+                return;
+            end%if
+
+            n_moves = length(contour_data.moves);
+            cylinder_radius = PlotProperties.bead_width;
+            cylinder_resolution = 6;
+
+            % Initialize default cylinder
+            [X,Y,Z] = cylinder(cylinder_radius,cylinder_resolution);
+
+            hold on;
+
+            for i = 1:n_moves
+                current_move = contour_data.moves{i};
+                x = current_move.point1.x;
+                y = current_move.point1.y;
+                z = current_move.point1.z;
+
+                move_length = MoveAlgorithms.GetMoveDistance(current_move);
+
+                move_direction = MoveAlgorithms.GetMoveDirectionVector(current_move);
+                rotation = vrrotvec([0,0,1],move_direction);
+                rotation_vector = rotation(1:3);
+                rotation_angle = rad2deg(rotation(4));
+
+                x_points = X + x;
+                y_points = Y + y;
+                z_points = Z .* move_length + z;
+                surf_plot = surf(x_points,y_points,z_points);
+                colormap copper;
+                rotate(surf_plot,rotation_vector,rotation_angle,[x,y,z]);
+            end%for i
+
+            hold off;
+            view(3);
+            shading interp;
+
+        end%func
+
         function ref = BufferPlotAxes(ax,percent_buffer)
             x_lim = xlim(ax);
             y_lim = ylim(ax);
