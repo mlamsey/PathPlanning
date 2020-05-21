@@ -74,7 +74,7 @@ classdef FileTools
             % Input: absolute path to contour file
             % Output: XYZ contour points
 
-            raw_data = dlmread(file_path,' ',1,1);
+            raw_data = dlmread(file_path,' ',0,0);
             x = raw_data(:,1);
             y = raw_data(:,2);
             z = raw_data(:,3);

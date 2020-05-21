@@ -107,7 +107,7 @@ classdef PathFileWriter
 			retracted_point = PathFileWriter.GenerateRetractedWaypoint(waypoint);
 
 			% Write contour end point and then offset point
-			appended_string = PathFileWriter.WriteTravelLinearMotion(motion_end_point,working_string);
+			working_string = PathFileWriter.WriteTravelLinearMotion(motion_end_point,working_string);
 			appended_string = PathFileWriter.WriteTravelLinearMotion(retracted_point,working_string);
 
 		end%func WriteEndContour
@@ -213,7 +213,7 @@ classdef PathFileWriter
 			retracted_z = waypoint_on_contour.z + retracted_point_offset(3);
 
 			retracted_point = Waypoint(retracted_x,retracted_y,retracted_z,waypoint_on_contour.torch_quaternion,PathFileWriter.mms_welding_speed);
-			retracted_waypoint.R = waypoint_on_contour.R;
+			retracted_point.R = waypoint_on_contour.R;
 		end%func GenerateRetractedWaypoint
 	end%methods
 end%class PathFileWriter
