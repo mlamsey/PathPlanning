@@ -97,5 +97,25 @@ classdef SegmentAlgorithms
 				ContourAlgorithms.RepairContourEndContinuity(original_segment.contours{i});
 			end%for i
 		end%func RepairContourEndContinuity
+
+		function RepairSubsetOfContourEndContinuity(original_segment,subset_indices)
+			if(~isa(original_segment,'Segment'))
+				fprintf('SegmentAlgorithms::RepairSubsetOfContourEndContinuity: Input 1 not a part\n');
+				return;
+			end%if
+
+			n_contours = length(original_segment.contours);
+
+			if(max(subset_indices) > n_contours || min(subset_indices) < 1)
+				fprintf('SegmentAlgorithms::RepairSubsetOfContourEndContinuity: Input 2 outside contour index range\n');
+				return;
+			end%if
+
+			for i = 1:length(subset_indices)
+				current_index = subset_indices(i);
+				ContourAlgorithms.RepairContourEndContinuity(original_segment.contours{current_index});
+			end%for i
+
+		end%func RepairSubsetOfContourEndContinuity
 	end%methods
 end%class SegmentAlgorithms
