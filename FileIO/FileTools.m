@@ -48,16 +48,9 @@ classdef FileTools
                     else
                         full_path = strcat(dir_info(i).folder,'/',file_name);
                     end%if
-                    [positions,orientations] = FileTools.ImportContour(full_path);
-
-                    % Spoof speed
-                    speeds = cell(length(positions),1);
-                    for j = 1:length(positions)
-                        speeds{j} = FileTools.default_speed;
-                    end%for i
 
                     % Assign contour
-                    contours{contour_i} = Contour(positions,orientations,speeds);
+                    contours{contour_i} = FileTools.ImportContour(full_path);
 
                     % iterate
                     contour_i = contour_i + 1;
@@ -70,7 +63,7 @@ classdef FileTools
 
         end%func ImportGOMPath
 
-        function [positions,orientations] = ImportContour(file_path)
+        function imported_contour = ImportContour(file_path)
             % Input: absolute path to contour file
             % Output: XYZ contour points
 
@@ -86,6 +79,14 @@ classdef FileTools
                 positions{i} = [x(i),y(i),z(i)];
                 orientations{i} = quaternion.ones;
             end%for i
+
+            % Spoof speed
+            speeds = cell(length(positions),1);
+            for j = 1:length(positions)
+                speeds{j} = FileTools.default_speed;
+            end%for i
+
+            imported_contour = Contour(positions,orientations,speeds);
 
         end%func
 
