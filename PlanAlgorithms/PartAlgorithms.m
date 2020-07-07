@@ -1,5 +1,20 @@
 classdef PartAlgorithms
 	methods(Static)
+		function UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane(original_part,plane_vector)
+			if(~isa(original_part,'Part'))
+				fprintf('PartAlgorithms::UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane: Input not a part\n');
+				return;
+			end%if
+
+			fprintf('Updating torch angles...\n');
+			tic;
+			for i = 1:length(original_part.segments)
+				SegmentAlgorithms.UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane(original_part.segments{i},plane_vector);
+			end%for i
+			
+			fprintf('Torch angles calculated in %1.2f seconds\n',toc);
+		end%func UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane
+
 		function UpdateTorchQuaternionsUsingInterContourVectors(original_part)
 			if(~isa(original_part,'Part'))
 				fprintf('PartAlgorithms::UpdateTorchQuaternionsUsingInterContourVectors: Input not a part\n');

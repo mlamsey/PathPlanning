@@ -23,6 +23,24 @@ classdef SegmentAlgorithms
 			end%for i
 		end%func CombineLinearMoves
 
+		function UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane(original_segment,plane_vector)
+			if(~isa(original_segment,'Segment'))
+				fprintf('SegmentAlgorithms::UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane: Input not a segment\n');
+				return;
+			end%if
+
+			if(length(original_segment.contours) > 1)
+				% for i = 2:end b/c first contour has GA torch orientation
+				for i = 2:length(original_segment.contours)
+					fprintf('Calculating Quaternions for Layer %i\n',i);
+					previous_contour = original_segment.contours{i-1};
+					this_contour = original_segment.contours{i};
+					ContourAlgorithms.UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane(this_contour,previous_contour,plane_vector);
+				end%for i
+			end%if
+
+		end%func UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane
+
 		function UpdateTorchQuaternionsUsingInterContourVectors(original_segment)
 			if(~isa(original_segment,'Segment'))
 				fprintf('SegmentAlgorithms::UpdateTorchQuaternionsUsingInterContourVectors: Input not a segment\n');

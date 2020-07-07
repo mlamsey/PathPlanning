@@ -124,8 +124,9 @@ classdef DebugTools
                 this_move = original_contour.moves{i};
 
                 % Get info from point 1 on move
-                quat = this_move.point1.torch_quaternion;
-                R = rotmat(quat,'frame');
+                % quat = this_move.point1.torch_quaternion;
+                % R = rotmat(quat,'frame');
+                R = this_move.point1.R;
 
                 cs_x_direction = R(:,1);
                 cs_y_direction = R(:,2);
