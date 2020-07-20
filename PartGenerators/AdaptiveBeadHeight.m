@@ -1,49 +1,75 @@
 function AdaptiveBeadHeight
-	part_length = 5 * 25.4; % in -> mm
-	part_height = 1 * 25.4; % in -> mm
-	[x,y,z] = GenerateGauss(part_height,part_length);
-	% [x,y,z] = GeneratePringle(6,2);
-
-	normal_vector = [0,0,1];
+	close all;
+	% normal_vector = [0,0,1];
 	min_layer_height = 2.25;
 	max_layer_height = 2.75;
 
-	a = axes;
-	PlotGauss(x,y,z,a);
-	hold on;
+	% Gaussian part
+	part_length = 5 * 25.4; % in -> mm
+	lump_height = 1 * 25.4; % in -> mm
 
-	x2 = x;
-	y2 = y;
-	z2 = z;
+	GenerateGaussPart(lump_height,part_length,min_layer_height,max_layer_height);
 
-	is_flat = false;
-	i = 1;
-	while(~is_flat)
-		[x2,y2,z2,is_flat] = GenerateNextLayer(x2,y2,z2,normal_vector,min_layer_height,max_layer_height);
-		PlotGauss(x2,y2,z2,a);
-		i = i + 1;
-	end%while
+	% Pringle part 1
+	part_radius = 3 * 25.4; % in -> mm
+	part_perturbation = 1 * 25.4; % in -> mm
+	n_perturbations = 4;
 
-	n_layers_to_add = 2;
-	for j = 1:n_layers_to_add
-		[x2,y2,z2,is_flat] = GenerateNextLayer(x2,y2,z2,normal_vector,min_layer_height,max_layer_height);
-		PlotGauss(x2,y2,z2,a);
-		i = i + 1;
-	end%for i
+	GeneratePringlePart(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
 
-	fprintf('Number of layers: %i\n',i);
-
-	hold off;
-	grid on;
-	SquareAxes3(a);
 end%func AdaptiveBeadHeight
 
+function GenerateGaussPart(lump_height,part_length,min_layer_height,max_layer_height)
+
+	fprintf('Generating Gaussian perturbation with height %1.3fmm and length %1.3fmm\n',lump_height,part_length);
+	fprintf('Minimum layer height: %1.3fmm; Maximum layer height: %1.3fmm\n',min_layer_height,max_layer_height);
+
+	normal_vector = [0,0,1];
+
+	[x0,y0,z0] = GenerateGauss(lump_height,part_length);
+
+	[x,y,z] = InterpolateToFlat(x0,y0,z0,normal_vector,min_layer_height,max_layer_height);
+
+	% Flip z
+	z = z .* -1;
+
+	% Move part to zero z
+	z = z - min(z(end,:));
+
+	PlotGauss(x,y,z);
+
+end%func GenerateGaussPart
+
+function GeneratePringlePart(deviation_height,part_radius,n_perturbations,min_layer_height,max_layer_height)
+	fprintf('Generating "Pringle" profile with height %1.3fmm and radius %1.3fmm\n',deviation_height,part_radius);
+	fprintf('Minimum layer height: %1.3fmm; Maximum layer height: %1.3fmm\n',min_layer_height,max_layer_height);
+
+	normal_vector = [0,0,1];
+
+	[x0,y0,z0] = GeneratePringle(part_radius,deviation_height,n_perturbations);
+	n_points = length(x0);
+
+	[x,y,z] = InterpolateToFlat(x0,y0,z0,normal_vector,min_layer_height,max_layer_height);
+
+	% Flip z
+	z = z .* -1;
+
+	% Move part to zero z
+	z = z - min(z(end,:));
+
+	PlotPringle(x,y,z);
+
+end%func GeneratePringlePart
+
 % Generators
-function [x,y,z] = GeneratePringle(radius,z_offset)
+function [x,y,z] = GeneratePringle(radius,z_offset,n_peaks)
 	points = linspace(0,2*pi,100);
 	x = radius .* sin(points);
 	y = radius .* cos(points);
-	z = z_offset .* sin(2 .* points);
+
+	% Sinusoidal offset
+	n_peaks = ceil(n_peaks);
+	z = z_offset .* sin(n_peaks .* points) ./ 2;
 end%func GeneratePringle
 
 function [x,y,z] = GenerateGauss(height,wall_length)
@@ -51,8 +77,34 @@ function [x,y,z] = GenerateGauss(height,wall_length)
 	l = wall_length / 2;
 	x = linspace(-1*l,l,n_points);
 	y = zeros(1,n_points);
+
+	% Gaussian function (w/ gain) defined from wikipedia
 	z = -1 .* height .* exp(-1 .* ((x ./ (l / 3)) .^ 2));
 end%func GenerateGauss
+
+function [x,y,z] = InterpolateToFlat(x0,y0,z0,normal_vector,min_layer_height,max_layer_height)
+	% Need algorithm to predict size of final matrix
+	n_points = length(x0);
+	x = zeros(1,n_points);
+	y = x;
+	z = x;
+
+	is_flat = false;
+	i = 1;
+	while(~is_flat)
+		[x0,y0,z0,is_flat] = GenerateNextLayer(x0,y0,z0,normal_vector,min_layer_height,max_layer_height);
+		x(i,:) = x0;
+		y(i,:) = y0;
+		z(i,:) = z0;
+
+		i = i + 1;
+	end%while
+
+	n_layers = i - 1;
+
+	fprintf('Profiles resolved in %i layers\n', n_layers);
+
+end%func InterpolateToFlat
 
 function [x,y,z,is_flat] = GenerateNextLayer(prev_x,prev_y,prev_z,normal_vector,min_layer_height,max_layer_height)
 	n_points = length(prev_x);
@@ -93,12 +145,43 @@ function [min_height,max_height] = GetLayerExtrema(x,y,z)
 end%func GetLayerExtrema
 
 % Plotting
-function PlotPringle(x,y,z,axes_handle)
-	plot3(x,y,z,'k','parent',axes_handle);
+function PlotPringle(x,y,z)
+	matrix_size = size(x);
+	n_layers = matrix_size(1);
+
+	f = figure;
+	axes_handle = axes('parent',f);
+
+	hold on;
+	for i = 1:n_layers
+		plot3(x(i,:),y(i,:),z(i,:),'k','parent',axes_handle);
+	end%for i
+	hold off;
+
+	grid on;
+	xlabel('X (mm)');
+	ylabel('Z (mm)');
+	title('Pringle Sinusoidal Perturbation');
+	view(45,45);
 end%func PlotPringle
 
-function PlotGauss(x,y,z,axes_handle)
-	plot(x,-1.*z,'k','parent',axes_handle);
+function PlotGauss(x,y,z)
+	matrix_size = size(x);
+	n_layers = matrix_size(1);
+
+	f = figure;
+	axes_handle = axes('parent',f);
+
+	hold on;
+	for i = 1:matrix_size(1)
+		plot(x(i,:),z(i,:),'k','parent',axes_handle);
+	end%for i
+	hold off;
+
+	grid on;
+	xlabel('X (mm)');
+	ylabel('Z (mm)');
+	title('Gaussian Perturbation');
 end%func PlotPringle
 
 function SquareAxes3(axes_handle)
