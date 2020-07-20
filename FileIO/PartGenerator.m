@@ -5,7 +5,7 @@ classdef PartGenerator
 
 	methods(Static)
 		function part = CreatePart(x,y,z)
-			
+			%uhhhh
 		end%func CreatePart
 	end%static methods
 end%class PartGenerator
