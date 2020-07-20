@@ -1,4 +1,4 @@
-function AdaptiveBeadHeight
+function output = AdaptiveBeadHeight
 	close all;
 	% normal_vector = [0,0,1];
 	min_layer_height = 2.25;
@@ -10,8 +10,8 @@ function AdaptiveBeadHeight
 
 	% GenerateGaussPart(lump_height,part_length,min_layer_height,max_layer_height);
 
-	layer = GenerateGaussLayer(lump_height,part_length);
-	PlotLayer(layer);
+	layers = GenerateGaussLayerPart(lump_height,part_length,min_layer_height,max_layer_height);
+	PlotLayers(layers);
 
 	% Pringle part 1
 	part_radius = 3 * 25.4; % in -> mm
@@ -22,6 +22,7 @@ function AdaptiveBeadHeight
 
 	% GeneratePringlePart(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
 
+	output = 0;
 end%func AdaptiveBeadHeight
 
 function GenerateGaussPart(lump_height,part_length,min_layer_height,max_layer_height)
@@ -45,18 +46,16 @@ function GenerateGaussPart(lump_height,part_length,min_layer_height,max_layer_he
 
 end%func GenerateGaussPart
 
-function GenerateGaussLayerPart(lump_height,part_length,min_layer_height,max_layer_height)
+function layers = GenerateGaussLayerPart(lump_height,part_length,min_layer_height,max_layer_height)
 
 	fprintf('Generating Gaussian perturbation with height %1.3fmm and length %1.3fmm\n',lump_height,part_length);
 	fprintf('Minimum layer height: %1.3fmm; Maximum layer height: %1.3fmm\n',min_layer_height,max_layer_height);
 
 	normal_vector = [0,0,1];
 
-	layer = GenerateGaussPoints(lump_height,part_length);
+	layer = GenerateGaussLayer(lump_height,part_length);
 
-	layers = InterpolateLayersToFlat(layer,min_layer_height,max_layer_height);
-
-	PlotGaussLayers(layers);
+	layers = InterpolateLayerToFlat(layer,min_layer_height,max_layer_height);
 
 end%func GenerateGaussLayerPart
 
@@ -172,15 +171,16 @@ function [x,y,z] = InterpolateToFlat(x0,y0,z0,normal_vector,min_layer_height,max
 
 end%func InterpolateToFlat
 
-function layers = InterpolateLayerToFlat(layer0,min_layer_height,max_layer_height)
+function layers = InterpolateLayerToFlat(layer,min_layer_height,max_layer_height)
 	% Need algorithm to predict size of final matrix
-	n_points = length(layer0,points{1}.x);
+	n_points = length(layer.points{1}.x);
 	layers = cell(1,n_points);
+	layers{1} = layer;
 
 	is_flat = false;
-	i = 1;
+	i = 2;
 	while(~is_flat)
-		[layer,is_flat] = GenerateNextLayerObj(layer0,min_layer_height,max_layer_height);
+		[layer,is_flat] = GenerateNextLayerObj(layer,min_layer_height,max_layer_height);
 		layers{i} = layer;
 
 		i = i + 1;
@@ -234,7 +234,7 @@ function [layer,is_flat] = GenerateNextLayerObj(layer0,min_layer_height,max_laye
 	n_points = length(layer0.points);
 	new_points = cell(1,n_points);
 
-	[layer_min,layer_max] = GetLayerObjExtrema(layer0);
+	[layer_min,layer_max] = GetLayerObjExtrema(layer0,max_layer_height);
 	layer_range = layer_max - layer_min;
 	
 	layer_height_range = max_layer_height - min_layer_height;
@@ -244,7 +244,7 @@ function [layer,is_flat] = GenerateNextLayerObj(layer0,min_layer_height,max_laye
 			x = layer0.points{i}.x;
 			y = layer0.points{i}.y;
 
-			height_ratio = 1 - ((prev_z(i) - layer_min) / (layer_range));
+			height_ratio = 1 - ((layer0.points{i}.z - layer_min) / (layer_range));
 			z_shift = min_layer_height + (layer_height_range * height_ratio);
 			z = layer0.points{i}.z + z_shift;
 
@@ -283,22 +283,14 @@ end%func LayerObj2XYZ
 
 % Analysis
 function [min_height,max_height] = GetLayerExtrema(x,y,z)
-	min_height = min(z);
-	max_height = max(z);
+
 end%func GetLayerExtrema
 
-function [min_height,max_height] = GetLayerObjExtrema(layer)
-	min_height = Inf;
-	max_height = -Inf;
+function [min_height,max_height] = GetLayerObjExtrema(layer,max_layer_height)
+	[x,y,z] = LayerObj2XYZ(layer);
 
-	for i = 1:length(layer.points)
-		if(layer.points{i}.z < min_height)
-			min_height = layer.points{i}.z;
-		end%if
-		if(layer.points{i}.z > max_layer_height)
-			max_height = layer.points{i}.z;
-		end%if
-	end%for i
+	min_height = min(z);
+	max_height = max(z);
 end%func GetLayerExtrema
 
 % Plotting
@@ -341,10 +333,21 @@ function PlotGauss(x,y,z)
 	title('Gaussian Perturbation');
 end%func PlotPringle
 
-function PlotLayer(layer)
-	[x,y,z] = LayerObj2XYZ(layer);
-	plot3(x,y,z,'k');
+function PlotLayers(layers)
+	a = axes;
+	% PlotLayer(layers{1},a);
+	hold on;
+	for i = 1:length(layers)
+		PlotLayer(layers{i},a);
+	end%for i
+	hold off;
+	view(45,45);
+	grid on;
+end%func PlotLayers
 
+function PlotLayer(layer,axes_handle)
+	[x,y,z] = LayerObj2XYZ(layer);
+	plot3(x,y,z,'k','parent',axes_handle);
 end%func PlotLayer
 
 function SquareAxes3(axes_handle)
