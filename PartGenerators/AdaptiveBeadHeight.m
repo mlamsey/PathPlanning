@@ -10,8 +10,8 @@ function output = AdaptiveBeadHeight
 
 	% GenerateGaussPart(lump_height,part_length,min_layer_height,max_layer_height);
 
-	layers = GenerateGaussLayerPart(lump_height,part_length,min_layer_height,max_layer_height);
-	PlotLayers(layers);
+	% layers = GenerateGaussLayerPart(lump_height,part_length,min_layer_height,max_layer_height);
+	% PlotLayers(layers);
 
 	% Pringle part 1
 	part_radius = 3 * 25.4; % in -> mm
@@ -21,6 +21,7 @@ function output = AdaptiveBeadHeight
 	% PringleSpiral(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
 
 	% GeneratePringlePart(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
+	layers = GeneratePringleLayerPart(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
 
 	output = 0;
 end%func AdaptiveBeadHeight
@@ -56,6 +57,7 @@ function layers = GenerateGaussLayerPart(lump_height,part_length,min_layer_heigh
 	layer = GenerateGaussLayer(lump_height,part_length);
 
 	layers = InterpolateLayerToFlat(layer,min_layer_height,max_layer_height);
+	PlotLayers(layers);
 
 end%func GenerateGaussLayerPart
 
@@ -80,6 +82,17 @@ function GeneratePringlePart(deviation_height,part_radius,n_perturbations,min_la
 
 end%func GeneratePringlePart
 
+function layers = GeneratePringleLayerPart(deviation_height,part_radius,n_perturbations,min_layer_height,max_layer_height)
+	fprintf('Generating "Pringle" profile with height %1.3fmm and radius %1.3fmm\n',deviation_height,part_radius);
+	fprintf('Minimum layer height: %1.3fmm; Maximum layer height: %1.3fmm\n',min_layer_height,max_layer_height);
+
+	layer = GeneratePringleLayer(part_radius,deviation_height,n_perturbations);
+
+	layers = InterpolateLayerToFlat(layer,min_layer_height,max_layer_height);
+	PlotLayers(layers);
+
+end%func GeneratePringleLayerPart
+
 function PringleSpiral(deviation_height,part_radius,n_perturbations,min_layer_height,max_layer_height)
 
 	[x0,y0,z0] = GeneratePringle(part_radius,deviation_height,n_perturbations);
@@ -102,6 +115,24 @@ function [x,y,z] = GeneratePringle(radius,z_offset,n_peaks)
 	% Sinusoidal offset
 	n_peaks = ceil(n_peaks);
 	z = z_offset .* sin(n_peaks .* points) ./ 2;
+end%func GeneratePringle
+
+function layer = GeneratePringleLayer(radius,z_offset,n_peaks)
+	n_points = 100;
+	points = linspace(0,2*pi,n_points);
+	x = radius .* sin(points);
+	y = radius .* cos(points);
+
+	% Sinusoidal offset
+	n_peaks = ceil(n_peaks);
+	z = z_offset .* sin(n_peaks .* points) ./ 2;
+
+	point_objects = cell(1,n_points);
+	for i = 1:n_points
+		point_objects{i} = Point(x(i),y(i),z(i));
+	end%for i
+
+	layer = Layer(point_objects);
 end%func GeneratePringle
 
 function [x,y,z] = GenerateGauss(height,wall_length)
