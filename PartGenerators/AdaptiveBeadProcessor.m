@@ -4,30 +4,6 @@ classdef AdaptiveBeadProcessor
 	end%const
 
 	methods(Static)
-		function [x,y,z] = InterpolateToFlat(x0,y0,z0,normal_vector,min_layer_height,max_layer_height)
-			% Need algorithm to predict size of final matrix
-			n_points = length(x0);
-			x = zeros(1,n_points);
-			y = x;
-			z = x;
-
-			is_flat = false;
-			i = 1;
-			while(~is_flat)
-				[x0,y0,z0,is_flat] = AdaptiveBeadProcessor.GenerateNextLayer(x0,y0,z0,normal_vector,min_layer_height,max_layer_height);
-				x(i,:) = x0;
-				y(i,:) = y0;
-				z(i,:) = z0;
-
-				i = i + 1;
-			end%while
-
-			n_layers = i - 1;
-
-			fprintf('Profiles resolved in %i layers\n', n_layers);
-
-		end%func InterpolateToFlat
-
 		function layers = InterpolateLayerToFlat(layer,min_layer_height,max_layer_height)
 			% Need algorithm to predict size of final matrix
 			n_points = length(layer.points{1}.x);
@@ -37,7 +13,7 @@ classdef AdaptiveBeadProcessor
 			is_flat = false;
 			i = 2;
 			while(~is_flat)
-				[layer,is_flat] = AdaptiveBeadProcessor.GenerateNextLayerObj(layer,min_layer_height,max_layer_height);
+				[layer,is_flat] = AdaptiveBeadProcessor.GenerateNextLayer(layer,min_layer_height,max_layer_height);
 				layers{i} = layer;
 
 				i = i + 1;
@@ -50,7 +26,7 @@ classdef AdaptiveBeadProcessor
 		end%func InterpolateToFlat
 
 		function [x,y,z] = SpiralUpwards(x0,y0,z0,step,n_layers,min_layer_height,max_layer_height)
-
+			% NEEDS WORK >:(
 			n_points = length(x0);
 			x = zeros(n_layers,n_points);
 			y = x;
@@ -81,43 +57,11 @@ classdef AdaptiveBeadProcessor
 	end%static methods
 
 	methods(Static, Access = 'private')
-		function [x,y,z,is_flat] = GenerateNextLayer(prev_x,prev_y,prev_z,normal_vector,min_layer_height,max_layer_height)
-			n_points = length(prev_x);
-
-			% Preallocate
-			x = zeros(1,n_points);
-			y = x;
-			z = x;
-
-			[layer_min,layer_max] = AdaptiveBeadProcessor.GetLayerExtrema(prev_x,prev_y,prev_z);
-			layer_range = layer_max - layer_min;
-			
-			layer_height_range = max_layer_height - min_layer_height;
-
-			if(layer_height_range < layer_range)
-				for i = 1:n_points
-					x(i) = prev_x(i);
-					y(i) = prev_y(i);
-
-					height_ratio = 1 - ((prev_z(i) - layer_min) / (layer_range));
-					z_shift = min_layer_height + (layer_height_range * height_ratio);
-					z(i) = prev_z(i) + z_shift;
-				end%for i
-
-				is_flat = false;
-			else
-				x = prev_x;
-				y = prev_y;
-				z = (ones(1,n_points) .* max(prev_z)) + min_layer_height;
-				is_flat = true;
-			end%if
-		end%func GenerateNextLayer
-
-		function [layer,is_flat] = GenerateNextLayerObj(layer0,min_layer_height,max_layer_height)
+		function [layer,is_flat] = GenerateNextLayer(layer0,min_layer_height,max_layer_height)
 			n_points = length(layer0.points);
 			new_points = cell(1,n_points);
 
-			[layer_min,layer_max] = AdaptiveBeadProcessor.GetLayerObjExtrema(layer0,max_layer_height);
+			[layer_min,layer_max] = AdaptiveBeadProcessor.GetLayerExtrema(layer0,max_layer_height);
 			layer_range = layer_max - layer_min;
 			
 			layer_height_range = max_layer_height - min_layer_height;
@@ -149,20 +93,16 @@ classdef AdaptiveBeadProcessor
 
 			layer = Layer(new_points);
 
-		end%func GenerateNextLayerObj
+		end%func GenerateNextLayer
 
 		function [x,y,z] = GenerateSpiraledLayer(prev_x,prev_y,prev_z,step,min_layer_height,max_layer_height)
+			% NEEDS WORK >:(
 			x = prev_x;
 			y = prev_y;
 			z = prev_z + step;
 		end%func GenerateSpiraledLayer
 
-		function [min_height,max_height] = GetLayerExtrema(x,y,z)
-			min_height = min(z);
-			max_height = max(z);
-		end%func GetLayerExtrema
-
-		function [min_height,max_height] = GetLayerObjExtrema(layer,max_layer_height)
+		function [min_height,max_height] = GetLayerExtrema(layer,max_layer_height)
 			[x,y,z] = AdaptiveBeadProcessor.LayerObj2XYZ(layer);
 
 			min_height = min(z);

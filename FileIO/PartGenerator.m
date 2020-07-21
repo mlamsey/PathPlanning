@@ -4,8 +4,8 @@ classdef PartGenerator
 	end%const
 
 	methods(Static)
-		function part = CreatePart(x,y,z)
-			%uhhhh
+		function part = CreatePart(layers)
+			% turn "layers" into "contours" and then pack them into a Part
 		end%func CreatePart
 	end%static methods
 end%class PartGenerator
