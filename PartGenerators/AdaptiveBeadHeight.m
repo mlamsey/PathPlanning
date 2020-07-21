@@ -10,7 +10,8 @@ function output = AdaptiveBeadHeight
 
 	layers = WallGenerator.GenerateGaussLayerPart(lump_height,part_length,min_layer_height,max_layer_height);
 	% AdaptiveBeadPlotTools.PlotLayers(layers);
-	GeometryProcessor.UpdateWallLayerNormals(layers{1});
+	AdaptiveBeadPlotTools.PlotGaussHeat(layers,min_layer_height);
+	% GeometryProcessor.UpdateWallLayerNormals(layers{1});
 
 	% Pringle part 1
 	part_radius = 3 * 25.4; % in -> mm

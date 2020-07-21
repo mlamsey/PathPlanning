@@ -42,6 +42,24 @@ classdef AdaptiveBeadPlotTools
 			title('Gaussian Perturbation');
 		end%func PlotPringle
 
+		function PlotGaussHeat(layers,min_layer_height)
+			[l1x,l1y,l1z] = AdaptiveBeadProcessor.LayerObj2XYZ(layers{1});
+			z_bottom = min(l1x);
+			a = axes;
+
+			hold on;
+			for i = 1:length(layers)
+				% y = 0 for gauss
+				[x,y,z] = AdaptiveBeadProcessor.LayerObj2XYZ(layers{i});
+				z = -1 .* (z - z_bottom) + (i * min_layer_height);
+				y = y + i;
+				plot3(x,y,z,'k','parent',a);
+			end%for i
+			hold off;
+			view(45,45);
+			grid on;
+		end%func PlotGaussHeat
+
 		function PlotLayers(layers)
 			a = axes;
 			% PlotLayer(layers{1},a);

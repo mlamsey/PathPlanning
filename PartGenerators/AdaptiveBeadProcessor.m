@@ -6,7 +6,7 @@ classdef AdaptiveBeadProcessor
 	methods(Static)
 		function layers = InterpolateLayerToFlat(layer,min_layer_height,max_layer_height)
 			% Need algorithm to predict size of final matrix
-			n_points = length(layer.points{1}.x);
+			n_points = 50;
 			layers = cell(1,n_points);
 			layers{1} = layer;
 
@@ -23,7 +23,21 @@ classdef AdaptiveBeadProcessor
 
 			fprintf('Profiles resolved in %i layers\n', n_layers);
 
-		end%func InterpolateToFlat
+		end%func InterpolateLayersToFlat
+
+		function layers = ToFlatUsingNormalVectors(layer,min_layer_height,max_layer_height)
+
+			is_flat = false;
+			i = 2;
+			while(~is_flat)
+
+				i = i + 1;
+			end%while
+
+			n_layers = i - 1;
+
+			fprintf('Profile resolved in %i layers\n', n_layers);
+		end%func ToFlatUsingNormalVectors
 
 		function [x,y,z] = SpiralUpwards(x0,y0,z0,step,n_layers,min_layer_height,max_layer_height)
 			% NEEDS WORK >:(
