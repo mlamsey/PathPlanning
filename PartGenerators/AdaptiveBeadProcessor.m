@@ -54,6 +54,12 @@ classdef AdaptiveBeadProcessor
 			end%for i
 		end%func LayerObj2XYZ
 
+		function [x,y,z] = PointObj2XYZ(point)
+			x = point.x;
+			y = point.y;
+			z = point.z;
+		end%func PointObj2XYZ
+
 	end%static methods
 
 	methods(Static, Access = 'private')

@@ -8,8 +8,9 @@ function output = AdaptiveBeadHeight
 	part_length = 5 * 25.4; % in -> mm
 	lump_height = 1 * 25.4; % in -> mm
 
-	% layers = WallGenerator.GenerateGaussLayerPart(lump_height,part_length,min_layer_height,max_layer_height);
+	layers = WallGenerator.GenerateGaussLayerPart(lump_height,part_length,min_layer_height,max_layer_height);
 	% AdaptiveBeadPlotTools.PlotLayers(layers);
+	GeometryProcessor.UpdateWallLayerNormals(layers{1});
 
 	% Pringle part 1
 	part_radius = 3 * 25.4; % in -> mm
@@ -18,8 +19,9 @@ function output = AdaptiveBeadHeight
 
 	% CylinderGenerator.PringleSpiral(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
 
-	layers = CylinderGenerator.GeneratePringleLayerPart(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
-	AdaptiveBeadPlotTools.PlotLayers(layers);
+	% layers = CylinderGenerator.GeneratePringleLayerPart(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
+	% AdaptiveBeadPlotTools.PlotLayers(layers);
+	% GeometryProcessor.UpdateCylinderLayerNormals(layers{1});
 
-	output = 0;
+	output = layers;
 end%func AdaptiveBeadHeight
