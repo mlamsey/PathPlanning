@@ -68,12 +68,13 @@ classdef AdaptiveBeadProcessor
 
 			if(layer_height_range < layer_range)
 				for i = 1:n_points
-					x = layer0.points{i}.x;
-					y = layer0.points{i}.y;
+					current_point = layer0.points{i};
+					x = current_point.x;
+					y = current_point.y;
 
 					height_ratio = 1 - ((layer0.points{i}.z - layer_min) / (layer_range));
 					z_shift = min_layer_height + (layer_height_range * height_ratio);
-					z = layer0.points{i}.z + z_shift;
+					z = current_point.z + z_shift;
 
 					new_points{i} = Point(x,y,z);
 				end%for i
@@ -81,8 +82,9 @@ classdef AdaptiveBeadProcessor
 				is_flat = false;
 			else
 				for i = 1:n_points
-					x = layer0.points{i}.x;
-					y = layer0.points{i}.y;
+					current_point = layer0.points{i};
+					x = current_point.x;
+					y = current_point.y;
 					z = layer_max + min_layer_height;
 
 					new_points{i} = Point(x,y,z);

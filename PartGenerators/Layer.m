@@ -1,4 +1,4 @@
-classdef Layer
+classdef Layer < handle
 	properties
 		points
 	end%properties

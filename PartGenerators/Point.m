@@ -1,4 +1,4 @@
-classdef Point
+classdef Point < handle
 	properties
 		x;
 		y;
@@ -14,7 +14,7 @@ classdef Point
 			obj.normal_vector = [0,0,1];
 		end%func Constructor
 
-		function obj = set.normal_vector(obj,vector)
+		function set.normal_vector(obj,vector)
 			if(length(vector) ~= 3)
 				fprintf('Point::set.normal_vector: input not of length 3. Setting as [0,0,1]\n');
 				obj.normal_vector = [0,0,1];
