@@ -1,9 +1,8 @@
 classdef PlotTools
 	methods(Static)
-        function figure_ref = PlotPartSimple(part_data,parent_axes)
+        function PlotPartSimple(part_data,parent_axes)
             if(~isa(part_data,'Part'))
                 fprintf('PlotTools::PlotPartSimple: Input is not a Part\n');
-                figure_ref = null;
                 return;
             end%if
 
@@ -13,7 +12,7 @@ classdef PlotTools
                 linspace(start_color(2),end_color(2),length(part_data.segments{1}.contours));...
                 linspace(start_color(3),end_color(3),length(part_data.segments{1}.contours))];
 
-            hold on;
+            hold(parent_axes,'on');
 
             for i_segment = 1:length(part_data.segments)
                 current_segment = part_data.segments{i_segment};
@@ -21,19 +20,19 @@ classdef PlotTools
                     current_contour = current_segment.contours{i_contour};
                     [x,y,z] = ContourAlgorithms.GetContourWaypointVectors(current_contour);
                     plot_color = colors(:,i_contour) ./ norm(colors(:,i_contour));
-                    plot3(x,y,z,'-','color',plot_color,'parent',parent_axes,'tag','simple_plot');
+                    plot3(x,y,z,'-','color',plot_color,'parent',parent_axes);
                 end%for i_contour
             end%for i_segment
 
-            hold off;
-            view(25,45);
+            hold(parent_axes,'off');
+            view(parent_axes,25,45);
 
         end%func PlotPartSimple
 
         function figure_ref = PlotPartOnNewFigure(part_data)
             f = figure;
             a = axes('parent',f,'gridcolor',[0,0,0],'gridalpha',0.5);
-            view(45,25);
+            view(a,45,25);
             grid on;
             PlotTools.PlotPart(part_data,a);
         end%func PlotPartOnNewFigure
@@ -51,8 +50,8 @@ classdef PlotTools
 
 			segments = part_data.segments;
 
-			hold on;
 			for i = 1:length(segments)
+                hold(parent_axes,'on');
                 if(nargin == 1)
     				PlotTools.PlotSegment(segments{i});
                 elseif(nargin == 2)
@@ -61,14 +60,14 @@ classdef PlotTools
                     fprintf('PlotTools::PlotPart: incorrect number of arguments.\n');
                     break;
                 end%if
+                hold(parent_axes,'off');
 			end%for i
-            hold off;
 
             PlotTools.BufferPlotAxes(parent_axes,0.15);
 
             parent_axes.GridColor = [0,0,0];
             parent_axes.GridAlpha = 0.5;
-            view(45,25);
+            view(parent_axes,45,25);
             grid on;
 
             fprintf(' Done!\n');
@@ -83,6 +82,7 @@ classdef PlotTools
             contours = segment_data.contours;
             
             for i = 1:length(contours)
+                hold(parent_axes,'on');
                 if(nargin == 1)
                     PlotTools.PlotContour(contours{i});
                 elseif(nargin == 2)
@@ -91,9 +91,30 @@ classdef PlotTools
                     fprintf('PlotTools::PlotSegment: incorrect number of arguments.\n');
                     break;
                 end%if
+                hold(parent_axes,'off')
             end%for i
 
-        end%func PlotContourSet
+        end%func PlotSegment
+
+        function ref = PlotSegmentSimple(segment_data,parent_axes)
+            for i = 1:length(segment_data.contours)
+                hold(parent_axes,'on');
+                PlotTools.PlotContourSimple(segment_data.contours{i},parent_axes);
+                hold(parent_axes,'off')
+            end%for i
+        end%func PlotSegmentSimple
+
+        function ref = PlotSegmentSimpleWithSelectedContour(segment_data,selected_contour,parent_axes)
+            for i = 1:length(segment_data.contours)
+                hold(parent_axes,'on');
+                if(i == selected_contour)
+                    PlotTools.PlotContourSimpleSelected(segment_data.contours{i},parent_axes);
+                else
+                    PlotTools.PlotContourSimple(segment_data.contours{i},parent_axes);
+                end%if
+                hold(parent_axes,'off');
+            end%for i
+        end%func PlotSegmentSimpleWithSelectedContour
 
         function ref = PlotContour(contour_data,parent_axes)
             if(~isa(contour_data,'Contour'))
@@ -104,7 +125,7 @@ classdef PlotTools
             moves = contour_data.moves;
             ref = cell(length(moves),1);
             for i = 1:length(moves)
-
+                
                 % Color: Green [0,1,0] = Start, Red [1,0,0] = End, Black [0,0,0] = else
                 if(i == 1)
                     color_vector = [0,1,0];
@@ -131,10 +152,20 @@ classdef PlotTools
                     ref{i} = null;
                     break;
                 end%if
-
+                hold(parent_axes,'off');
             end%for i
 
         end%func PlotContour
+
+        function ref = PlotContourSimple(contour_data,parent_axes)
+            [x,y,z] = ContourAlgorithms.GetContourWaypointVectors(contour_data);
+            plot3(x,y,z,'k','parent',parent_axes);
+        end%func PlotContourSimple
+
+        function ref = PlotContourSimpleSelected(contour_data,parent_axes)
+            [x,y,z] = ContourAlgorithms.GetContourWaypointVectors(contour_data);
+            plot3(x,y,z,'r','parent',parent_axes);
+        end%func PlotContourSimple
 
         function ref = PlotMoveLine(move,parent_axes,color_vector)
             if(~isa(move,'Move'))
@@ -210,10 +241,10 @@ classdef PlotTools
                 current_segment = part_data.segments{i};
                 for j = 1:length(current_segment.contours)
                     fprintf('%i/%i\n',j,length(current_segment.contours));
-                    hold on;
+                    hold(parent_axes,'on');
                     current_contour = current_segment.contours{j};
                     PlotTools.PlotContourBeads(ax,current_contour);
-                    hold off;
+                    hold(parent_axes,'off');
                 end%for j
             end%for i
             PlotTools.BufferPlotAxes(ax,0.25);
@@ -253,7 +284,7 @@ classdef PlotTools
             % Initialize default cylinder
             [X,Y,Z] = cylinder(cylinder_radius,cylinder_resolution);
 
-            hold on;
+            hold(parent_axes,'on');
 
             for i = 1:n_moves
                 current_move = contour_data.moves{i};
@@ -276,7 +307,7 @@ classdef PlotTools
                 rotate(surf_plot,rotation_vector,rotation_angle,[x,y,z]);
             end%for i
 
-            hold off;
+            hold(parent_axes,'off');
             view(3);
             shading interp;
 
