@@ -4,14 +4,16 @@ classdef FileTools
     end%properties
 
     methods(Static)
-        function part = PromptForPartImportFromGOM
+        function [part,import_path] = PromptForPartImportFromGOM
             msg = questdlg('Please select a folder containing contours from GOM','INFO','OK','OK');
             directory = uigetdir;
             if(~directory)
                 fprintf('FileTools::PromptForPartImportFromGOM: No directory selected!\n');
                 part = 0;
+                import_path = '';
             else
                 part = FileTools.ImportContourSetFromGOM(directory);
+                import_path = directory;
             end%if
 
         end%func PromptForPartImportFromGOM
