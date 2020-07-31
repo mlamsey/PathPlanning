@@ -228,6 +228,37 @@ classdef PlotTools
             end%if
         end%func PlotMoveVector
 
+        function PlotContourWithToolCoordinateFrames(original_contour,parent_axes)
+            if(~isa(original_contour,'Contour'))
+                fprintf('DebugTools::PlotContourWithToolCoordinateFrames: Input not a contour\n');
+                return;
+            end%if
+
+            hold(parent_axes,'on');
+
+            PlotTools.PlotContourSimple(original_contour,parent_axes);
+
+            for i = 1:length(original_contour.moves)
+                this_move = original_contour.moves{i};
+
+                % Get info from point 1 on move
+                % quat = this_move.point1.torch_quaternion;
+                % R = rotmat(quat,'frame');
+                R = this_move.point1.R;
+
+                cs_x_direction = R(:,1);
+                cs_y_direction = R(:,2);
+                cs_z_direction = R(:,3);
+                cs_origin = [this_move.point1.x,this_move.point1.y,this_move.point1.z];
+
+                cs = CoordinateSystemPlot(cs_origin,cs_x_direction,cs_y_direction,cs_z_direction,parent_axes);
+                cs.Plot(10);
+            end%for i
+
+            hold(parent_axes,'off');
+
+        end%func PlotContourWithToolCoordinateFrames
+
         function ref = PlotPartBeads(ax,part_data)
             if(~isa(part_data,'Part'))
                 fprintf('PlotTools::PlotPartBeads: Input 2 not a part\n');
@@ -331,5 +362,17 @@ classdef PlotTools
             zlim([z_lim(1) - z_inc, z_lim(2) + z_inc]);
 
         end%func BufferPlotAxes
+
+        function SquareAxes3(axes_ref)
+            x_lim = xlim(axes_ref);
+            y_lim = ylim(axes_ref);
+            z_lim = zlim(axes_ref);
+            min_bound = min([x_lim,y_lim,z_lim]);
+            max_bound = max([x_lim,y_lim,z_lim]);
+            xlim(axes_ref,[min_bound,max_bound]);
+            ylim(axes_ref,[min_bound,max_bound]);
+            zlim(axes_ref,[min_bound,max_bound]);
+        end%func SquareAxes3
+
 	end%methods
 end%class PlotTooles
