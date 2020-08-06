@@ -2,6 +2,7 @@ classdef Move < handle & matlab.mixin.Copyable
 	properties
 		point1;
 		point2;
+		move_type; % linear, ramp, ptp, etc
 	end%properties
 
 	methods
@@ -13,6 +14,7 @@ classdef Move < handle & matlab.mixin.Copyable
 
 			obj.point1 = point1;
 			obj.point2 = point2;
+			obj.move_type = 'linear';
 		end%func Constructor
 	end%methods
 end%class Move
