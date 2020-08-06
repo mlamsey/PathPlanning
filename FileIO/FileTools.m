@@ -12,11 +12,80 @@ classdef FileTools
                 part = 0;
                 import_path = '';
             else
-                part = FileTools.ImportContourSetFromGOM(directory);
+                part = FileTools.ImportPart(directory);
                 import_path = directory;
             end%if
 
         end%func PromptForPartImportFromGOM
+
+        function part = ImportPart(part_directory)
+             % Get directory information
+            dir_info = dir(part_directory);
+            n_paths = length(dir_info);
+
+            % Instantiate bonus iterator
+            segment_i = 1;
+
+            % Loop through all files
+            for i = 1:n_paths
+                path_name = dir_info(i).name;
+
+                % check if filenames are NOT navigation targets
+                if(~strcmp(path_name,'.') && ~strcmp(path_name,'..'))
+                    % Generate path, import contour data, assign contour in set
+                    if(ispc)
+                        full_path = strcat(dir_info(i).folder,'\',path_name);
+                    else
+                        full_path = strcat(dir_info(i).folder,'/',path_name);
+                    end%if
+
+                    % Assign contour
+                    segments{segment_i} = FileTools.ImportSegment(full_path);
+
+                    % iterate
+                    segment_i = segment_i + 1;
+                end%if
+
+            end%for i
+
+            part = Part(segments);
+        end%func ImportPart
+
+        function imported_segment = ImportSegment(segment_directory)
+            % Get directory information
+            dir_info = dir(segment_directory);
+            n_files = length(dir_info);
+
+            % Instantiate bonus iterator
+            contour_i = 1;
+
+            % Notice!
+            fprintf('Segment Import - GOM Slices with default speed: %1.3f mm/s\n',FileTools.default_speed);
+
+            % Loop through all files
+            for i = 1:n_files
+                file_name = dir_info(i).name;
+
+                % check if filenames are NOT navigation targets
+                if(~strcmp(file_name,'.') && ~strcmp(file_name,'..'))
+                    % Generate path, import contour data, assign contour in set
+                    if(ispc)
+                        full_path = strcat(dir_info(i).folder,'\',file_name);
+                    else
+                        full_path = strcat(dir_info(i).folder,'/',file_name);
+                    end%if
+
+                    % Assign contour
+                    contours{contour_i} = FileTools.ImportContour(full_path);
+
+                    % iterate
+                    contour_i = contour_i + 1;
+                end%if
+
+            end%for i
+
+            imported_segment = Segment(contours);
+        end%func ImportSegment
 
         function part = ImportContourSetFromGOM(file_path)
             part = Part({Segment(FileTools.ImportGOMPath(file_path))});
@@ -101,8 +170,8 @@ classdef FileTools
                 return;
             end%if
 
-            mm_delimiter = '+';
-            end_delimiter = ' ';
+            mm_delimiter = 'Radial';
+            end_delimiter = 'degrees';
 
             % Find maximum order of magnitude
             mm_values = [];
@@ -110,9 +179,10 @@ classdef FileTools
             for i = 1:length(working_dir)
                 filename = working_dir(i).name;
                 if(contains(filename,filename_prefix))
-                    mm_index = strfind(filename,mm_delimiter) + 1;
-                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - 1;
-                    mm_values = [mm_values,str2num(filename(mm_index:end_number_index))];
+                    mm_index = strfind(filename,mm_delimiter) + 7;
+                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - 2;
+                    value_string = filename(mm_index:end_number_index);
+                    mm_values = [mm_values,str2num(value_string)];
                 end%if
             end%for i
 
@@ -124,8 +194,8 @@ classdef FileTools
                 old_file_string = strcat(working_dir(i).folder,'\',filename);
 
                 if(contains(filename,filename_prefix))
-                    mm_index = strfind(filename,mm_delimiter) + 1;
-                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - 1;
+                    mm_index = strfind(filename,mm_delimiter) + 7;
+                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - 2;
                     mm_value = str2num(filename(mm_index:end_number_index));
 
                     mm_order = floor(log10(mm_value));
