@@ -2,7 +2,7 @@ classdef PartAlgorithms
 	methods(Static)
 		function UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane(original_part,plane_vector)
 			if(~isa(original_part,'Part'))
-				fprintf('PartAlgorithms::UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane: Input not a part\n');
+				fprintf('PartAlgorithms::UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane: Input not a Part\n');
 				return;
 			end%if
 
@@ -17,7 +17,7 @@ classdef PartAlgorithms
 
 		function UpdateTorchQuaternionsUsingInterContourVectors(original_part)
 			if(~isa(original_part,'Part'))
-				fprintf('PartAlgorithms::UpdateTorchQuaternionsUsingInterContourVectors: Input not a part\n');
+				fprintf('PartAlgorithms::UpdateTorchQuaternionsUsingInterContourVectors: Input not a Part\n');
 				return;
 			end%if
 
@@ -32,7 +32,7 @@ classdef PartAlgorithms
 
 		function DecimateContoursByMoveLength(original_part,mm_decimate_move_length)
 			if(~isa(original_part,'Part'))
-				fprintf('PartAlgorithms::DecimateContoursByMoveLength: Input not a part\n');
+				fprintf('PartAlgorithms::DecimateContoursByMoveLength: Input not a Part\n');
 				return;
 			end%if
 
@@ -44,7 +44,7 @@ classdef PartAlgorithms
 
 		function CombineCollinearMoves(original_part)
 			if(~isa(original_part,'Part'))
-				fprintf('PartAlgorithms::CombineCollinearMoves: Input not a part\n');
+				fprintf('PartAlgorithms::CombineCollinearMoves: Input not a Part\n');
 				return;
 			end%if
 
@@ -57,7 +57,7 @@ classdef PartAlgorithms
 
 		function StaggerPartStartPoints(original_part)
 			if(~isa(original_part,'Part'))
-				fprintf('PartAlgorithms::StaggerPartStartPoints: Input not a part\n');
+				fprintf('PartAlgorithms::StaggerPartStartPoints: Input not a Part\n');
 				return;
 			end%if
 
@@ -74,7 +74,7 @@ classdef PartAlgorithms
 
 		function AlternateContourDirections(original_part, number_of_layers_per_alternation)
 			if(~isa(original_part,'Part'))
-				fprintf('PartAlgorithms::AlternateContourDirections: Input not a part\n');
+				fprintf('PartAlgorithms::AlternateContourDirections: Input not a Part\n');
 				return;
 			end%if
 
@@ -85,7 +85,7 @@ classdef PartAlgorithms
 
 		function RepairContourEndContinuity(original_part)
 			if(~isa(original_part,'Part'))
-				fprintf('PartAlgorithms::RepairContourEndContinuity: Input 1 not a part\n');
+				fprintf('PartAlgorithms::RepairContourEndContinuity: Input 1 not a Part\n');
 				return;
 			end%if
 
@@ -96,7 +96,7 @@ classdef PartAlgorithms
 
 		function RemoveTailOfContours(original_part,percent_of_each_contour_to_remove)
 			if(~isa(original_part,'Part'))
-				fprintf('PartAlgoritms::RemoveTailOfContours: Input 1 not a contour!\n');
+				fprintf('PartAlgoritms::RemoveTailOfContours: Input 1 not a Part!\n');
 				return;
 			end%if
 			if(percent_of_each_contour_to_remove <= 0 || percent_of_each_contour_to_remove >= 1)
@@ -118,7 +118,7 @@ classdef PartAlgorithms
 
 		function RemoveContourLessThanZero(original_part)
 			if(~isa(original_part,'Part'))
-				fprintf('PartAlgoritms::RemoveContourLessThanZero: Input 1 not a contour!\n');
+				fprintf('PartAlgoritms::RemoveContourLessThanZero: Input 1 not a Part!\n');
 				return;
 			end%if
 
@@ -140,5 +140,44 @@ classdef PartAlgorithms
 				end%for j
 			end%for i
 		end%func RemoveContourLessThanZero
+
+		function new_manifest = ParallelizeSegments(original_part,manifest_indices_to_parallelize)
+			if(~isa(original_part,'Part'))
+				fprintf('PartAlgoritms::ParallelizeSegments: Input 1 not a Part!\n');
+				return;
+			end%if
+
+			if(min(manifest_indices_to_parallelize) < 0)
+				fprintf('PartAlgorithms::ParallelizeSegments: Input 2 has value(s) < 0\n');
+				return;
+			end%if
+
+			n_segments = length(original_part.segments);
+
+			if(max(manifest_indices_to_parallelize) > n_segments)
+				fprintf('PartAlgorithms::ParallelizeSegments: Input 2 has value(s) > # segments\n');
+				return;
+			end%if
+
+			manifest_indices_to_parallelize = sort(manifest_indices_to_parallelize);
+			original_manifest = original_part.segment_manifest;
+
+			new_manifest_length = length(original_manifest) - length(manifest_indices_to_parallelize) + 1;
+			new_manifest = cell(1,new_manifest_length);
+			
+			for i = 1:new_manifest_length
+				if(i < manifest_indices_to_parallelize(1))
+					new_manifest{i} = i;
+				elseif(i == manifest_indices_to_parallelize(1))
+					subset = [];
+					for j = 1:length(manifest_indices_to_parallelize)
+						subset = [subset,original_manifest{manifest_indices_to_parallelize(j)}];
+					end%for j
+					new_manifest{i} = subset;
+				else
+					new_manifest{i} = i + manifest_indices_to_parallelize(1);
+				end%if
+			end%for i
+		end%func ParallelizeSegments
 	end%methods
 end%class PartAlgorithms

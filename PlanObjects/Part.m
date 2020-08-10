@@ -1,6 +1,7 @@
 classdef Part < handle & matlab.mixin.Copyable
 	properties
 		segments;
+		segment_manifest;
 	end%properties
 	methods
 
@@ -15,7 +16,19 @@ classdef Part < handle & matlab.mixin.Copyable
 			end%if
 
 			obj.segments = segments;
+			obj.segment_manifest = Part.InitializeSegmentManifest(segments);
 		end%Constructor
 
 	end%methods
+
+	methods(Static, Access = 'private')
+		function manifest = InitializeSegmentManifest(segments)
+			n_segments = length(segments);
+			manifest = cell(1,n_segments);
+			
+			for i = 1:n_segments
+				manifest{i} = i;
+			end%for i
+		end%func InitializeSegmentManifest
+	end%private methods
 end%class Part
