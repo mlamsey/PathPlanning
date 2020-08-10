@@ -43,5 +43,20 @@ classdef StandardProcessing
 
 			PartAlgorithms.AlternateContourDirections(part,1);
 		end%func ProcessEllipticalBowl
+
+		function ProcessShiftValidationWalls(part)
+			if(~isa(part,'Part'))
+				fprintf('StandardProcessing::ProcessShiftValidationWalls: Input not a part\n');
+				return;
+			end%if
+
+			% Cleanup
+			PartAlgorithms.CombineCollinearMoves(part);
+
+			% Test stuff
+
+			% Establish manifest
+			PartAlgorithms.ParallelizeSegments(part,[1:9]);
+		end%func ProcessShiftValidationWalls
 	end%methods
 end%class StandardProcessing
