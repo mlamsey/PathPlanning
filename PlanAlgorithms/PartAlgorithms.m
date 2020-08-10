@@ -141,7 +141,7 @@ classdef PartAlgorithms
 			end%for i
 		end%func RemoveContourLessThanZero
 
-		function new_manifest = ParallelizeSegments(original_part,manifest_indices_to_parallelize)
+		function ParallelizeSegments(original_part,manifest_indices_to_parallelize)
 			if(~isa(original_part,'Part'))
 				fprintf('PartAlgoritms::ParallelizeSegments: Input 1 not a Part!\n');
 				return;
@@ -178,6 +178,7 @@ classdef PartAlgorithms
 					new_manifest{i} = i + manifest_indices_to_parallelize(1);
 				end%if
 			end%for i
+			original_part.segment_manifest = new_manifest;
 		end%func ParallelizeSegments
 	end%methods
 end%class PartAlgorithms
