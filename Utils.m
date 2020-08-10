@@ -36,6 +36,17 @@ classdef Utils
 
 		end%func AreAll
 
+		function at_least_one_true = AtLeastOneTrue(logical_array)
+			for i = 1:length(logical_array)
+				if(logical_array(i))
+					at_least_one_true = true;
+					return;
+				end%if
+			end%for i
+
+			at_least_one_true = false;
+		end%func AtLeasOneTrue
+
 		function normalized_quaternion = NormalizeQuaternion(quat)
 			if(~isa(quat,'quaternion'))
 				fprintf('Utils::NormalizeQuaternion: Input not a quaternion\n');
