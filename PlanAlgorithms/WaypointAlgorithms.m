@@ -69,5 +69,62 @@ classdef WaypointAlgorithms
 			between_point = Waypoint(x,y,z,torch_quaternion,speed);
 
 		end%func GetPointBetween
+        
+        function UpdateWaypointPosition(waypoint,new_x,new_y,new_z)
+            if(~isa(waypoint,'Waypoint'))
+                fpritnf('WaypointAlgorithms::UpdateWaypointPosition: Input 1 is not a waypoint');
+                return;
+            end%if
+            
+            waypoint.x = new_x;
+            waypoint.y = new_y;
+            waypoint.z = new_z;
+            
+        end%func UpdateWaypointPosition
+        
+        function UpdateWaypointRotation(waypoint,new_R)
+            if(~isa(waypoint,'Waypoint'))
+                fprintf('WaypointAlgorithms::UpdateWaypointPosition: Input 1 is not a waypoint');
+                return;
+            end%if
+            
+            column1_denominator = sqrt((new_R(1,1).^2)+(new_R(2,1).^2)+(new_R(3,1).^2));
+            column2_denominator = sqrt((new_R(1,2).^2)+(new_R(2,2).^2)+(new_R(3,2).^2));
+            column3_denominator = sqrt((new_R(1,3).^2)+(new_R(2,3).^2)+(new_R(3,3).^2));
+            
+            if column1_denominator ~= 0
+                new_R(1,1) = new_R(1,1)./column1_denominator;
+                new_R(2,1) = new_R(2,1)./column1_denominator;
+                new_R(3,1) = new_R(3,1)./column1_denominator;
+            else
+                new_R(1,1) = 1;
+                new_R(2,1) = 0;
+                new_R(3,1) = 0;
+            end
+            
+            if column2_denominator ~= 0
+                new_R(1,2) = new_R(1,2)./column2_denominator;
+                new_R(2,2) = new_R(2,2)./column2_denominator;
+                new_R(3,2) = new_R(3,2)./column2_denominator;
+            else
+                new_R(1,2) = 0;
+                new_R(2,2) = 1;
+                new_R(3,2) = 0;
+            end
+            
+            if column3_denominator ~= 0
+                new_R(1,3) = new_R(1,3)./column3_denominator;
+                new_R(2,3) = new_R(2,3)./column3_denominator;
+                new_R(3,3) = new_R(3,3)./column3_denominator;
+            else
+                new_R(1,3) = 0;
+                new_R(2,3) = 0;
+                new_R(3,3) = 1;
+            end
+            
+            waypoint.R = new_R;
+            
+        end%func UpdateWaypointRotation
+        
 	end%methods
 end%class WaypointAlgorithms
