@@ -11,17 +11,17 @@ classdef PathFileWriter
 	methods(Static)
 		function WritePart(file_path,part)
 			if(~isa(part,'Part'))
-				fprintf('PathFileWrite::Write: Input 2 not a part\n');
+				fprintf('PathFileWrite::WritePart: Input 2 not a part\n');
 				return;
 			end%if
 
 			file_id = fopen(file_path,'w');
 			if(file_id == -1)
-				fprintf('PathFileWriter::Write: File failed to open.\n');
+				fprintf('PathFileWriter::WritePart: File failed to open.\n');
 				return;
 			end%if
 
-			last_operation_index = 1;
+			last_operation_index = 1; % tracks OP_ID
 
 			for i = 1:length(part.segments)
 				last_operation_index = PathFileWriter.WriteSegment(file_id,part.segments{i},last_operation_index);
@@ -42,6 +42,59 @@ classdef PathFileWriter
 				last_operation_index = PathFileWriter.WriteContourToFile(file_id,current_segment.contours{i},last_operation_index);
 			end%for i
 		end%func WriteSegment
+
+		function WritePartWithManifest(file_path,part)
+			if(~isa(part,'Part'))
+				fprintf('PathFileWrite::WritePartWithManifest: Input 2 not a part\n');
+				return;
+			end%if
+
+			file_id = fopen(file_path,'w');
+			if(file_id == -1)
+				fprintf('PathFileWriter::WritePartWithManifest: File failed to open.\n');
+				return;
+			end%if
+
+			PathFileWriter.WriteSegmentManifest(file_id,part);
+
+			fclose('all');
+		end%func Write
+
+		function last_operation_index = WriteSegmentManifest(file_id,part)
+			if(~isa(part,'Part'))
+				fprintf('PathFileWrite::WriteSegmentManifest: Input 2 not a part\n');
+				return;
+			end%if
+
+			last_operation_index = 1; % tracks OP_ID
+
+			for i = 1:length(part.segment_manifest)
+				manifest_entry = part.segment_manifest{i};
+				n_segments = length(manifest_entry);
+				all_written_bools = zeros(1,n_segments);
+
+				all_segments_written = false;
+				contour_i = 1;
+
+				while(~all_written_bools)
+					for j = 1:n_segments
+						segment_index = manifest_entry(j);
+						current_segment = part.segments{segment_index};
+
+						if(contour_i <= length(current_segment.contours))
+							current_contour = current_segment.contours{contour_i};
+							last_operation_index = PathFileWriter.WriteContourToFile(file_id,current_contour,last_operation_index);
+						else
+							all_written_bools(j) = true;
+							fprintf('Segment %i contains %i contours\n',j,contour_i)
+						end%if
+
+					end%for j
+
+					contour_i = contour_i + 1;
+				end%while
+			end%for i
+		end%func WriteSegmentManifest
 
 		function last_operation_index = WriteContourToFile(file_id,current_contour,current_operation_index)
 			PathFileWriter.WriteHeader(file_id,current_operation_index);
