@@ -126,5 +126,15 @@ classdef WaypointAlgorithms
             
         end%func UpdateWaypointRotation
         
+        function UpdateWaypointSpeed(waypoint,new_speed)
+            if(~isa(waypoint,'Waypoint'))
+                fprintf('WaypointAlgorithms::UpdateWaypointPosition: Input 1 is not a waypoint');
+                return;
+            end%if
+            
+            waypoint.speed = new_speed;
+            
+        end%func UpdateWaypointSpeed
+        
 	end%methods
 end%class WaypointAlgorithms
