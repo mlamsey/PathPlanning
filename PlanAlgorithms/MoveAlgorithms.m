@@ -105,6 +105,35 @@ classdef MoveAlgorithms
 			move2 = Move(point_middle,point_end);
 		end%func BisectMoveAtPercent
 
+		function move_list = MoveLinspaceConstantR(old_move,number_of_moves)
+			if(~isa(old_move,'Move'))
+				fprintf('MoveAlgorithms::MoveLinspace: Input 1 not a Move\n');
+				move_list = old_move;
+				return;
+			end%if
+
+			point1 = old_move.point1;
+			point2 = old_move.point2;
+
+			number_of_points = number_of_moves + 1;
+			% Generate x ranges
+			x_range = linspace(point1.x,point2.x,number_of_points);
+			y_range = linspace(point1.y,point2.y,number_of_points);
+			z_range = linspace(point1.z,point2.z,number_of_points);
+
+			old_quaternion = point1.torch_quaternion;
+			old_R = point1.R;
+			old_speed = point1.speed;
+
+			for i = 1:number_of_moves
+				start_point = Waypoint(x_range(i),y_range(i),z_range(i),quaternion.ones,old_speed);
+				start_point.R = old_R;
+				end_point = Waypoint(x_range(i + 1),y_range(i + 1),z_range(i + 1),quaternion.ones,old_speed);
+				end_point.R = old_R;
+				move_list{i} = Move(start_point,end_point);
+			end%for i
+		end%func
+
 		function new_move = CombineMoves(move1,move2)
 			if(~isa(move1,'Move') || ~isa(move2,'Move'))
                 fprintf('MoveAlgorithms::IsCollinear: Inputs are not moves\n');

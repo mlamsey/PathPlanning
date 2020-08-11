@@ -367,11 +367,21 @@ classdef PlotTools
             x_lim = xlim(axes_ref);
             y_lim = ylim(axes_ref);
             z_lim = zlim(axes_ref);
-            min_bound = min([x_lim,y_lim,z_lim]);
-            max_bound = max([x_lim,y_lim,z_lim]);
-            xlim(axes_ref,[min_bound,max_bound]);
-            ylim(axes_ref,[min_bound,max_bound]);
-            zlim(axes_ref,[min_bound,max_bound]);
+
+            % Find max range for an axis
+            x_range = max(x_lim) - min(x_lim);
+            y_range = max(y_lim) - min(y_lim);
+            z_range = max(z_lim) - min(z_lim);
+            axis_range = max([x_range,y_range,z_range]);
+
+            % Create new axes centered on plot axes
+            x_limits = [mean(x_lim) - 0.5*axis_range,mean(x_lim) + 0.5*axis_range];
+            y_limits = [mean(y_lim) - 0.5*axis_range,mean(y_lim) + 0.5*axis_range];
+            z_limits = [mean(z_lim) - 0.5*axis_range,mean(z_lim) + 0.5*axis_range];
+
+            xlim(axes_ref,[x_limits(1),x_limits(2)]);
+            ylim(axes_ref,[y_limits(1),y_limits(2)]);
+            zlim(axes_ref,[z_limits(1),z_limits(2)]);
         end%func SquareAxes3
 
 	end%methods
