@@ -60,6 +60,45 @@ classdef SegmentAlgorithms
 			end%if
 		end%func UpdateTorchQuaternionsUsingInterContourVectors
 
+		function DetermineGravityAlignment(original_segment)
+			if(~isa(original_segment,'Segment'))
+				fprintf('SegmentAlgorithms::DetermineGravityAlignment: Input not a Segment\n');
+				return;
+			end%if
+
+			n_contours = length(original_segment.contours);
+			% Counters for GA and NGA layers
+			n_ga = 0;
+			n_nga = 0;
+
+			for i = 2:n_contours
+				current_contour = original_segment.contours{i};
+				previous_contour = original_segment.contours{i - 1};
+				n_moves = length(current_contour.moves);
+				
+				previous_closest_move_index = 1;
+
+				contour_is_ga = logical(ones(1,n_moves));
+
+				for j = 1:n_moves
+					current_move = current_contour.moves{i};
+					[normal_vector,previous_closest_move_index,~] = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour,previous_closest_move_index);
+
+					normal_vector = normal_vector ./ norm(normal_vector);
+					if(abs(dot(normal_vector,[0,0,1])) < 0.999)
+						contour_is_ga(j) = false;
+					end%if
+				end%for j
+
+				if(contour_is_ga)
+					n_ga = n_ga + 1;
+				else
+					n_nga = n_nga + 1;
+				end%if
+			end%for i
+			fprintf('%i GA contours and %i NGA contours identified\n',n_ga,n_nga);
+		end%func 
+
 		function StaggerSegmentStartPoints(original_segment)
 			if(~isa(original_segment,'Segment'))
 				fprintf('SegmentAlgorithms::StaggerSegmentStartPoints: Input not a segmetn\n');
