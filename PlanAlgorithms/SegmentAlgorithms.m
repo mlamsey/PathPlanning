@@ -60,11 +60,28 @@ classdef SegmentAlgorithms
 			end%if
 		end%func UpdateTorchQuaternionsUsingInterContourVectors
 
+		function SetSegmentShift(original_segment,shift)
+			if(~isa(original_segment,'Segment'))
+				fprintf('SegmentAlgorithms::SetSegmentShift: Input 1 not a Segment\n');
+				return;
+			end%if
+
+			if(~isa(shift,'Shift'))
+				fprintf('SegmentAlgorithms::SetSegmentShift: Input 2 not a Shift\n');
+				return;
+			end%if
+
+			for i = 1:length(original_segment.contours)
+				ContourAlgorithms.SetContourShift(original_segment.contours{i},shift);
+			end%for i
+		end%func SetSegmentShift
+
 		function DetermineGravityAlignment(original_segment)
 			if(~isa(original_segment,'Segment'))
 				fprintf('SegmentAlgorithms::DetermineGravityAlignment: Input not a Segment\n');
 				return;
 			end%if
+			fprintf('Determining Gravity Alignment of Segment...\n');
 
 			n_contours = length(original_segment.contours);
 			% Counters for GA and NGA layers
@@ -97,7 +114,15 @@ classdef SegmentAlgorithms
 				end%if
 			end%for i
 			fprintf('%i GA contours and %i NGA contours identified\n',n_ga,n_nga);
-		end%func 
+
+			if(n_ga == 0 && n_nga > 0)
+				original_segment.segment_type = 'NGA';
+			elseif(n_ga > 0 && n_nga == 0)
+				original_segment.segment_type = 'GA';
+			else
+				original_segment.segment_type = 'TZ';
+			end%if
+		end%func DetermineGravityAlignment
 
 		function StaggerSegmentStartPoints(original_segment)
 			if(~isa(original_segment,'Segment'))

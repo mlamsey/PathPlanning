@@ -70,6 +70,26 @@ classdef WaypointAlgorithms
 
 		end%func GetPointBetween
 
+		function [x,y,z,a,b,c] = GetWaypointElements(waypoint)
+			if(~isa(waypoint,'Waypoint'))
+				fprintf('WaypoinyAlgorithms::GetWaypointElements: Input not a waypoint\n');
+				x = [];
+				y = x;
+				z = x;
+				a = x;
+				b = x;
+				c = x;
+				return;
+			end%if
+
+			x = waypoint.x;
+			y = waypoint.y;
+			z = waypoint.z;
+			a = waypoint.a;
+			b = waypoint.b;
+			c = waypoint.c;
+		end%func GetWaypointElements
+
 		function [x,y,z,a,b,c] = GetShiftedWaypointElements(waypoint)
 			if(~isa(waypoint,'Waypoint'))
 				fprintf('WaypointAlgorithms::GetShiftedWaypointElements: Input 1 not a waypoint\n');
@@ -159,18 +179,18 @@ classdef WaypointAlgorithms
             
         end%func UpdateWaypointSpeed
 
-        function SetShift(waypoint,dx,dy,dz,da,db,dc)
+        function SetShift(waypoint,shift)
         	if(~isa(waypoint,'Waypoint'))
         		fprintf('WaypointAlgorithms::SetShift: Input 1 not a waypoint\n');
         		return;
         	end%if
 
-        	if(nargin ~= 7)
-        		fprintf('WaypointAlgorithms::SetShift: Incorrect number of inputs\n');
+        	if(~isa(shift,'Shift'))
+        		fprintf('WaypointAlgorithms::SetShift: Input 2 not a Shift\n');
         		return;
         	end%if
 
-        	waypoint.shift = Shift(dx,dy,dz,da,db,dc);
+        	waypoint.shift = shift;
         end%func SetShift
         
 	end%methods

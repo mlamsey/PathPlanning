@@ -68,6 +68,21 @@ classdef MoveAlgorithms
 			move_midpoint = WaypointAlgorithms.GetMidpoint(move.point1,move.point2);
 		end%func GetMoveMidpoint
 
+		function SetMoveShift(move,shift)
+			if(~isa(move,'Move'))
+				fprintf('MoveAlgorithms::SetMoveShift: Input 1 not a Move\n');
+				return;
+			end%if
+
+			if(~isa(shift,'Shift'))
+				fprintf('MoveAlgorithms::SetMoveShift: Input 2 not a Shift\n');
+				return;
+			end%if
+
+			WaypointAlgorithms.SetShift(move.point1,shift);
+			WaypointAlgorithms.SetShift(move.point2,shift);
+		end%func SetMoveShift
+
 		function ReverseMove(move)
 			if(~isa(move,'Move'))
 				fprintf('MoveAlgorithms::ReverseMove: Input not a move\n');
