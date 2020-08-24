@@ -204,16 +204,18 @@ classdef PathFileWriter
 				return;
 			end%if
 
-			% Extract info w/ 3 decimal points precision
-			str_x = num2str(waypoint.x,'%1.3f');
-			str_y = num2str(waypoint.y,'%1.3f');
-			str_z = num2str(waypoint.z,'%1.3f');
+			% Extract info and add shift
+			[x,y,z,a,b,c] = WaypointAlgorithms.GetShiftedWaypointElements(waypoint);
 
-			[a,b,c] = Utils.GetZYZEulerAnglesFromRotationMatrix(waypoint.R);
+			% Create string w/ 3 decimal points precision
+			str_x = num2str(x,'%1.3f');
+			str_y = num2str(y,'%1.3f');
+			str_z = num2str(z,'%1.3f');
 			
 			str_a = num2str(a,'%1.3f');
 			str_b = num2str(b,'%1.3f');
 			str_c = num2str(c,'%1.3f');
+			
 			str_speed = num2str(waypoint.speed,'%1.3f');
 
 			% Create comma separated string
