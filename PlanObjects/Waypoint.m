@@ -15,7 +15,7 @@ classdef Waypoint < handle & matlab.mixin.Copyable
 			obj.y = y;
 			obj.z = z;
 			obj.R = eye(3);
-			shift = Shift(0,0,0,0,0,0);
+			obj.shift = Shift(0,0,0,0,0,0);
 			obj.torch_quaternion = torch_quaternion;
 			obj.speed = speed;
 		end%func Constructor
