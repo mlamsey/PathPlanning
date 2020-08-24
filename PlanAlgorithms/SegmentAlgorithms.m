@@ -198,6 +198,17 @@ classdef SegmentAlgorithms
 				ContourAlgorithms.RepairContourEndContinuity(original_segment.contours{current_index});
 			end%for i
 
+			function RotateSegmentPointsAboutToolFrames(original_segment,degrees_to_rotate,axis_name)
+				if(~isa(original_segment,'Segment'))
+					fprintf('SegmentAlgorithms::RotateSegmentPointsAboutToolFrames: Input 1 not a Segment\n');
+					return;
+				end%if
+
+				for i = 1:length(original_segment.contours)
+					ContourAlgorithms.RotateAboutToolFrameAxis(original_segment.contours{i},degrees_to_rotate,axis_name);
+				end%for i
+			end%func RotateSegmentPointsAboutToolFrames
+
 		end%func RepairSubsetOfContourEndContinuity
 	end%methods
 end%class SegmentAlgorithms

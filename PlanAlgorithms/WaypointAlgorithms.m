@@ -179,6 +179,36 @@ classdef WaypointAlgorithms
             
         end%func UpdateWaypointSpeed
 
+        function RotateAboutToolFrameAxis(waypoint,degrees_to_rotate,axis_name)
+        	if(~isa(waypoint,'Waypoint'))
+        		fprintf('WaypointAlgorithms::RotateAboutToolFrameAxis: Input 1 not a waypoint\n');
+        		return;
+        	end%if
+
+        	theta = degrees_to_rotate;
+        	axis_name = lower(axis_name);
+
+        	switch axis_name
+        		case 'x'
+        			R = [1,0,0
+        			0,cosd(theta),-1 * sind(theta)
+        			0,sind(theta),cosd(theta)];
+        		case 'y'
+        			R = [cosd(theta),0,sind(theta)
+        			0,1,0
+        			-1*sind(theta),0,cosd(theta)];
+        		case 'z'
+        			R = [cosd(theta),-1*sind(theta),0
+        			sind(theta),cosd(theta),0
+        			0,0,1];
+        		otherwise
+        			fprintf('WaypointAlgorithms::RotateAboutToolFrameAxis: Axis name not recognized\n');
+        			return;
+        	end%switch
+
+        	waypoint.R = R * waypoint.R;
+        end%func RotateAboutToolFrameAxis
+
         function SetShift(waypoint,shift)
         	if(~isa(waypoint,'Waypoint'))
         		fprintf('WaypointAlgorithms::SetShift: Input 1 not a waypoint\n');

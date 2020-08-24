@@ -292,6 +292,17 @@ classdef ContourAlgorithms
 
         end%func AddMoveAtBeginningOfContour
 
+        function RotateContourPointsAboutToolFrames(original_contour,degrees_to_rotate,axis_name)
+            if(~isa(original_contour,'Contour'))
+                fprintf('ContourAlgorithms::RotateContourPointsAboutToolFrames: Input 1 not a Contour\n');
+                return;
+            end%if
+
+            for i = 1:length(original_contour.moves)
+                MoveAlgorithms.RotateAboutToolFrameAxis(original_contour.moves{i},degrees_to_rotate,axis_name);
+            end%for i
+        end%func RotateContourPointsAboutToolFrames
+
         function [x,y,z] = GetContourWaypointVectors(original_contour)
             if(~isa(original_contour,'Contour'))
                 fprintf('ContourAlgorithms::GetContourWaypointVectors: Input is not a Contour\n');
@@ -407,7 +418,7 @@ classdef ContourAlgorithms
             end%while
 
         end%func FindClosestContour2MoveToContour1MoveWithInitialGuess
-        
+
         function shift = CalculateShiftUsingInterContourVectors
             shift = Shift(0,0,0,0,0,0);
         end%func CalculateShiftUsingInterContourVectors
