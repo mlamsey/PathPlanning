@@ -69,10 +69,33 @@ classdef WaypointAlgorithms
 			between_point = Waypoint(x,y,z,torch_quaternion,speed);
 
 		end%func GetPointBetween
+
+		function [x,y,z,a,b,c] = GetShiftedWaypointElements(waypoint)
+			if(~isa(waypoint,'Waypoint'))
+				fprintf('WaypointAlgorithms::GetShiftedWaypointElements: Input 1 not a waypoint\n');
+				x = [];
+				y = x;
+				z = x;
+				a = x;
+				b = x;
+				c = x;
+				return;
+			end%if
+
+			shift = waypoint.shift;
+			x = waypoint.x + shift.dx;
+			y = waypoint.y + shift.dy;
+			z = waypoint.z + shift.dz;
+
+			[a,b,c] = Utils.GetZYZEulerAnglesFromRotationMatrix(waypoint.R);
+			a = a + shift.da;
+			b = b + shift.db;
+			c = c + shift.dc;
+		end%func GetShiftedWaypointElements
         
         function UpdateWaypointPosition(waypoint,new_x,new_y,new_z)
             if(~isa(waypoint,'Waypoint'))
-                fpritnf('WaypointAlgorithms::UpdateWaypointPosition: Input 1 is not a waypoint');
+                fpritnf('WaypointAlgorithms::UpdateWaypointPosition: Input 1 is not a waypoint\n');
                 return;
             end%if
             
@@ -84,7 +107,7 @@ classdef WaypointAlgorithms
         
         function UpdateWaypointRotation(waypoint,new_R)
             if(~isa(waypoint,'Waypoint'))
-                fprintf('WaypointAlgorithms::UpdateWaypointPosition: Input 1 is not a waypoint');
+                fprintf('WaypointAlgorithms::UpdateWaypointPosition: Input 1 is not a waypoint\n');
                 return;
             end%if
             
@@ -128,13 +151,27 @@ classdef WaypointAlgorithms
         
         function UpdateWaypointSpeed(waypoint,new_speed)
             if(~isa(waypoint,'Waypoint'))
-                fprintf('WaypointAlgorithms::UpdateWaypointPosition: Input 1 is not a waypoint');
+                fprintf('WaypointAlgorithms::UpdateWaypointPosition: Input 1 is not a waypoint\n');
                 return;
             end%if
             
             waypoint.speed = new_speed;
             
         end%func UpdateWaypointSpeed
+
+        function SetShift(waypoint,dx,dy,dz,da,db,dc)
+        	if(~isa(waypoint,'Waypoint'))
+        		fprintf('WaypointAlgorithms::SetShift: Input 1 not a waypoint\n');
+        		return;
+        	end%if
+
+        	if(nargin ~= 7)
+        		fprintf('WaypointAlgorithms::SetShift: Incorrect number of inputs\n');
+        		return;
+        	end%if
+
+        	waypoint.shift = Shift(dx,dy,dz,da,db,dc);
+        end%func SetShift
         
 	end%methods
 end%class WaypointAlgorithms
