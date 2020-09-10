@@ -210,5 +210,16 @@ classdef SegmentAlgorithms
 			end%func RotateSegmentPointsAboutToolFrames
 
 		end%func RepairSubsetOfContourEndContinuity
+        
+        function TranslateSegment(original_segment,x_translate,y_translate,z_translate)
+            if(~isa(original_segment,'Segment'))
+                fprintf('SegmentAlgorithms::TranslateSegment: Input 1 not a Segment\n');
+                return;
+            end%if
+            
+            for i = 1:length(original_segment.contours)
+                ContourAlgorithms.TranslateContour(original_segment.contours{i},x_translate,y_translate,z_translate);
+            end%for i
+        end%func TranslateSegment
 	end%methods
 end%class SegmentAlgorithms

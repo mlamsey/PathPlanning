@@ -180,5 +180,23 @@ classdef PartAlgorithms
 			end%for i
 			original_part.segment_manifest = new_manifest;
 		end%func ParallelizeSegments
+        
+        function TranslatePartToPoint(original_part,x_new,y_new,z_new)
+            if(~isa(original_part,'Part'))
+                fprintf('PartAlgoritms::TranslatePart: Input 1 not a Part!\n');
+                return;
+            end%if
+            
+            first_segment = original_part.segments{1};
+            first_contour = first_segment.contours{1};
+            [x_avg,y_avg,z_avg] = ContourAlgorithms.FindContourCentroid(first_contour);
+            x_translate = x_new - x_avg;
+            y_translate = y_new - y_avg;
+            z_translate = z_new - z_avg;
+            
+            for i = 1:length(original_part.segments)
+                SegmentAlgorithms.TranslateSegment(original_part.segments{i},x_translate,y_translate,z_translate);
+            end%for i
+        end%func TranslatePart       
 	end%methods
 end%class PartAlgorithms

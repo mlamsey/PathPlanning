@@ -223,6 +223,17 @@ classdef MoveAlgorithms
                 bool_is_parallel = false;
             end%if
         end%func IsParallel
+        
+        function TranslateMove(move,x_translate,y_translate,z_translate)
+            if(~isa(move,'Move'))
+				fprintf('MoveAlgorithms::TranslateMove: Input 1 not a Move\n');
+				return;
+			end%if
+            
+            WaypointAlgorithms.TranslateWaypoint(move.point1,x_translate,y_translate,z_translate);
+            WaypointAlgorithms.TranslateWaypoint(move.point2,x_translate,y_translate,z_translate);
+            
+        end%func TranslateMove
 
 	end%methods
 end%class MoveAlgorithms

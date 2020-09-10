@@ -328,6 +328,37 @@ classdef ContourAlgorithms
             y(end) = original_contour.moves{end}.point2.y;
             z(end) = original_contour.moves{end}.point2.z;
         end%func GetContourWaypointVectors
+        
+        function [x_avg,y_avg,z_avg] = FindContourCentroid(original_contour)
+            if(~isa(original_contour,'Contour'))
+                fprintf('ContourAlgorithms::FindContourCentroid: Input is not a Contour\n');
+                return;
+            end%if
+            
+            [x,y,z] = ContourAlgorithms.GetContourWaypointVectors(original_contour);
+            x_min = min(x);
+            x_max = max(x);
+            y_min = min(y);
+            y_max = max(y);
+            z_min = min(z);
+            z_max = max(z);
+            
+            x_avg = (x_min+x_max)./2;
+            y_avg = (y_min+y_max)./2;
+            z_avg = (z_min+z_max)./2;
+        end%func FindContourCentroid
+        
+        function TranslateContour(original_contour,x_translate,y_translate,z_translate)
+            if(~isa(original_contour,'Contour'))
+                fprintf('ContourAlgorithms::TranslateContour: Input 1 not a Contour\n');
+                return;
+            end%if
+
+            for i = 1:length(original_contour.moves)
+                MoveAlgorithms.TranslateMove(original_contour.moves{i},x_translate,y_translate,z_translate);
+            end%for i
+            
+        end%func TranslateContour        
     end%methods
 
     methods(Static, Access = 'private')

@@ -223,5 +223,16 @@ classdef WaypointAlgorithms
         	waypoint.shift = shift;
         end%func SetShift
         
+        function TranslateWaypoint(waypoint,x_translate,y_translate,z_translate)
+            if(~isa(waypoint,'Waypoint'))
+                fpritnf('WaypointAlgorithms::TranslateWaypoint: Input 1 is not a waypoint\n');
+                return;
+            end%if
+            
+            waypoint.x = waypoint.x + x_translate;
+            waypoint.y = waypoint.y + y_translate;
+            waypoint.z = waypoint.z + z_translate;
+        end%func TranslateWaypoint
+        
 	end%methods
 end%class WaypointAlgorithms
