@@ -120,7 +120,7 @@ classdef MoveAlgorithms
 			move2 = Move(point_middle,point_end);
 		end%func BisectMoveAtPercent
 
-		function RotateMovePointsAboutToolFrames(move,degrees_to_rotate,axis_name)
+		function RotateAboutToolFrameAxis(move,degrees_to_rotate,axis_name)
 			if(~isa(move,'Move'))
 				fprintf('MoveAlgorithms::RotateMovePointsAboutToolFrames: Input 1 not a Move\n');
 				return;

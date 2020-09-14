@@ -125,19 +125,25 @@ classdef PathFileWriter
 
 			write_string = '';
 
-			for i = 1:length(current_contour.moves)
-				current_move = current_contour.moves{i};
+			if(length(current_contour.moves) > 1)
+				for i = 1:length(current_contour.moves)
+					current_move = current_contour.moves{i};
 
-				% Write moves
-				if(i == 1) % first move
-					write_string = PathFileWriter.WriteStartContour(current_move.point1,write_string);
-					write_string = PathFileWriter.WriteLinearMotion(current_move.point2,write_string);
-				elseif(i == length(current_contour.moves)) % last move
-					write_string = PathFileWriter.WriteEndContour(current_move.point2,write_string);
-				else
-					write_string = PathFileWriter.WriteLinearMotion(current_move.point2,write_string);
-				end%if
-			end%for i
+					% Write moves
+					if(i == 1) % first move
+						write_string = PathFileWriter.WriteStartContour(current_move.point1,write_string);
+						write_string = PathFileWriter.WriteWeldLinearMotion(current_move.point2,write_string);
+					elseif(i == length(current_contour.moves)) % last move
+						write_string = PathFileWriter.WriteEndContour(current_move.point2,write_string);
+					else
+						write_string = PathFileWriter.WriteWeldLinearMotion(current_move.point2,write_string);
+					end%if
+				end%for i
+			else
+				current_move = current_contour.moves{1};
+				write_string = PathFileWriter.WriteStartContour(current_move.point1,write_string);
+				write_string = PathFileWriter.WriteEndContour(current_move.point2,write_string);
+			end%if
 
 			% Write to file
 			fprintf(file_id,write_string);
@@ -150,7 +156,7 @@ classdef PathFileWriter
 
 			% Write offset point and then contour start point
 			appended_string = PathFileWriter.WriteTravelLinearMotion(retracted_point,working_string);
-			appended_string = PathFileWriter.WriteTravelLinearMotion(motion_start_point,appended_string);
+			appended_string = PathFileWriter.WriteWeldLinearMotion(motion_start_point,appended_string);
 
 		end%func WriteStartContour
 
@@ -160,7 +166,7 @@ classdef PathFileWriter
 			retracted_point = PathFileWriter.GenerateRetractedWaypoint(waypoint);
 
 			% Write contour end point and then offset point
-			working_string = PathFileWriter.WriteTravelLinearMotion(motion_end_point,working_string);
+			working_string = PathFileWriter.WriteWeldLinearMotion(motion_end_point,working_string);
 			appended_string = PathFileWriter.WriteTravelLinearMotion(retracted_point,working_string);
 
 		end%func WriteEndContour
@@ -181,13 +187,13 @@ classdef PathFileWriter
 		
 		end%func WriteJointMotion
 
-		function appended_string = WriteLinearMotion(destination_waypoint,working_string)
+		function appended_string = WriteWeldLinearMotion(destination_waypoint,working_string)
 			% Write generic linear motion
 			appended_string = [working_string ...
 			PathFileWriter.cmd_linear_move ...
 			':' PathFileWriter.GetWaypointString(destination_waypoint) '\n'];
 
-		end%func WriteLinearMotion
+		end%func WriteWeldLinearMotion
 
 		function appended_string = WriteContourMotion(destination_waypoint,working_string)
 			% Write generic contour motion
@@ -195,7 +201,7 @@ classdef PathFileWriter
 			PathFileWriter.cmd_contour_move ...
 			':' PathFileWriter.GetWaypointString(destination_waypoint) '\n'];
 
-		end%func WriteLinearMotion
+		end%func WriteWeldLinearMotion
 
 		function waypoint_string = GetWaypointString(waypoint)
 			if(~isa(waypoint,'Waypoint'))
@@ -227,17 +233,20 @@ classdef PathFileWriter
 
 		function waypoint_string = GetWaypointStringWithCustomVelocity(waypoint,velocity)
 			if(~isa(waypoint,'Waypoint'))
-				fprintf('PathFileWriter::GetWaypointString: Input not a Waypoint\n');
+				fprintf('PathFileWriter::GetWaypointStringWithCustomVelocity: Input not a Waypoint\n');
 				waypoint_string = '';
 				return;
 			end%if
 
-			% Extract info w/ 3 decimal points precision
-			str_x = num2str(waypoint.x,'%1.3f');
-			str_y = num2str(waypoint.y,'%1.3f');
-			str_z = num2str(waypoint.z,'%1.3f');
+			% Extract info and add shift
+			[x,y,z,a,b,c] = WaypointAlgorithms.GetShiftedWaypointElements(waypoint);
 
-			[a,b,c] = Utils.GetZYZEulerAnglesFromRotationMatrix(waypoint.R);
+			% Extract info w/ 3 decimal points precision
+			str_x = num2str(x,'%1.3f');
+			str_y = num2str(y,'%1.3f');
+			str_z = num2str(z,'%1.3f');
+
+			% [a,b,c] = Utils.GetZYZEulerAnglesFromRotationMatrix(waypoint.R);
 
 			str_a = num2str(a,'%1.3f');
 			str_b = num2str(b,'%1.3f');
@@ -262,10 +271,13 @@ classdef PathFileWriter
 			retract_vector = [0,0,PathFileWriter.mm_retract_z_offset];
 			retracted_point_offset = retract_vector * transpose(waypoint_on_contour.R);
 
+			% Extract info and add shift
+			[x,y,z,a,b,c] = WaypointAlgorithms.GetShiftedWaypointElements(waypoint_on_contour);
+
 			% Generate point away from workpiece in torch direction
-			retracted_x = waypoint_on_contour.x + retracted_point_offset(1);
-			retracted_y = waypoint_on_contour.y + retracted_point_offset(2);
-			retracted_z = waypoint_on_contour.z + retracted_point_offset(3);
+			retracted_x = x + retracted_point_offset(1);
+			retracted_y = y + retracted_point_offset(2);
+			retracted_z = z + retracted_point_offset(3);
 
 			retracted_point = Waypoint(retracted_x,retracted_y,retracted_z,waypoint_on_contour.torch_quaternion,PathFileWriter.mms_welding_speed);
 			retracted_point.R = waypoint_on_contour.R;
