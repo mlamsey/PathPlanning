@@ -8,14 +8,16 @@ classdef PlotTools
 
             start_color = [0,1,0];
             end_color = [1,0,0];
-            colors = [linspace(start_color(1),end_color(1),length(part_data.segments{1}.contours));...
-                linspace(start_color(2),end_color(2),length(part_data.segments{1}.contours));...
-                linspace(start_color(3),end_color(3),length(part_data.segments{1}.contours))];
 
             hold(parent_axes,'on');
 
             for i_segment = 1:length(part_data.segments)
                 current_segment = part_data.segments{i_segment};
+                
+                colors = [linspace(start_color(1),end_color(1),length(current_segment.contours));...
+                    linspace(start_color(2),end_color(2),length(current_segment.contours));...
+                    linspace(start_color(3),end_color(3),length(current_segment.contours))];
+
                 for i_contour = 1:length(current_segment.contours)
                     current_contour = current_segment.contours{i_contour};
                     [x,y,z] = ContourAlgorithms.GetContourWaypointVectors(current_contour);
@@ -344,6 +346,17 @@ classdef PlotTools
 
         end%func
 
+        function DefaultPlot3Setup(axes_ref)
+            axes_ref.XLabel.String = 'X (mm)';
+            axes_ref.YLabel.String = 'Y (mm)';
+            axes_ref.ZLabel.String = 'Z (mm)';
+            axes_ref.XGrid = true;
+            axes_ref.YGrid = true;
+            axes_ref.ZGrid = true;
+            PlotTools.SquareAxes3AboutOrigin(axes_ref);
+            view(45,45);
+        end%func DefaultPlotSetup
+
         function ref = BufferPlotAxes(ax,percent_buffer)
             x_lim = xlim(ax);
             y_lim = ylim(ax);
@@ -384,5 +397,53 @@ classdef PlotTools
             zlim(axes_ref,[z_limits(1),z_limits(2)]);
         end%func SquareAxes3
 
+        function SquareAxes3AboutOrigin(axes_ref)
+            x_lim = xlim(axes_ref);
+            y_lim = ylim(axes_ref);
+            z_lim = zlim(axes_ref);
+
+            bound = max(abs([x_lim,y_lim,z_lim]));
+
+            limits = [-1 * bound, bound];
+
+            xlim(axes_ref,[limits(1),limits(2)]);
+            ylim(axes_ref,[limits(1),limits(2)]);
+            zlim(axes_ref,[limits(1),limits(2)]);
+        end%func SquareAxes3
+
+        function figure_ref = CreateCenteredFigure(figure_width,figure_height)
+            monitor_position = PlotTools.GetBiggestMonitorPosition;
+            monitor_corner = monitor_position(1:2) - 1;
+            monitor_center = [monitor_position(3) / 2, monitor_position(4) / 2];
+
+            figure_x = monitor_center(1) - (figure_width / 2) + monitor_corner(1);
+            figure_y = monitor_center(2) - (figure_height / 2) + monitor_corner(2);
+            figure_ref = figure('position',[figure_x,figure_y,figure_width,figure_height]);
+        end%func CreateCenteredFigure
+
 	end%methods
+
+    methods(Static, Access = 'private')
+        function monitor_position = GetBiggestMonitorPosition
+            monitor_positions = PlotTools.GetMonitorPositions;
+            resolutions = monitor_positions(:,3) .* monitor_positions(:,4);
+            [~,biggest_monitor_index] = max(resolutions);
+            monitor_position = monitor_positions(biggest_monitor_index,:);
+        end%func GetBiggestMonitorPosition
+
+        function monitor_positions = GetMonitorPositions
+            % from https://www.mathworks.com/matlabcentral/answers/312738-how-to-get-real-screen-size
+            ScreenPixelsPerInch = java.awt.Toolkit.getDefaultToolkit().getScreenResolution();
+            ScreenDevices = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
+            MainScreen = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getScreen()+1;
+            MainBounds = ScreenDevices(MainScreen).getDefaultConfiguration().getBounds();
+            MonitorPositions = zeros(numel(ScreenDevices),4);
+            for n = 1:numel(ScreenDevices)
+                Bounds = ScreenDevices(n).getDefaultConfiguration().getBounds();
+                MonitorPositions(n,:) = [Bounds.getLocation().getX() + 1,-Bounds.getLocation().getY() + 1 - Bounds.getHeight() + MainBounds.getHeight(),Bounds.getWidth(),Bounds.getHeight()];
+            end%for n
+
+            monitor_positions = MonitorPositions;
+        end%func GetMonitorPositions
+    end%private methods
 end%class PlotTooles
