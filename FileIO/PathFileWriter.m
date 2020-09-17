@@ -2,6 +2,7 @@ classdef PathFileWriter
 	properties(Constant)
 		cmd_retract_move = 'R';
 		cmd_linear_move = 'L';
+		cmd_joint_move = 'J';
 		cmd_contour_move = 'C';
 		mm_retract_z_offset = 25.4; % mm
 		mms_welding_speed = 2.75; % mm/s // 2.75 mm/s // used to be 6.418
@@ -180,9 +181,17 @@ classdef PathFileWriter
 		end%func WriteRetractMove
 
 		function appended_string = WriteTravelLinearMotion(destination_waypoint,working_string)
-			% Write a fast p2p move
+			% Write a p2p move
 			appended_string = [working_string ...
 			PathFileWriter.cmd_linear_move ...
+			':' PathFileWriter.GetWaypointStringWithCustomVelocity(destination_waypoint,PathFileWriter.mms_travel_speed) '\n'];
+		
+		end%func WriteJointMotion
+
+		function appended_string = WriteTravelJointMotion(destination_waypoint,working_string)
+			% Write a joint p2p move
+			appended_string = [working_string ...
+			PathFileWriter.cmd_joint_move ...
 			':' PathFileWriter.GetWaypointStringWithCustomVelocity(destination_waypoint,PathFileWriter.mms_travel_speed) '\n'];
 		
 		end%func WriteJointMotion
