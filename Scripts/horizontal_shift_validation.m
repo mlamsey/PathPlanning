@@ -23,6 +23,11 @@ if(reimport)
 	PartAlgorithms.AlternateContourDirections(part,1);
 	PartAlgorithms.TranslatePartToPoint(part,-88.9,31.75,0);
 
+	% Flip backwards segments
+	for i = 5:9
+		SegmentAlgorithms.ReverseSegmentContourDirections(part.segments{i});
+	end%for i
+
 	reimport = false;
 end%if
 
@@ -33,11 +38,11 @@ if(~exist('shiftpos','var'))
 end%if
 
 % 45
-shifts = [1.941, 0.9158, 0.611, -0.221, 0.3329, 0.8196, 0.1263, -0.4002, -1.978];
+% shifts = [1.941, 0.9158, 0.611, -0.221, 0.3329, 0.8196, 0.1263, -0.4002, -1.978];
 % 65
 % shifts = [4.8369, 3.8607, 2.0646, 0.4356, 0.8402, 0.4972, -0.3417, -0.6770, -3.2889];
 %90
-% shifts = [-0.3549, -0.1903, -0.1488, -0.0152, 0.8907, 1.5158, 2.0144, 1.5433, 0.2923];
+shifts = [-0.3549, -0.1903, -0.1488, -0.0152, 0.8907, 1.5158, 2.0144, 1.5433, 0.2923];
 
 if(shiftpos)
 	for i = 1:n_segments
@@ -70,8 +75,9 @@ end%if
 if(~exist('export','var'))
 	export = true;
 end%if
+
 if(export)
-	file_path = '45_Shifted_Walls.path';
+	file_path = '90_Shifted_Walls.path';
 	PathFileWriter.WritePartWithManifest(file_path,part);
 	export = false;
 end%if
