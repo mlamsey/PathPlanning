@@ -169,6 +169,26 @@ classdef SegmentAlgorithms
 
 		end%func AlternateContourDirections
 
+		function ReverseSegmentContours(original_segment)
+			if(~isa(original_segment,'Segment'))
+				fprintf('SegmentAlgorithms::ReverseSegmentContours: Input not a Segment\n');
+				return;
+			end%if
+
+			original_segment.contours = flip(original_segment.contours);
+		end%func ReverseSegmentContours
+
+		function ReverseSegmentContourDirections(original_segment)
+			if(~isa(original_segment,'Segment'))
+				fprintf('SesgmentAlgorithms::ReverseSegmentContourDirections: Input not a Segment\n');
+				return;
+			end%if
+
+			for i = 1:length(original_segment.contours)
+				ContourAlgorithms.ReverseContourPointOrder(original_segment.contours{i});
+			end%for i
+		end%func ReverseSegmentContourDirections
+
 		function RepairContourEndContinuity(original_segment)
 			if(~isa(original_segment,'Segment'))
 				fprintf('SegmentAlgorithms::RepairContourEndContinuity: Input 1 not a segment\n');
