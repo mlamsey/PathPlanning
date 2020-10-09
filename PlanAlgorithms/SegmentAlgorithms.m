@@ -60,6 +60,29 @@ classdef SegmentAlgorithms
 			end%if
 		end%func UpdateTorchQuaternionsUsingInterContourVectors
 
+		function ShiftTorchAnglesUsingOverhangAngle(original_segment)
+			theta = zeros(1,length(original_segment.contours)-1);
+			shift = theta;
+
+			for i = 2:length(original_segment.contours)
+				this_contour = original_segment.contours{i};
+				previous_contour = original_segment.contours{i - 1};
+				[thetas,shifts] = ContourAlgorithms.ShiftTorchAngleUsingOverhangAngle(this_contour,previous_contour);
+				theta(i-1) = mean(thetas);
+				shift(i-1) = mean(shifts);
+			end%for i
+
+			% Uncomment below for debug plotting
+			plot(-1.*theta);
+			hold on;
+			plot(-1.*(theta - shift));
+			hold off;
+			grid on;
+			xlabel('Contour Number');
+			ylabel('Angle (degrees)');
+			legend('Overhang Angle','Optimal Torch Angle');
+		end%func ShiftTorchAnglesUsingOverhangAngle
+
 		function SetSegmentShift(original_segment,shift)
 			if(~isa(original_segment,'Segment'))
 				fprintf('SegmentAlgorithms::SetSegmentShift: Input 1 not a Segment\n');

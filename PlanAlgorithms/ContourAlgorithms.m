@@ -132,6 +132,42 @@ classdef ContourAlgorithms
 
         end%func UpdateTorchQuaternionsUsingInterContourVectors
 
+        function [thetas,shifts] = ShiftTorchAngleUsingOverhangAngle(this_contour,previous_contour)
+
+            gravity_vector = [0,0,1];
+            n_moves = length(this_contour.moves);
+            thetas = zeros(1,n_moves);
+            shifts = thetas;
+
+            for i = 1:n_moves
+                current_move = this_contour.moves{i};
+                [normal_vector,~,~] = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,previous_contour,1);
+
+                x_prod = cross(gravity_vector,normal_vector);
+
+                thetas(i) = rad2deg(asin(norm(x_prod)));
+                t = thetas(i);
+
+                % angle_shift = (-1.24e-04 * t^3) + (0.024 * t^2) - (1.22 * t);
+                angle_shift = (-1.31e-04 * t^3) + (0.0196 * t^2) - (0.736 * t) - 0.52;
+                shifts(i) = angle_shift;
+
+                % Determine quadrant and shift
+                if(abs(angle_shift) > 2) % check if shift > 2 degrees
+                    % normal_vector
+                    if(normal_vector(1) > 0)
+                        % fprintf('NEG\n');
+                        MoveAlgorithms.RotateAboutToolFrameAxis(current_move,angle_shift,'x');
+                    else
+                        % fprintf('POS\n');
+                        MoveAlgorithms.RotateAboutToolFrameAxis(current_move,-1 * angle_shift,'x');
+                    end%if
+                end%if
+
+            end%for i
+
+        end%func ShiftTorchAngleUsingOverhangAngle
+
         function [normalized_normal_vector,previous_contour_closest_move_index,number_of_search_iterations] = GetNormalVectorFromClosestMoveOnPreviousContour(move_on_current_contour,previous_contour,initial_guess)
             if(~isa(move_on_current_contour,'Move'))
                 fprintf('ContourAlgorithms::GetNormalVectorFromClosestMoveOnPreviousContour: Input 1 not a Move\n')

@@ -206,7 +206,7 @@ classdef WaypointAlgorithms
         			return;
         	end%switch
 
-        	waypoint.R = R * waypoint.R;
+        	waypoint.R = waypoint.R * R;
         end%func RotateAboutToolFrameAxis
 
         function SetShift(waypoint,shift)
