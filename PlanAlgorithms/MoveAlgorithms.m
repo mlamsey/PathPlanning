@@ -130,6 +130,19 @@ classdef MoveAlgorithms
 			WaypointAlgorithms.RotateAboutToolFrameAxis(move.point2,degrees_to_rotate,axis_name);
 		end%func RotateMovePointsAboutToolFrames
 
+		function move_list = MoveLinspaceByMaxDistance(move,max_move_distance)
+			if(~isa(move,'Move'))
+				fprintf('MoveAlgorithms::MoveLinspaceByMaxDistance: Input 1 not a Move\n');
+				move_list = move;
+				return;
+			end%if
+
+			move_length = MoveAlgorithms.GetMoveDistance(move);
+			n_moves_in_linspace = ceil(move_length / max_move_distance);
+
+			move_list = MoveAlgorithms.MoveLinspaceConstantR(move,n_moves_in_linspace);
+		end%func MoveLinspaceByMaxDistance
+
 		function move_list = MoveLinspaceConstantR(old_move,number_of_moves)
 			if(~isa(old_move,'Move'))
 				fprintf('MoveAlgorithms::MoveLinspace: Input 1 not a Move\n');

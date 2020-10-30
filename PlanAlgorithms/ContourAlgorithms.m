@@ -248,6 +248,24 @@ classdef ContourAlgorithms
 
         end%func BisectMove
 
+        function LinspaceMoveByDistance(original_contour,move_number,max_move_distance)
+            if(~isa(original_contour,'Contour'))
+                fprintf('ContourAlgorithms::LinspaceMoveByDistance: Input 1 not a Contour\n');
+                return;
+            end%if
+
+            move_to_split = original_contour.moves{move_number};
+            move_list = MoveAlgorithms.MoveLinspaceByMaxDistance(move_to_split,max_move_distance);
+
+            n_new_moves = length(move_list);
+
+            % Insert into contours
+            [original_contour.moves{move_number + n_new_moves:end + n_new_moves,:}] = original_contour.moves{move_number:end,:};
+            for i = 1:n_new_moves
+                original_contour.moves{move_number + i - 1} = move_list{i};
+            end%for i
+        end%func LinspaceMoveByDistance
+
         function ReverseContourPointOrder(original_contour)
             if(~isa(original_contour,'Contour'))
                 fprintf('ContourAlgorithms::ReverseContourPointOrder: Input not a contour!\n');
