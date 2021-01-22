@@ -11,6 +11,18 @@ classdef CylinderGenerator
 			layer = CylinderGenerator.GeneratePringleLayer(part_radius,deviation_height,n_perturbations);
 
 			layers = AdaptiveBeadProcessor.InterpolateLayerToFlat(layer,min_layer_height,max_layer_height);
+			layers = flip(layers);
+
+			min_z = layers{1}.points{1}.z;
+
+			for i = 1:length(layers)
+				for j = 1:length(layers{i}.points)
+					layers{i}.points{j}.z = -1 .* layers{i}.points{j}.z;
+					layers{i}.points{j}.z = layers{i}.points{j}.z + min_z;
+				end%for j
+			end%for i
+
+			% layers = flip(layers);
 
 		end%func GeneratePringleLayerPart
 

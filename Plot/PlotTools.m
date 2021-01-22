@@ -411,6 +411,20 @@ classdef PlotTools
             zlim(axes_ref,[limits(1),limits(2)]);
         end%func SquareAxes3
 
+        function SquareAxes3AboutPoint(axes_ref,xyz_point)
+            x_lim = xlim(axes_ref);
+            y_lim = ylim(axes_ref);
+            z_lim = zlim(axes_ref);
+
+            bound = max(abs([x_lim,y_lim,z_lim]));
+
+            limits = [-1 * bound, bound];
+
+            xlim(axes_ref,[limits(1),limits(2)] + xyz_point(1));
+            ylim(axes_ref,[limits(1),limits(2)] + xyz_point(2));
+            zlim(axes_ref,[limits(1),limits(2)] + xyz_point(3));
+        end%func SquareAxes3
+
         function figure_ref = CreateCenteredFigure(figure_width,figure_height)
             monitor_position = PlotTools.GetBiggestMonitorPosition;
             monitor_corner = monitor_position(1:2) - 1;

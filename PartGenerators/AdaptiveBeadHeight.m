@@ -1,5 +1,6 @@
 function output = AdaptiveBeadHeight
 	% close all;
+	figure;
 	% normal_vector = [0,0,1];
 	min_layer_height = 2.25;
 	max_layer_height = 2.75;
@@ -20,11 +21,43 @@ function output = AdaptiveBeadHeight
 
 	% CylinderGenerator.PringleSpiral(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
 
-	% layers = CylinderGenerator.GeneratePringleLayerPart(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
-	% AdaptiveBeadPlotTools.PlotLayers(layers);
-	% GeometryProcessor.UpdateCylinderLayerNormals(layers{1});
-	TestHeatEqn;
-	% output = layers;
+	layers = CylinderGenerator.GeneratePringleLayerPart(part_perturbation,part_radius,n_perturbations,min_layer_height,max_layer_height);
+	AdaptiveBeadPlotTools.PlotLayers(layers);
+	xlabel('X (mm)');
+	ylabel('Y (mm)');
+	zlabel('Z (mm)');
+	title('Adaptive Layer Height Part');
+	legend('Layer 1','Layer 2-n','location','northeast');
+	% GeometryProc
+	% TestHeatEqn;
+
+	% figure;
+	% indices = ceil(linspace(1,length(layers),6));
+	% for i = 1:6
+	% 	j = indices(i);
+	% 	subplot(2,3,i);
+	% 	AdaptiveBeadPlotTools.PlotLayer(layers{j},gca);
+	% 	grid on;
+	% 	title(sprintf('Layer %i',j));
+	% 	AdaptiveBeadPlotTools.SquareAxes3(gca);
+	% 	[x,y,z] = AdaptiveBeadProcessor.LayerObj2XYZ(layers{j});
+	% 	layer_z = mean(z);
+	% 	offset = 25; % mm
+	% 	zlim([layer_z - offset,layer_z + offset]);
+	% 	xlabel('X (mm)');
+	% 	ylabel('Y (mm)');
+	% 	zlabel('Z (mm)');
+	% end%for i
+
+	dir_path = 'C:\Users\pty883\University of Tennessee\UT_MABE_Welding - Documents\MAJIC LSAM\Adaptive Bead Height\Pringle Slices\Segment 1\';
+	for i = 1:length(layers)
+		s = sprintf('Layer_%i.asc',i);
+		file_path = strcat(dir_path,s);
+		[x,y,z] = AdaptiveBeadProcessor.LayerObj2XYZ(layers{i});
+		dlmwrite(file_path,[x',y',z'],' ');
+	end%for i
+
+	output = layers;
 end%func AdaptiveBeadHeight
 
 function TestHeatEqn

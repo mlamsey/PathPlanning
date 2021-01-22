@@ -65,16 +65,24 @@ classdef AdaptiveBeadPlotTools
 			% PlotLayer(layers{1},a);
 			hold on;
 			for i = 1:length(layers)
-				AdaptiveBeadPlotTools.PlotLayer(layers{i},a);
+				if(i == 1)
+					AdaptiveBeadPlotTools.PlotLayer(layers{i},a,'r');
+				else
+					AdaptiveBeadPlotTools.PlotLayer(layers{i},a);
+				end%if
 			end%for i
 			hold off;
 			view(45,45);
 			grid on;
 		end%func PlotLayers
 
-		function PlotLayer(layer,axes_handle)
+		function PlotLayer(layer,axes_handle,plot_color)
 			[x,y,z] = AdaptiveBeadProcessor.LayerObj2XYZ(layer);
-			plot3(x,y,z,'k','parent',axes_handle);
+			if(nargin == 2)
+				plot3(x,y,z,'k','parent',axes_handle);
+			elseif(nargin == 3)
+				plot3(x,y,z,'k','parent',axes_handle,'color',plot_color);
+			end%if
 		end%func PlotLayer
 
 		function SquareAxes3(axes_handle)
