@@ -172,7 +172,7 @@ classdef FileTools
 
             mm_delimiter = '+'; % 'Radial';
             end_delimiter = ' '; % 'degrees';
-            mm_front_offset = 2; % 7 for radial
+            mm_front_offset = 1; % 7 for radial
             mm_end_offset = 1; % 2 for radial
 
             % Find maximum order of magnitude
