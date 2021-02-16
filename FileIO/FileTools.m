@@ -170,8 +170,10 @@ classdef FileTools
                 return;
             end%if
 
-            mm_delimiter = 'Radial';
-            end_delimiter = 'degrees';
+            mm_delimiter = '+'; % 'Radial';
+            end_delimiter = ' '; % 'degrees';
+            mm_front_offset = 2; % 7 for radial
+            mm_end_offset = 1; % 2 for radial
 
             % Find maximum order of magnitude
             mm_values = [];
@@ -179,8 +181,8 @@ classdef FileTools
             for i = 1:length(working_dir)
                 filename = working_dir(i).name;
                 if(contains(filename,filename_prefix))
-                    mm_index = strfind(filename,mm_delimiter) + 7;
-                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - 2;
+                    mm_index = strfind(filename,mm_delimiter) + mm_front_offset;
+                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - mm_end_offset;
                     value_string = filename(mm_index:end_number_index);
                     mm_values = [mm_values,str2num(value_string)];
                 end%if
@@ -194,8 +196,8 @@ classdef FileTools
                 old_file_string = strcat(working_dir(i).folder,'\',filename);
 
                 if(contains(filename,filename_prefix))
-                    mm_index = strfind(filename,mm_delimiter) + 7;
-                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - 2;
+                    mm_index = strfind(filename,mm_delimiter) + mm_front_offset;
+                    end_number_index = strfind(filename(mm_index:end),end_delimiter) + mm_index - mm_end_offset;
                     mm_value = str2num(filename(mm_index:end_number_index));
 
                     mm_order = floor(log10(mm_value));
