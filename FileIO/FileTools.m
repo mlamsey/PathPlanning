@@ -295,4 +295,4 @@ classdef FileTools
         end%func ReverseFileOrder
 
     end%Static Methods
-end%class ContourTools
+end%class FileTools

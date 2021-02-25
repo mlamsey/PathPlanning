@@ -1,7 +1,7 @@
 classdef MoveAlgorithms
     properties(Constant)
         coincidence_threshold = 0.0001; % mm
-        parallel_threshold = 0.0001; % dmm
+        parallel_threshold = 0.001; % dmm
     end%properties
 
 	methods(Static)
