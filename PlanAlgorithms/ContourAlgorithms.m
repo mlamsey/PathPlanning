@@ -180,7 +180,8 @@ classdef ContourAlgorithms
                 return;
             end%if
 
-            [previous_contour_closest_move_index,number_of_search_iterations] = ContourAlgorithms.FindClosestContour2MoveToContour1MoveWithInitialGuess(move_on_current_contour,previous_contour,initial_guess);
+            % [previous_contour_closest_move_index,number_of_search_iterations] = ContourAlgorithms.FindClosestContour2MoveToContour1MoveWithInitialGuess(move_on_current_contour,previous_contour,initial_guess);
+            [previous_contour_closest_move_index,number_of_search_iterations] = ContourAlgorithms.FindClosestContour2MoveToContour1Move(move_on_current_contour,previous_contour);
 
             previous_contour_closest_move = previous_contour.moves{previous_contour_closest_move_index};
 
@@ -416,7 +417,7 @@ classdef ContourAlgorithms
     end%methods
 
     methods(Static, Access = 'private')
-        function closest_move_index = FindClosestContour2MoveToContour1Move(contour1_move,contour2)
+        function [closest_move_index,number_of_search_iterations] = FindClosestContour2MoveToContour1Move(contour1_move,contour2)
             if(~isa(contour1_move,'Move'))
                 fprintf('ContourAlgorithms::FindClosestContour2MoveToContour1Move: contour1_move is not a Move\n');
                 return;
@@ -435,6 +436,7 @@ classdef ContourAlgorithms
             end%for i
 
             [min_distance_value,closest_move_index] = min(distances_between_moves);
+            number_of_search_iterations = length(contour2.moves);
 
         end%func FindClosestNextContourPointToCurrentContourMoveMidpoint
 
