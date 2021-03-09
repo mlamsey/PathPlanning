@@ -47,10 +47,9 @@ classdef SegmentAlgorithms
 				return;
 			end%if
 
-			% ContourAlgorithms.UpdateTorchQuaternionsUsingTravelVectorOnly(original_segment.contours{1});
-			ContourAlgorithms.UpdateNextContourTorchRotationUsingInterContourVectors(original_segment.contours{1},original_segment.contours{2});
-
 			if(length(original_segment.contours) > 1)
+				ContourAlgorithms.UpdateNextContourTorchRotationUsingInterContourVectors(original_segment.contours{1},original_segment.contours{2});
+
 				% for i = 2:end b/c first contour has GA torch orientation
 				for i = 2:length(original_segment.contours)
 					fprintf('Calculating Quaternions for Layer %i\n',i);
@@ -58,6 +57,8 @@ classdef SegmentAlgorithms
 					this_contour = original_segment.contours{i};
 					ContourAlgorithms.UpdateTorchQuaternionsUsingInterContourVectors(this_contour,previous_contour);
 				end%for i
+			else
+				ContourAlgorithms.UpdateTorchQuaternionsUsingTravelVectorOnly(original_segment.contours{1});
 			end%if
 		end%func UpdateTorchQuaternionsUsingInterContourVectors
 
