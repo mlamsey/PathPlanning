@@ -94,6 +94,34 @@ classdef ContourAlgorithms
 
         end%func UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane
 
+        function UpdateNextContourTorchRotInterContourVectorsFixedXPlane(this_contour,next_contour,plane_vector)
+            if(~isa(this_contour,'Contour') || ~isa(next_contour,'Contour'))
+                fprintf('ContourAlgorithms::UpdateNextContourTorchRotationUsingInterContourVectorsWithFixedTravelPlane: Inputs not all Contours\n');
+                return;
+            end%if
+
+            n_moves = length(next_contour.moves);
+            previous_closest_move_index = 1;
+
+            for i = 1:n_moves
+                current_move = next_contour.moves{i};
+
+                [normal_vector,previous_closest_move_index,~] = ContourAlgorithms.GetNormalVectorFromClosestMoveOnPreviousContour(current_move,this_contour,previous_closest_move_index);
+                x_vector_in_plane = cross(normal_vector,plane_vector);
+
+                z_axis = -1 .* normal_vector ./ norm(normal_vector);
+                x_axis = x_vector_in_plane ./ norm(x_vector_in_plane);
+                y_axis = cross(z_axis,x_axis);
+                y_axis = y_axis ./ norm(y_axis);
+
+                R = [x_axis(1),y_axis(1),z_axis(1)
+                x_axis(2),y_axis(2),z_axis(2)
+                x_axis(3),y_axis(3),z_axis(3)];
+                MoveAlgorithms.UpdateRotationMatrix(this_contour.moves{i},R);
+            end%for i
+
+        end%func UpdateTorchAnglesUsingInterContourVectorsWithFixedTravelPlane
+
         function UpdateTorchQuaternionsUsingInterContourVectors(this_contour,previous_contour)
             if(~isa(this_contour,'Contour') || ~isa(previous_contour,'Contour'))
                 fprintf('ContourAlgorithms::UpdateTorchQuaternionsUsingInterContourVectors: Inputs not all Contours\n');

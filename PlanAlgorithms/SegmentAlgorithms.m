@@ -30,6 +30,7 @@ classdef SegmentAlgorithms
 			end%if
 
 			if(length(original_segment.contours) > 1)
+				ContourAlgorithms.UpdateNextContourTorchRotInterContourVectorsFixedXPlane(original_segment.contours{1},original_segment.contours{2},plane_vector)
 				% for i = 2:end b/c first contour has GA torch orientation
 				for i = 2:length(original_segment.contours)
 					fprintf('Calculating Quaternions for Layer %i\n',i);
