@@ -6,7 +6,7 @@ classdef AdaptiveBeadProcessor
 	methods(Static)
 		function layers = InterpolateLayerToFlat(layer,min_layer_height,max_layer_height)
 			% Need algorithm to predict size of final matrix
-			n_points = 50;
+			n_points = length(layer);
 			layers = cell(1,n_points);
 			layers{1} = layer;
 

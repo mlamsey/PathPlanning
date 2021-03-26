@@ -74,6 +74,7 @@ classdef AdaptiveBeadPlotTools
 			hold off;
 			view(45,45);
 			grid on;
+			daspect([1,1,1]);
 		end%func PlotLayers
 
 		function PlotLayer(layer,axes_handle,plot_color)
