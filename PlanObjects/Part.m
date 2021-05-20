@@ -2,6 +2,7 @@ classdef Part < handle & matlab.mixin.Copyable
 	properties
 		segments;
 		segment_manifest;
+		part_origin;
 	end%properties
 	methods
 
@@ -17,6 +18,7 @@ classdef Part < handle & matlab.mixin.Copyable
 
 			obj.segments = segments;
 			obj.segment_manifest = Part.InitializeSegmentManifest(segments);
+			obj.part_origin = [0,0,0];
 		end%Constructor
 
 	end%methods
